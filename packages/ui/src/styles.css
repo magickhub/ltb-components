@@ -1,0 +1,100 @@
+/**
+ * LTB Components - Styles
+ * @version 1.0.0
+ * 
+ * CSS Variables for customizing LTB components.
+ * Override these in your project to match your brand.
+ */
+
+:root {
+  /* Base colors */
+  --ltb-bg: #ffffff;
+  --ltb-foreground: #0f172a;
+  --ltb-muted: #f1f5f9;
+  --ltb-muted-foreground: #64748b;
+  --ltb-border: #e2e8f0;
+  
+  /* Primary (used for buttons, links, focus states) */
+  --ltb-primary: #0f172a;
+  --ltb-primary-hover: #1e293b;
+  --ltb-primary-foreground: #ffffff;
+  
+  /* User messages */
+  --ltb-user-message-bg: #0f172a;
+  --ltb-user-message-text: #ffffff;
+  
+  /* Assistant messages */
+  --ltb-assistant-message-bg: #f1f5f9;
+  --ltb-assistant-message-text: #0f172a;
+  
+  /* System messages */
+  --ltb-system-message-bg: transparent;
+  --ltb-system-message-text: #64748b;
+  
+  /* Sidebar */
+  --ltb-sidebar-bg: #f8fafc;
+  --ltb-sidebar-text: #334155;
+  --ltb-sidebar-hover: #f1f5f9;
+  --ltb-sidebar-active: #e2e8f0;
+  --ltb-sidebar-active-text: #0f172a;
+  
+  /* Header */
+  --ltb-header-bg: #ffffff;
+  
+  /* Input */
+  --ltb-input-bg: #ffffff;
+  --ltb-input-border: #e2e8f0;
+  
+  /* Attachments */
+  --ltb-attachment-bg: #f1f5f9;
+  
+  /* Status */
+  --ltb-error: #ef4444;
+  --ltb-error-bg: #fef2f2;
+  
+  /* Border radius */
+  --ltb-radius: 0.5rem;
+}
+
+/* Dark theme */
+.dark {
+  --ltb-bg: #0f172a;
+  --ltb-foreground: #f8fafc;
+  --ltb-muted: #1e293b;
+  --ltb-muted-foreground: #94a3b8;
+  --ltb-border: #334155;
+  
+  --ltb-primary: #f8fafc;
+  --ltb-primary-hover: #e2e8f0;
+  --ltb-primary-foreground: #0f172a;
+  
+  --ltb-user-message-bg: #3b82f6;
+  --ltb-user-message-text: #ffffff;
+  
+  --ltb-assistant-message-bg: #1e293b;
+  --ltb-assistant-message-text: #f8fafc;
+  
+  --ltb-system-message-bg: transparent;
+  --ltb-system-message-text: #94a3b8;
+  
+  --ltb-sidebar-bg: #0f172a;
+  --ltb-sidebar-text: #cbd5e1;
+  --ltb-sidebar-hover: #1e293b;
+  --ltb-sidebar-active: #334155;
+  --ltb-sidebar-active-text: #f8fafc;
+  
+  --ltb-header-bg: #0f172a;
+  
+  --ltb-input-bg: #1e293b;
+  --ltb-input-border: #334155;
+  
+  --ltb-attachment-bg: #1e293b;
+  
+  --ltb-error: #f87171;
+  --ltb-error-bg: #450a0a;
+}
+
+/* Component styles */
+.ltb-chat-widget {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}

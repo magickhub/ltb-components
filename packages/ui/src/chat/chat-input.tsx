@@ -2,7 +2,7 @@
  * LTB Components - ChatInput
  * @version 1.0.0
  * 
- * Componente de entrada para enviar mensajes con soporte de archivos adjuntos.
+ * Componente de entrada para enviar mensajes con soporte de archivos adjuntos y acciones.
  */
 
 'use client'
@@ -11,7 +11,8 @@ import * as React from 'react'
 import { Send, Paperclip, X, Loader2 } from 'lucide-react'
 import { cn, formatFileSize } from '../utils'
 import { useFileAttachments, useAutoResize } from './hooks'
-import type { ChatInputProps } from './types'
+import { ChatActions } from './chat-actions'
+import type { ChatInputProps, MessageAction } from './types'
 
 export function ChatInput({
   placeholder = 'Escribe un mensaje...',
@@ -23,8 +24,13 @@ export function ChatInput({
   disabled = false,
   className,
   classNames,
+  actions,
+  executingAction,
+  onExecuteAction,
+  actionsButtonText = 'Acciones',
 }: ChatInputProps) {
   const [message, setMessage] = React.useState('')
+  const [pendingAction, setPendingAction] = React.useState<MessageAction | null>(null)
   const { ref: textareaRef, resize } = useAutoResize<HTMLTextAreaElement>()
   
   const {
@@ -37,19 +43,24 @@ export function ChatInput({
     openFilePicker,
   } = useFileAttachments({ maxFileSize, maxAttachments, allowedFileTypes })
 
-  const canSend = (message.trim() || files.length > 0) && !isLoading && !disabled
+  const canSend = (message.trim() || files.length > 0 || pendingAction) && !isLoading && !disabled && !executingAction
 
   const handleSubmit = React.useCallback(async () => {
     if (!canSend) return
     
-    await onSendMessage(message.trim(), files.length > 0 ? files : undefined)
+    await onSendMessage(
+      message.trim(), 
+      files.length > 0 ? files : undefined,
+      pendingAction || undefined
+    )
     setMessage('')
     clearFiles()
+    setPendingAction(null)
     
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto'
     }
-  }, [canSend, message, files, onSendMessage, clearFiles, textareaRef])
+  }, [canSend, message, files, pendingAction, onSendMessage, clearFiles, textareaRef])
 
   const handleKeyDown = React.useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -64,8 +75,40 @@ export function ChatInput({
     }
   }, [addFiles])
 
+  const handleClearPendingAction = React.useCallback(() => {
+    setPendingAction(null)
+  }, [])
+
+  // Exponer setPendingAction para que el widget padre pueda establecer la accion pendiente
+  React.useImperativeHandle(
+    React.useRef(null),
+    () => ({
+      setPendingAction,
+    }),
+    []
+  )
+
+  const hasActions = actions && actions.length > 0
+
   return (
     <div className={cn('border-t border-[var(--ltb-border)] bg-[var(--ltb-input-bg)] p-4', className, classNames?.inputContainer)}>
+      {/* Vista previa de accion pendiente */}
+      {pendingAction && (
+        <div className="mb-3 flex items-center gap-2">
+          <div className="flex items-center gap-1.5 rounded-full bg-[var(--ltb-action-badge-bg,#dbeafe)] px-3 py-1 text-xs font-medium text-[var(--ltb-action-badge-text,#1e40af)]">
+            <span>Contexto: {pendingAction.label}</span>
+            <button
+              type="button"
+              onClick={handleClearPendingAction}
+              className="ml-1 rounded-full p-0.5 hover:bg-[var(--ltb-action-badge-text,#1e40af)]/20"
+              aria-label="Quitar accion"
+            >
+              <X className="h-3 w-3" />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Vista previa de archivos */}
       {files.length > 0 && (
         <div className="mb-3 flex flex-wrap gap-2">
@@ -110,10 +153,11 @@ export function ChatInput({
           aria-label="Adjuntar archivos"
         />
         
+        {/* Boton de adjuntar */}
         <button
           type="button"
           onClick={openFilePicker}
-          disabled={disabled || isLoading || files.length >= maxAttachments}
+          disabled={disabled || isLoading || files.length >= maxAttachments || !!executingAction}
           className={cn(
             'flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-[var(--ltb-input-border)] bg-transparent text-[var(--ltb-muted-foreground)] transition-colors hover:bg-[var(--ltb-border)] hover:text-[var(--ltb-foreground)] disabled:cursor-not-allowed disabled:opacity-50',
             classNames?.attachButton
@@ -123,6 +167,18 @@ export function ChatInput({
           <Paperclip className="h-5 w-5" />
         </button>
 
+        {/* Boton de acciones */}
+        {hasActions && onExecuteAction && (
+          <ChatActions
+            actions={actions}
+            executingAction={executingAction}
+            onExecuteAction={onExecuteAction}
+            buttonText={actionsButtonText}
+            disabled={disabled || isLoading}
+          />
+        )}
+
+        {/* Input de texto */}
         <div className="relative flex-1 flex">
           <textarea
             ref={textareaRef}
@@ -133,7 +189,7 @@ export function ChatInput({
             }}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
-            disabled={disabled || isLoading}
+            disabled={disabled || isLoading || !!executingAction}
             rows={1}
             className={cn(
               'w-full resize-none rounded-lg border border-[var(--ltb-input-border)] bg-[var(--ltb-input-bg)] px-4 py-2 text-[var(--ltb-foreground)] placeholder:text-[var(--ltb-muted-foreground)] focus:border-[var(--ltb-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--ltb-primary)] disabled:cursor-not-allowed disabled:opacity-50',
@@ -143,6 +199,7 @@ export function ChatInput({
           />
         </div>
 
+        {/* Boton de enviar */}
         <button
           type="button"
           onClick={handleSubmit}

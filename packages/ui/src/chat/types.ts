@@ -11,11 +11,43 @@ export interface Attachment {
   size: number
 }
 
+/**
+ * Accion que puede inyectarse al chat como contexto.
+ * El badge se muestra visualmente pero el contenido completo se envia internamente.
+ */
+export interface ChatAction {
+  /** Identificador unico de la accion */
+  id: string
+  /** Nombre corto que se muestra en el badge (ej: "Buyer Persona") */
+  label: string
+  /** Descripcion de la accion para el menu */
+  description?: string
+  /** Icono de la accion (nombre de Lucide icon) */
+  icon?: string
+  /** Color del badge (por defecto usa el primario) */
+  color?: string
+}
+
+/**
+ * Referencia a una accion ejecutada en un mensaje.
+ * Se muestra como badge pero contiene el contexto completo.
+ */
+export interface MessageAction {
+  /** ID de la accion ejecutada */
+  actionId: string
+  /** Label que se muestra en el badge */
+  label: string
+  /** Contenido completo inyectado (no visible, enviado a la IA) */
+  content: string
+}
+
 export interface Message {
   id: string
   role: 'user' | 'assistant' | 'system'
   content: string
   attachments?: Attachment[]
+  /** Accion ejecutada con este mensaje (muestra badge, inyecta contexto) */
+  action?: MessageAction
   createdAt: Date
 }
 
@@ -84,13 +116,22 @@ export interface AIChatWidgetProps {
   sidebarTitle?: string
   /** Texto de carga mientras espera respuesta (por defecto: 'Pensando...') */
   loadingText?: string
+  /** Texto del boton de acciones (por defecto: 'Acciones') */
+  actionsButtonText?: string
+  
+  /** Acciones disponibles para inyectar contexto */
+  actions?: ChatAction[]
+  /** Accion actualmente en ejecucion (genera loading en el boton) */
+  executingAction?: ChatAction | null
   
   /** Custom class names for styling */
   className?: string
   classNames?: ChatClassNames
   
-  /** Called when user sends a message */
-  onSendMessage: (content: string, attachments?: File[]) => void | Promise<void>
+  /** Called when user sends a message (con accion opcional) */
+  onSendMessage: (content: string, attachments?: File[], action?: MessageAction) => void | Promise<void>
+  /** Called when user triggers an action (el consumidor genera el contenido y luego envia) */
+  onExecuteAction?: (action: ChatAction) => void | Promise<void>
   /** Called when user creates a new conversation */
   onNewConversation: () => void | Promise<void>
   /** Called when user selects a conversation */
@@ -119,11 +160,19 @@ export interface ChatInputProps {
   maxFileSize?: number
   maxAttachments?: number
   allowedFileTypes?: string[]
-  onSendMessage: (content: string, attachments?: File[]) => void | Promise<void>
+  onSendMessage: (content: string, attachments?: File[], action?: MessageAction) => void | Promise<void>
   isLoading?: boolean
   disabled?: boolean
   className?: string
   classNames?: Pick<ChatClassNames, 'inputContainer' | 'input' | 'inputActions' | 'sendButton' | 'attachButton'>
+  /** Acciones disponibles */
+  actions?: ChatAction[]
+  /** Accion en ejecucion */
+  executingAction?: ChatAction | null
+  /** Callback cuando se selecciona una accion */
+  onExecuteAction?: (action: ChatAction) => void | Promise<void>
+  /** Texto del boton de acciones */
+  actionsButtonText?: string
 }
 
 export interface ChatSidebarProps {

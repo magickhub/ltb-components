@@ -9,9 +9,19 @@
 'use client'
 
 import * as React from 'react'
-import { FileText, Image as ImageIcon, File, Copy, Check } from 'lucide-react'
+import { FileText, Image as ImageIcon, File, Copy, Check, Zap } from 'lucide-react'
 import { cn, formatFileSize } from '../utils'
-import type { ChatMessageProps, Attachment } from './types'
+import type { ChatMessageProps, Attachment, MessageAction } from './types'
+
+/** Badge que muestra una accion inyectada en el mensaje */
+function ActionBadge({ action }: { action: MessageAction }) {
+  return (
+    <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-[var(--ltb-action-badge-bg,#dbeafe)] px-3 py-1 text-xs font-medium text-[var(--ltb-action-badge-text,#1e40af)]">
+      <Zap className="h-3 w-3" />
+      <span>Contexto: {action.label}</span>
+    </div>
+  )
+}
 
 function AttachmentPreview({ attachment }: { attachment: Attachment }) {
   const isImage = attachment.type.startsWith('image/')
@@ -243,6 +253,11 @@ export function ChatMessage({ message, className, classNames }: ChatMessageProps
           ]
         )}
       >
+        {/* Badge de accion si existe */}
+        {message.action && (
+          <ActionBadge action={message.action} />
+        )}
+        
         {message.attachments && message.attachments.length > 0 && (
           <div
             className={cn(

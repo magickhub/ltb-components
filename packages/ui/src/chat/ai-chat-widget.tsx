@@ -4,6 +4,7 @@
  * 
  * Interfaz completa de chat con IA incluyendo sidebar, lista de mensajes e input.
  * Totalmente personalizable via props y variables CSS.
+ * Soporta acciones para inyectar contexto predefinido.
  */
 
 'use client'
@@ -36,6 +37,11 @@ export function AIChatWidget({
   deleteConfirmMessage = '¿Estas seguro de que deseas eliminar esta conversacion? Esta accion no se puede deshacer.',
   sidebarTitle = 'Conversaciones',
   loadingText = 'Pensando...',
+  actionsButtonText = 'Acciones',
+  
+  // Acciones
+  actions,
+  executingAction,
   
   // Estilos
   className,
@@ -47,6 +53,7 @@ export function AIChatWidget({
   onSelectConversation,
   onDeleteConversation,
   onRenameConversation,
+  onExecuteAction,
   
   // Estados
   isLoading = false,
@@ -126,6 +133,10 @@ export function AIChatWidget({
           isLoading={isLoading}
           disabled={disabled}
           classNames={classNames}
+          actions={actions}
+          executingAction={executingAction}
+          onExecuteAction={onExecuteAction}
+          actionsButtonText={actionsButtonText}
         />
       </div>
     </div>

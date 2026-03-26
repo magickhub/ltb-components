@@ -1,8 +1,33 @@
 'use client'
 
 import { useState } from 'react'
-import { AIChatWidget, type Message, type Conversation } from '@/packages/ui/src/chat'
+import { AIChatWidget, type Message, type Conversation, type ChatAction, type MessageAction } from '@/packages/ui/src/chat'
 import '@/packages/ui/src/styles.css'
+
+// Acciones de demo
+const demoActions: ChatAction[] = [
+  {
+    id: 'buyer-persona',
+    label: 'Buyer Persona',
+    description: 'Inyectar contexto del buyer persona',
+    icon: 'users',
+    color: '#2563eb',
+  },
+  {
+    id: 'benchmark',
+    label: 'Benchmark',
+    description: 'Analisis comparativo de mercado',
+    icon: 'bar-chart',
+    color: '#16a34a',
+  },
+  {
+    id: 'objetivo',
+    label: 'Objetivo',
+    description: 'Definir objetivo de negocio',
+    icon: 'target',
+    color: '#dc2626',
+  },
+]
 
 // Datos de demo
 const demoConversations: Conversation[] = [
@@ -42,12 +67,14 @@ function ChatDemo() {
   const [currentId, setCurrentId] = useState<string>('1')
   const [messages, setMessages] = useState<Message[]>(demoMessages)
   const [isLoading, setIsLoading] = useState(false)
+  const [executingAction, setExecutingAction] = useState<ChatAction | null>(null)
 
-  const handleSendMessage = async (content: string) => {
+  const handleSendMessage = async (content: string, _files?: File[], action?: MessageAction) => {
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: 'user',
       content,
+      action, // Incluir accion si existe
       createdAt: new Date(),
     }
     setMessages(prev => [...prev, userMessage])
@@ -78,6 +105,45 @@ function ChatDemo() {
     setMessages([])
   }
 
+  const handleExecuteAction = async (action: ChatAction) => {
+    setExecutingAction(action)
+    
+    // Simular generacion de contenido (en produccion, aqui llamarias a tu API)
+    await new Promise(resolve => setTimeout(resolve, 1500))
+    
+    // Crear el mensaje con la accion
+    const actionContent = `Contexto de ${action.label} generado automaticamente...`
+    const messageAction: MessageAction = {
+      actionId: action.id,
+      label: action.label,
+      content: actionContent,
+    }
+    
+    // Enviar mensaje con la accion
+    const userMessage: Message = {
+      id: crypto.randomUUID(),
+      role: 'user',
+      content: `Analiza esto basandote en el contexto de ${action.label}`,
+      action: messageAction,
+      createdAt: new Date(),
+    }
+    setMessages(prev => [...prev, userMessage])
+    setExecutingAction(null)
+    
+    // Simular respuesta
+    setIsLoading(true)
+    setTimeout(() => {
+      const assistantMessage: Message = {
+        id: crypto.randomUUID(),
+        role: 'assistant',
+        content: `He analizado la informacion usando el contexto de **${action.label}**. Aqui tienes mi analisis detallado...`,
+        createdAt: new Date(),
+      }
+      setMessages(prev => [...prev, assistantMessage])
+      setIsLoading(false)
+    }, 1000)
+  }
+
   return (
     <div className="h-[500px] rounded-lg border border-border overflow-hidden">
       <AIChatWidget
@@ -90,6 +156,10 @@ function ChatDemo() {
         onDeleteConversation={(id) => setConversations(prev => prev.filter(c => c.id !== id))}
         isLoading={isLoading}
         maxAttachments={2}
+        actions={demoActions}
+        executingAction={executingAction}
+        onExecuteAction={handleExecuteAction}
+        actionsButtonText="Plantillas"
       />
     </div>
   )
@@ -253,6 +323,30 @@ import 'ltb-components/styles.css'`}</code></pre>
                 <td className="py-3 px-4 text-muted-foreground">Mostrar/ocultar el sidebar</td>
               </tr>
               <tr>
+                <td className="py-3 px-4 font-mono text-xs">actions</td>
+                <td className="py-3 px-4 font-mono text-xs">ChatAction[]</td>
+                <td className="py-3 px-4">-</td>
+                <td className="py-3 px-4 text-muted-foreground">Lista de acciones disponibles para inyectar contexto</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">executingAction</td>
+                <td className="py-3 px-4 font-mono text-xs">ChatAction | null</td>
+                <td className="py-3 px-4">-</td>
+                <td className="py-3 px-4 text-muted-foreground">Accion en ejecucion (muestra loading)</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">onExecuteAction</td>
+                <td className="py-3 px-4 font-mono text-xs">(action) =&gt; void</td>
+                <td className="py-3 px-4">-</td>
+                <td className="py-3 px-4 text-muted-foreground">Se llama cuando el usuario selecciona una accion</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">actionsButtonText</td>
+                <td className="py-3 px-4 font-mono text-xs">string</td>
+                <td className="py-3 px-4">'Acciones'</td>
+                <td className="py-3 px-4 text-muted-foreground">Texto del boton de acciones</td>
+              </tr>
+              <tr>
                 <td className="py-3 px-4 font-mono text-xs">isLoading</td>
                 <td className="py-3 px-4 font-mono text-xs">boolean</td>
                 <td className="py-3 px-4">false</td>
@@ -309,6 +403,36 @@ import 'ltb-components/styles.css'`}</code></pre>
   type: string
   url?: string
   size: number
+}`}</code></pre>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-medium mb-2">ChatAction</h3>
+            <p className="text-muted-foreground mb-2">
+              Define una accion que puede inyectarse al chat como contexto.
+            </p>
+            <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
+              <pre className="text-sm"><code>{`interface ChatAction {
+  id: string           // Identificador unico
+  label: string        // Nombre visible (ej: "Buyer Persona")
+  description?: string // Descripcion en el menu
+  icon?: string        // Icono Lucide (ej: "users", "bar-chart")
+  color?: string       // Color del badge (hex)
+}`}</code></pre>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-medium mb-2">MessageAction</h3>
+            <p className="text-muted-foreground mb-2">
+              Referencia a una accion ejecutada en un mensaje. Se muestra como badge pero contiene el contexto completo.
+            </p>
+            <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
+              <pre className="text-sm"><code>{`interface MessageAction {
+  actionId: string  // ID de la accion ejecutada
+  label: string     // Label del badge visible
+  content: string   // Contenido completo (enviado a la IA)
 }`}</code></pre>
             </div>
           </div>

@@ -14,12 +14,15 @@ export { ChatMessageList } from './chat-message-list'
 export { ChatInput } from './chat-input'
 export { ChatSidebar } from './chat-sidebar'
 export { ChatHeader } from './chat-header'
+export { ChatActions } from './chat-actions'
 
 // Types
 export type {
   Message,
   Conversation,
   Attachment,
+  ChatAction,
+  MessageAction,
   ChatClassNames,
   AIChatWidgetProps,
   ChatMessageProps,

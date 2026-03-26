@@ -8,14 +8,15 @@ import { useCallback, useRef, useEffect, useState } from 'react'
 /**
  * Hook for auto-scrolling to the bottom of a container
  */
-export function useAutoScroll<T extends HTMLElement>(deps: unknown[]) {
+export function useAutoScroll<T extends HTMLElement>(deps: any[]) {
   const ref = useRef<T>(null)
 
   useEffect(() => {
     if (ref.current) {
       ref.current.scrollTop = ref.current.scrollHeight
     }
-  }, deps)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deps.length, ...deps.map((d) => JSON.stringify(d))])
 
   return ref
 }

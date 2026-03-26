@@ -104,15 +104,15 @@ function ChatDemo() {
 
   // El consumidor recibe la accion y el ID de la conversacion activa.
   // Genera el contenido de la plantilla (llamada a API, etc.) y luego
-  // llama a onSendMessage con ese contenido y la referencia a la accion.
+  // lo envia como mensaje del sistema con la referencia a la accion.
   const handleExecuteAction = async (action: ChatAction, conversationId: string | undefined) => {
     setExecutingAction(action)
     
     // Simular generacion del contenido de la plantilla (en produccion: llamada a tu API)
     await new Promise(resolve => setTimeout(resolve, 1500))
     
-    // El texto generado por la plantilla es el contenido visible del mensaje
-    const generatedContent = `[Demo] Contenido generado para la plantilla "${action.label}" en la conversacion ${conversationId ?? 'sin ID'}. En produccion, aqui iria el texto real producido por tu backend.`
+    // El texto generado por la plantilla
+    const generatedContent = `**${action.label}:**\n\nContenido de la plantilla generado para la conversacion ${conversationId ?? 'sin ID'}.\n\nEn produccion, aqui iria el texto real producido por tu backend.`
     
     const messageAction: MessageAction = {
       actionId: action.id,
@@ -120,29 +120,16 @@ function ChatDemo() {
       content: generatedContent,
     }
     
-    // El mensaje muestra el contenido generado; el badge identifica la plantilla
-    const userMessage: Message = {
+    // El mensaje es del sistema, contiene el contenido generado y muestra el badge de la plantilla
+    const systemMessage: Message = {
       id: crypto.randomUUID(),
-      role: 'user',
+      role: 'system',
       content: generatedContent,
       action: messageAction,
       createdAt: new Date(),
     }
-    setMessages(prev => [...prev, userMessage])
+    setMessages(prev => [...prev, systemMessage])
     setExecutingAction(null)
-    
-    // Simular respuesta del asistente
-    setIsLoading(true)
-    setTimeout(() => {
-      const assistantMessage: Message = {
-        id: crypto.randomUUID(),
-        role: 'assistant',
-        content: `Recibido el contexto de **${action.label}**. Puedes hacerme preguntas basandote en esta informacion.`,
-        createdAt: new Date(),
-      }
-      setMessages(prev => [...prev, assistantMessage])
-      setIsLoading(false)
-    }, 1000)
   }
 
   return (

@@ -138,7 +138,7 @@ export default function ChangelogPage() {
           Para fijar una version especifica:
         </p>
         <div className="rounded-lg border border-border bg-muted/50 p-4">
-          <code className="text-sm">npm install github:tu-usuario/ltb-components#v1.0.0</code>
+          <code className="text-sm">npm install github:magickhub/ltb-components#v1.0.0</code>
         </div>
       </section>
     </div>

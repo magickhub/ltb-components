@@ -24,21 +24,21 @@ export default function GettingStartedPage() {
           <div>
             <p className="text-sm font-medium mb-2">npm</p>
             <div className="rounded-lg border border-border bg-muted/50 p-4">
-              <code className="text-sm">npm install github:tu-usuario/ltb-components</code>
+              <code className="text-sm">npm install github:magickhub/ltb-components</code>
             </div>
           </div>
           
           <div>
             <p className="text-sm font-medium mb-2">yarn</p>
             <div className="rounded-lg border border-border bg-muted/50 p-4">
-              <code className="text-sm">yarn add github:tu-usuario/ltb-components</code>
+              <code className="text-sm">yarn add github:magickhub/ltb-components</code>
             </div>
           </div>
           
           <div>
             <p className="text-sm font-medium mb-2">pnpm</p>
             <div className="rounded-lg border border-border bg-muted/50 p-4">
-              <code className="text-sm">pnpm add github:tu-usuario/ltb-components</code>
+              <code className="text-sm">pnpm add github:magickhub/ltb-components</code>
             </div>
           </div>
         </div>

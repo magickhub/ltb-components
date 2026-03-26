@@ -173,7 +173,7 @@ export default function HomePage() {
         {/* Comando de instalacion */}
         <div className="mx-auto mt-12 max-w-xl">
           <div className="rounded-lg border border-border bg-muted/50 p-4 text-center">
-            <code className="text-sm">npm install github:tu-usuario/ltb-components</code>
+            <code className="text-sm">npm install github:magickhub/ltb-components</code>
           </div>
         </div>
       </section>

@@ -58,7 +58,7 @@ export interface AIChatWidgetProps {
   /** Mensajes de la conversacion actual */
   messages: Message[]
   
-  /** Texto placeholder para el input */
+  /** Texto placeholder para el input (por defecto: 'Escribe un mensaje...') */
   placeholder?: string
   /** Tamano maximo de archivo en MB (por defecto: 10) */
   maxFileSize?: number
@@ -70,14 +70,20 @@ export interface AIChatWidgetProps {
   showSidebar?: boolean
   /** Mostrar/ocultar header (por defecto: true) */
   showHeader?: boolean
-  /** Titulo del header */
+  /** Titulo del header (por defecto: 'Chat') */
   headerTitle?: string
-  /** Mensaje cuando no hay mensajes */
+  /** Mensaje cuando no hay mensajes (por defecto: 'Inicia una conversacion') */
   emptyStateMessage?: string
-  /** Mensaje cuando no hay conversaciones */
+  /** Texto secundario en estado vacio (por defecto: 'Envia un mensaje para comenzar') */
+  emptyStateHint?: string
+  /** Mensaje cuando no hay conversaciones (por defecto: 'No hay conversaciones') */
   emptyConversationsMessage?: string
   /** Mensaje de confirmacion al eliminar conversacion */
   deleteConfirmMessage?: string
+  /** Titulo del sidebar (por defecto: 'Conversaciones') */
+  sidebarTitle?: string
+  /** Texto de carga mientras espera respuesta (por defecto: 'Pensando...') */
+  loadingText?: string
   
   /** Custom class names for styling */
   className?: string
@@ -129,6 +135,7 @@ export interface ChatSidebarProps {
   onRenameConversation?: (id: string, newTitle: string) => void | Promise<void>
   emptyMessage?: string
   deleteConfirmMessage?: string
+  title?: string
   className?: string
   classNames?: Pick<ChatClassNames, 'sidebar' | 'sidebarHeader' | 'sidebarContent' | 'sidebarItem' | 'sidebarItemActive'>
 }
@@ -146,6 +153,8 @@ export interface ChatMessageListProps {
   isLoading?: boolean
   isStreaming?: boolean
   emptyMessage?: string
+  emptyHint?: string
+  loadingText?: string
   className?: string
   classNames?: Pick<ChatClassNames, 'messageList' | 'message' | 'userMessage' | 'assistantMessage' | 'systemMessage' | 'messageContent' | 'messageAttachments'>
 }

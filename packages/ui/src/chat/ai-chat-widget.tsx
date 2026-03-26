@@ -29,10 +29,13 @@ export function AIChatWidget({
   allowedFileTypes,
   showSidebar = true,
   showHeader = true,
-  headerTitle = 'Asistente de negocio',
+  headerTitle = 'Chat',
   emptyStateMessage = 'Inicia una conversacion',
+  emptyStateHint = 'Envia un mensaje para comenzar',
   emptyConversationsMessage = 'No hay conversaciones',
   deleteConfirmMessage = '¿Estas seguro de que deseas eliminar esta conversacion? Esta accion no se puede deshacer.',
+  sidebarTitle = 'Conversaciones',
+  loadingText = 'Pensando...',
   
   // Estilos
   className,
@@ -80,6 +83,7 @@ export function AIChatWidget({
           onRenameConversation={onRenameConversation}
           emptyMessage={emptyConversationsMessage}
           deleteConfirmMessage={deleteConfirmMessage}
+          title={sidebarTitle}
           classNames={classNames}
         />
       )}
@@ -107,6 +111,8 @@ export function AIChatWidget({
           isLoading={isLoading}
           isStreaming={isStreaming}
           emptyMessage={emptyStateMessage}
+          emptyHint={emptyStateHint}
+          loadingText={loadingText}
           classNames={classNames}
         />
 

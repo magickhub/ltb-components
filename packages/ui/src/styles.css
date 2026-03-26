@@ -52,6 +52,18 @@
   --ltb-error: #ef4444;
   --ltb-error-bg: #fef2f2;
   
+  /* Code blocks */
+  --ltb-code-bg: #1e293b;
+  --ltb-code-text: #e2e8f0;
+  --ltb-code-header-bg: #0f172a;
+  --ltb-code-language-text: #94a3b8;
+  --ltb-code-button-bg: #334155;
+  --ltb-code-button-text: #94a3b8;
+  --ltb-code-button-hover: #475569;
+  --ltb-code-button-hover-text: #f8fafc;
+  --ltb-code-inline-bg: #e2e8f0;
+  --ltb-code-inline-text: #0f172a;
+  
   /* Border radius */
   --ltb-radius: 0.5rem;
 }
@@ -92,6 +104,18 @@
   
   --ltb-error: #f87171;
   --ltb-error-bg: #450a0a;
+  
+  /* Code blocks (dark) */
+  --ltb-code-bg: #0f172a;
+  --ltb-code-text: #e2e8f0;
+  --ltb-code-header-bg: #020617;
+  --ltb-code-language-text: #64748b;
+  --ltb-code-button-bg: #1e293b;
+  --ltb-code-button-text: #94a3b8;
+  --ltb-code-button-hover: #334155;
+  --ltb-code-button-hover-text: #f8fafc;
+  --ltb-code-inline-bg: #334155;
+  --ltb-code-inline-text: #e2e8f0;
 }
 
 /* Component styles */

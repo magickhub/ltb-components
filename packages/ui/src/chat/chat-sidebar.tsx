@@ -188,6 +188,7 @@ export function ChatSidebar({
   onRenameConversation,
   emptyMessage = 'No hay conversaciones',
   deleteConfirmMessage = '¿Estas seguro de que deseas eliminar esta conversacion? Esta accion no se puede deshacer.',
+  title = 'Conversaciones',
   className,
   classNames,
 }: ChatSidebarProps) {
@@ -266,7 +267,7 @@ export function ChatSidebar({
           )}
         >
           <h2 className="text-sm font-semibold text-[var(--ltb-foreground)]">
-            Conversaciones
+            {title}
           </h2>
           <button
             onClick={() => onNewConversation()}

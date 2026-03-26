@@ -2,7 +2,7 @@
  * LTB Components - ChatMessageList
  * @version 1.0.0
  * 
- * Scrollable container for chat messages with auto-scroll support.
+ * Contenedor scrollable para mensajes con soporte de auto-scroll.
  */
 
 'use client'
@@ -18,7 +18,9 @@ export function ChatMessageList({
   messages,
   isLoading = false,
   isStreaming = false,
-  emptyMessage = 'Start a conversation',
+  emptyMessage = 'Inicia una conversacion',
+  emptyHint = 'Envia un mensaje para comenzar',
+  loadingText = 'Pensando...',
   className,
   classNames,
 }: ChatMessageListProps) {
@@ -42,7 +44,7 @@ export function ChatMessageList({
             {emptyMessage}
           </p>
           <p className="mt-1 text-sm text-[var(--ltb-muted-foreground)]">
-            Envia un mensaje para comenzar
+            {emptyHint}
           </p>
         </div>
       ) : (
@@ -55,17 +57,17 @@ export function ChatMessageList({
             />
           ))}
           
-          {/* Loading indicator */}
+          {/* Indicador de carga */}
           {isLoading && !isStreaming && (
             <div className="flex justify-start">
               <div className="flex items-center gap-2 rounded-lg bg-[var(--ltb-assistant-message-bg)] px-4 py-3 text-[var(--ltb-assistant-message-text)]">
                 <Loader2 className="h-4 w-4 animate-spin" />
-                <span className="text-sm">Pensando...</span>
+                <span className="text-sm">{loadingText}</span>
               </div>
             </div>
           )}
           
-          {/* Streaming indicator */}
+          {/* Indicador de streaming */}
           {isStreaming && (
             <div className="flex justify-start">
               <div className="flex items-center gap-1 rounded-lg bg-[var(--ltb-assistant-message-bg)] px-4 py-3">

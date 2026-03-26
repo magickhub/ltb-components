@@ -371,13 +371,17 @@ import 'ltb-components/styles.css'`}</code></pre>
         <div className="space-y-6">
           <div>
             <h3 className="text-lg font-medium mb-2">Message</h3>
+            <p className="text-muted-foreground mb-2">
+              Representa un mensaje en la conversacion. Incluye soporte para adjuntos y acciones de plantilla.
+            </p>
             <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
               <pre className="text-sm"><code>{`interface Message {
-  id: string
-  role: 'user' | 'assistant' | 'system'
-  content: string
-  attachments?: Attachment[]
-  createdAt: Date
+  id: string                              // Identificador unico del mensaje
+  role: 'user' | 'assistant' | 'system'   // Rol del autor del mensaje
+  content: string                         // Contenido del mensaje
+  attachments?: Attachment[]              // Archivos adjuntos (opcional)
+  action?: MessageAction                  // Plantilla ejecutada (opcional, muestra badge)
+  createdAt: Date                         // Fecha de creacion
 }`}</code></pre>
             </div>
           </div>

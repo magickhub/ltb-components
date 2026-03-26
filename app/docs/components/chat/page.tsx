@@ -247,9 +247,9 @@ import 'ltb-components/styles.css'`}</code></pre>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-mono text-xs">onSendMessage</td>
-                <td className="py-3 px-4 font-mono text-xs">(content, files?) =&gt; void</td>
+                <td className="py-3 px-4 font-mono text-xs">(content, files?, action?) =&gt; void</td>
                 <td className="py-3 px-4">-</td>
-                <td className="py-3 px-4 text-muted-foreground">Se llama cuando el usuario envia un mensaje</td>
+                <td className="py-3 px-4 text-muted-foreground">Se llama cuando el usuario envia un mensaje. Incluye archivos y accion opcional</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-mono text-xs">onNewConversation</td>
@@ -268,6 +268,30 @@ import 'ltb-components/styles.css'`}</code></pre>
                 <td className="py-3 px-4 font-mono text-xs">(id) =&gt; void</td>
                 <td className="py-3 px-4">-</td>
                 <td className="py-3 px-4 text-muted-foreground">Se llama cuando el usuario elimina una conversacion (con confirmacion)</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">onRenameConversation</td>
+                <td className="py-3 px-4 font-mono text-xs">(id, newTitle) =&gt; void</td>
+                <td className="py-3 px-4">-</td>
+                <td className="py-3 px-4 text-muted-foreground">Se llama cuando el usuario renombra una conversacion</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">maxFileSize</td>
+                <td className="py-3 px-4 font-mono text-xs">number</td>
+                <td className="py-3 px-4">10</td>
+                <td className="py-3 px-4 text-muted-foreground">Tamano maximo de archivo en MB</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">allowedFileTypes</td>
+                <td className="py-3 px-4 font-mono text-xs">string[]</td>
+                <td className="py-3 px-4">todos</td>
+                <td className="py-3 px-4 text-muted-foreground">Tipos de archivo permitidos (ej: ['.pdf', 'image/*'])</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">showHeader</td>
+                <td className="py-3 px-4 font-mono text-xs">boolean</td>
+                <td className="py-3 px-4">true</td>
+                <td className="py-3 px-4 text-muted-foreground">Mostrar/ocultar el header</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-mono text-xs">headerTitle</td>
@@ -351,7 +375,19 @@ import 'ltb-components/styles.css'`}</code></pre>
                 <td className="py-3 px-4 font-mono text-xs">isLoading</td>
                 <td className="py-3 px-4 font-mono text-xs">boolean</td>
                 <td className="py-3 px-4">false</td>
-                <td className="py-3 px-4 text-muted-foreground">Mostrar estado de carga</td>
+                <td className="py-3 px-4 text-muted-foreground">Mostrar estado de carga (esperando respuesta)</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">isStreaming</td>
+                <td className="py-3 px-4 font-mono text-xs">boolean</td>
+                <td className="py-3 px-4">false</td>
+                <td className="py-3 px-4 text-muted-foreground">Estado de streaming (recibiendo respuesta)</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">disabled</td>
+                <td className="py-3 px-4 font-mono text-xs">boolean</td>
+                <td className="py-3 px-4">false</td>
+                <td className="py-3 px-4 text-muted-foreground">Deshabilitar el input del chat</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-mono text-xs">classNames</td>

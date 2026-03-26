@@ -45,7 +45,7 @@ export default function DocsPage() {
         <h2 className="text-2xl font-semibold">Inicio rapido</h2>
         <div className="rounded-lg border border-border bg-muted/50 p-4">
           <code className="text-sm">
-            npm install github:tu-usuario/ltb-components
+            npm install github:magickhub/ltb-components
           </code>
         </div>
         <p className="text-muted-foreground">

@@ -123,7 +123,7 @@ export function ChatInput({
           <Paperclip className="h-5 w-5" />
         </button>
 
-        <div className="relative flex-1">
+        <div className="relative flex-1 flex">
           <textarea
             ref={textareaRef}
             value={message}

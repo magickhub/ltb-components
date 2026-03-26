@@ -199,6 +199,48 @@ import 'ltb-components/styles.css'`}</code></pre>
                 <td className="py-3 px-4 text-muted-foreground">Se llama cuando el usuario elimina una conversacion (con confirmacion)</td>
               </tr>
               <tr>
+                <td className="py-3 px-4 font-mono text-xs">headerTitle</td>
+                <td className="py-3 px-4 font-mono text-xs">string</td>
+                <td className="py-3 px-4">'Chat'</td>
+                <td className="py-3 px-4 text-muted-foreground">Titulo del header</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">sidebarTitle</td>
+                <td className="py-3 px-4 font-mono text-xs">string</td>
+                <td className="py-3 px-4">'Conversaciones'</td>
+                <td className="py-3 px-4 text-muted-foreground">Titulo del sidebar</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">placeholder</td>
+                <td className="py-3 px-4 font-mono text-xs">string</td>
+                <td className="py-3 px-4">'Escribe un mensaje...'</td>
+                <td className="py-3 px-4 text-muted-foreground">Placeholder del input</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">loadingText</td>
+                <td className="py-3 px-4 font-mono text-xs">string</td>
+                <td className="py-3 px-4">'Pensando...'</td>
+                <td className="py-3 px-4 text-muted-foreground">Texto mientras espera respuesta</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">emptyStateMessage</td>
+                <td className="py-3 px-4 font-mono text-xs">string</td>
+                <td className="py-3 px-4">'Inicia una conversacion'</td>
+                <td className="py-3 px-4 text-muted-foreground">Mensaje cuando no hay mensajes</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">emptyStateHint</td>
+                <td className="py-3 px-4 font-mono text-xs">string</td>
+                <td className="py-3 px-4">'Envia un mensaje para comenzar'</td>
+                <td className="py-3 px-4 text-muted-foreground">Hint secundario en estado vacio</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">emptyConversationsMessage</td>
+                <td className="py-3 px-4 font-mono text-xs">string</td>
+                <td className="py-3 px-4">'No hay conversaciones'</td>
+                <td className="py-3 px-4 text-muted-foreground">Mensaje cuando no hay conversaciones</td>
+              </tr>
+              <tr>
                 <td className="py-3 px-4 font-mono text-xs">deleteConfirmMessage</td>
                 <td className="py-3 px-4 font-mono text-xs">string</td>
                 <td className="py-3 px-4">Mensaje por defecto</td>

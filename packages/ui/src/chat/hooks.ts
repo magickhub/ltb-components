@@ -10,13 +10,13 @@ import { useCallback, useRef, useEffect, useState } from 'react'
  */
 export function useAutoScroll<T extends HTMLElement>(deps: any[]) {
   const ref = useRef<T>(null)
+  const depString = JSON.stringify(deps)
 
   useEffect(() => {
     if (ref.current) {
       ref.current.scrollTop = ref.current.scrollHeight
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deps.length, ...deps.map((d) => JSON.stringify(d))])
+  }, [depString])
 
   return ref
 }

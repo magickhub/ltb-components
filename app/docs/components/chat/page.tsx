@@ -18,12 +18,6 @@ const demoActions: ChatAction[] = [
     description: 'Genera el buyer persona',
     icon: 'users',
   },
-  {
-    id: 'objetivo',
-    label: 'Objetivo',
-    description: 'Define el objetivo de negocio',
-    icon: 'target',
-  },
 ]
 
 // Datos de demo

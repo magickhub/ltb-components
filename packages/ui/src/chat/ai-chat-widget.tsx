@@ -2,8 +2,8 @@
  * LTB Components - AIChatWidget
  * @version 1.0.0
  * 
- * Complete AI chat interface with sidebar, message list, and input.
- * Fully customizable via props and CSS variables.
+ * Interfaz completa de chat con IA incluyendo sidebar, lista de mensajes e input.
+ * Totalmente personalizable via props y variables CSS.
  */
 
 'use client'
@@ -17,22 +17,24 @@ import { ChatInput } from './chat-input'
 import type { AIChatWidgetProps } from './types'
 
 export function AIChatWidget({
-  // Data
+  // Datos
   conversations,
   currentConversationId,
   messages,
   
-  // Configuration
-  placeholder = 'Type a message...',
+  // Configuracion
+  placeholder = 'Escribe un mensaje...',
   maxFileSize = 10,
+  maxAttachments = 1,
   allowedFileTypes,
   showSidebar = true,
   showHeader = true,
   headerTitle = 'Chat',
-  emptyStateMessage = 'Start a conversation',
-  emptyConversationsMessage = 'No conversations yet',
+  emptyStateMessage = 'Inicia una conversacion',
+  emptyConversationsMessage = 'No hay conversaciones',
+  deleteConfirmMessage = '¿Estas seguro de que deseas eliminar esta conversacion? Esta accion no se puede deshacer.',
   
-  // Styling
+  // Estilos
   className,
   classNames,
   
@@ -43,14 +45,14 @@ export function AIChatWidget({
   onDeleteConversation,
   onRenameConversation,
   
-  // States
+  // Estados
   isLoading = false,
   isStreaming = false,
   disabled = false,
 }: AIChatWidgetProps) {
   const [sidebarOpen, setSidebarOpen] = React.useState(showSidebar)
 
-  // Sync sidebar visibility with prop
+  // Sincronizar visibilidad del sidebar con la prop
   React.useEffect(() => {
     setSidebarOpen(showSidebar)
   }, [showSidebar])
@@ -77,11 +79,12 @@ export function AIChatWidget({
           onDeleteConversation={onDeleteConversation}
           onRenameConversation={onRenameConversation}
           emptyMessage={emptyConversationsMessage}
+          deleteConfirmMessage={deleteConfirmMessage}
           classNames={classNames}
         />
       )}
 
-      {/* Main content */}
+      {/* Contenido principal */}
       <div
         className={cn(
           'flex flex-1 flex-col',
@@ -98,7 +101,7 @@ export function AIChatWidget({
           />
         )}
 
-        {/* Message list */}
+        {/* Lista de mensajes */}
         <ChatMessageList
           messages={messages}
           isLoading={isLoading}
@@ -111,6 +114,7 @@ export function AIChatWidget({
         <ChatInput
           placeholder={placeholder}
           maxFileSize={maxFileSize}
+          maxAttachments={maxAttachments}
           allowedFileTypes={allowedFileTypes}
           onSendMessage={onSendMessage}
           isLoading={isLoading}

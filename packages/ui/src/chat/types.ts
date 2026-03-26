@@ -51,29 +51,33 @@ export interface ChatClassNames {
 }
 
 export interface AIChatWidgetProps {
-  /** List of all conversations */
+  /** Lista de todas las conversaciones */
   conversations: Conversation[]
-  /** Currently selected conversation ID */
+  /** ID de la conversacion actualmente seleccionada */
   currentConversationId?: string
-  /** Messages for the current conversation */
+  /** Mensajes de la conversacion actual */
   messages: Message[]
   
-  /** Placeholder text for the input */
+  /** Texto placeholder para el input */
   placeholder?: string
-  /** Maximum file size in MB (default: 10) */
+  /** Tamano maximo de archivo en MB (por defecto: 10) */
   maxFileSize?: number
-  /** Allowed file types (default: all) */
+  /** Numero maximo de archivos adjuntos por mensaje (por defecto: 1) */
+  maxAttachments?: number
+  /** Tipos de archivo permitidos (por defecto: todos) */
   allowedFileTypes?: string[]
-  /** Show/hide sidebar (default: true) */
+  /** Mostrar/ocultar sidebar (por defecto: true) */
   showSidebar?: boolean
-  /** Show/hide header (default: true) */
+  /** Mostrar/ocultar header (por defecto: true) */
   showHeader?: boolean
-  /** Header title */
+  /** Titulo del header */
   headerTitle?: string
-  /** Empty state message when no messages */
+  /** Mensaje cuando no hay mensajes */
   emptyStateMessage?: string
-  /** Empty state for no conversations */
+  /** Mensaje cuando no hay conversaciones */
   emptyConversationsMessage?: string
+  /** Mensaje de confirmacion al eliminar conversacion */
+  deleteConfirmMessage?: string
   
   /** Custom class names for styling */
   className?: string
@@ -107,6 +111,7 @@ export interface ChatMessageProps {
 export interface ChatInputProps {
   placeholder?: string
   maxFileSize?: number
+  maxAttachments?: number
   allowedFileTypes?: string[]
   onSendMessage: (content: string, attachments?: File[]) => void | Promise<void>
   isLoading?: boolean
@@ -123,6 +128,7 @@ export interface ChatSidebarProps {
   onDeleteConversation?: (id: string) => void | Promise<void>
   onRenameConversation?: (id: string, newTitle: string) => void | Promise<void>
   emptyMessage?: string
+  deleteConfirmMessage?: string
   className?: string
   classNames?: Pick<ChatClassNames, 'sidebar' | 'sidebarHeader' | 'sidebarContent' | 'sidebarItem' | 'sidebarItemActive'>
 }

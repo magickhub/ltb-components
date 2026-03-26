@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Changelog - LTB Components',
-  description: 'Version history and release notes for LTB Components',
+  title: 'Historial - LTB Components',
+  description: 'Historial de versiones y notas de lanzamiento de LTB Components',
 }
 
 const releases = [
@@ -9,22 +9,24 @@ const releases = [
     date: '2026-03-26',
     changes: {
       added: [
-        'Initial release of LTB Components',
-        'AIChatWidget: Complete AI chat interface',
-        'Conversation sidebar with date grouping',
-        'Message list with user/assistant/system styling',
-        'Input with file attachment support',
-        'Header with sidebar toggle',
-        'Full customization via CSS variables',
-        'TypeScript type definitions',
-        'Dark mode support',
-        'Modular components: ChatMessage, ChatMessageList, ChatInput, ChatSidebar, ChatHeader',
+        'Lanzamiento inicial de LTB Components',
+        'AIChatWidget: Interfaz completa de chat con IA',
+        'Sidebar de conversaciones con agrupacion por fecha',
+        'Lista de mensajes con estilos usuario/asistente/sistema',
+        'Input con soporte de archivos adjuntos',
+        'Header con toggle de sidebar',
+        'Personalizacion completa via variables CSS',
+        'Definiciones de tipos TypeScript',
+        'Soporte de modo oscuro',
+        'Componentes modulares: ChatMessage, ChatMessageList, ChatInput, ChatSidebar, ChatHeader',
+        'Limite configurable de archivos adjuntos (maxAttachments)',
+        'Confirmacion al eliminar conversaciones',
       ],
       documentation: [
-        'Getting started guide',
-        'Component API reference',
-        'Customization examples',
-        'Interactive demos',
+        'Guia de primeros pasos',
+        'Referencia de API de componentes',
+        'Ejemplos de personalizacion',
+        'Demos interactivas',
       ],
     },
   },
@@ -34,24 +36,24 @@ export default function ChangelogPage() {
   return (
     <div className="space-y-12">
       <div>
-        <h1 className="text-4xl font-bold tracking-tight">Changelog</h1>
+        <h1 className="text-4xl font-bold tracking-tight">Historial de cambios</h1>
         <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-          All notable changes to LTB Components are documented here.
+          Todos los cambios notables de LTB Components estan documentados aqui.
         </p>
       </div>
 
       <div className="rounded-lg border border-border bg-muted/30 p-4">
         <p className="text-sm text-muted-foreground">
-          This project follows{' '}
+          Este proyecto sigue{' '}
           <a
             href="https://semver.org/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:underline"
           >
-            Semantic Versioning
+            Versionado Semantico
           </a>
-          . Breaking changes will only occur in major version updates.
+          . Los cambios que rompen compatibilidad solo ocurriran en actualizaciones de version mayor.
         </p>
       </div>
 
@@ -67,7 +69,7 @@ export default function ChangelogPage() {
               <div>
                 <h3 className="mb-3 flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-emerald-600">
                   <span className="flex h-5 w-5 items-center justify-center rounded bg-emerald-100 text-xs">+</span>
-                  Added
+                  Agregado
                 </h3>
                 <ul className="space-y-2">
                   {release.changes.added.map((item, index) => (
@@ -84,7 +86,7 @@ export default function ChangelogPage() {
               <div>
                 <h3 className="mb-3 flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-blue-600">
                   <span className="flex h-5 w-5 items-center justify-center rounded bg-blue-100 text-xs">D</span>
-                  Documentation
+                  Documentacion
                 </h3>
                 <ul className="space-y-2">
                   {release.changes.documentation.map((item, index) => (
@@ -101,42 +103,42 @@ export default function ChangelogPage() {
       </div>
 
       <section className="space-y-4 rounded-lg border border-border bg-card p-6">
-        <h2 className="text-xl font-semibold">Versioning Policy</h2>
+        <h2 className="text-xl font-semibold">Politica de versionado</h2>
         <div className="grid gap-4 md:grid-cols-3">
           <div>
-            <h3 className="font-medium text-primary">Major (X.0.0)</h3>
+            <h3 className="font-medium text-primary">Mayor (X.0.0)</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Breaking changes that require code updates
+              Cambios que rompen compatibilidad y requieren actualizar codigo
             </p>
           </div>
           <div>
-            <h3 className="font-medium text-primary">Minor (0.X.0)</h3>
+            <h3 className="font-medium text-primary">Menor (0.X.0)</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              New features, backwards compatible
+              Nuevas funcionalidades, compatibles hacia atras
             </p>
           </div>
           <div>
-            <h3 className="font-medium text-primary">Patch (0.0.X)</h3>
+            <h3 className="font-medium text-primary">Parche (0.0.X)</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Bug fixes and minor improvements
+              Correccion de errores y mejoras menores
             </p>
           </div>
         </div>
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Upgrading</h2>
+        <h2 className="text-xl font-semibold">Actualizar</h2>
         <p className="text-muted-foreground">
-          To update to the latest version:
+          Para actualizar a la ultima version:
         </p>
         <div className="rounded-lg border border-border bg-muted/50 p-4">
           <code className="text-sm">npm update ltb-components</code>
         </div>
         <p className="text-muted-foreground">
-          To pin a specific version:
+          Para fijar una version especifica:
         </p>
         <div className="rounded-lg border border-border bg-muted/50 p-4">
-          <code className="text-sm">npm install github:your-username/ltb-components#v1.0.0</code>
+          <code className="text-sm">npm install github:tu-usuario/ltb-components#v1.0.0</code>
         </div>
       </section>
     </div>

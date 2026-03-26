@@ -1,60 +1,60 @@
 export const metadata = {
-  title: 'Getting Started - LTB Components',
-  description: 'How to install and configure LTB Components in your project',
+  title: 'Primeros pasos - LTB Components',
+  description: 'Como instalar y configurar LTB Components en tu proyecto',
 }
 
 export default function GettingStartedPage() {
   return (
     <div className="space-y-12">
       <div>
-        <h1 className="text-4xl font-bold tracking-tight">Getting Started</h1>
+        <h1 className="text-4xl font-bold tracking-tight">Primeros pasos</h1>
         <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-          Learn how to install and configure LTB Components in your React project.
+          Aprende como instalar y configurar LTB Components en tu proyecto React.
         </p>
       </div>
 
-      {/* Installation */}
+      {/* Instalacion */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Installation</h2>
+        <h2 className="text-2xl font-semibold">Instalacion</h2>
         <p className="text-muted-foreground">
-          Install LTB Components directly from GitHub using your preferred package manager:
+          Instala LTB Components directamente desde GitHub usando tu gestor de paquetes preferido:
         </p>
         
         <div className="space-y-3">
           <div>
             <p className="text-sm font-medium mb-2">npm</p>
             <div className="rounded-lg border border-border bg-muted/50 p-4">
-              <code className="text-sm">npm install github:your-username/ltb-components</code>
+              <code className="text-sm">npm install github:tu-usuario/ltb-components</code>
             </div>
           </div>
           
           <div>
             <p className="text-sm font-medium mb-2">yarn</p>
             <div className="rounded-lg border border-border bg-muted/50 p-4">
-              <code className="text-sm">yarn add github:your-username/ltb-components</code>
+              <code className="text-sm">yarn add github:tu-usuario/ltb-components</code>
             </div>
           </div>
           
           <div>
             <p className="text-sm font-medium mb-2">pnpm</p>
             <div className="rounded-lg border border-border bg-muted/50 p-4">
-              <code className="text-sm">pnpm add github:your-username/ltb-components</code>
+              <code className="text-sm">pnpm add github:tu-usuario/ltb-components</code>
             </div>
           </div>
         </div>
 
         <div className="rounded-lg border border-border bg-muted/30 p-4">
           <p className="text-sm">
-            <strong>Pin a specific version:</strong> Add <code className="bg-muted px-1 rounded">#v1.0.0</code> at the end to lock to a specific version.
+            <strong>Fijar una version especifica:</strong> Agrega <code className="bg-muted px-1 rounded">#v1.0.0</code> al final para bloquear una version especifica.
           </p>
         </div>
       </section>
 
-      {/* Peer Dependencies */}
+      {/* Dependencias */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Peer Dependencies</h2>
+        <h2 className="text-2xl font-semibold">Dependencias requeridas</h2>
         <p className="text-muted-foreground">
-          LTB Components requires the following peer dependencies:
+          LTB Components requiere las siguientes dependencias peer:
         </p>
         <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
           <pre className="text-sm"><code>{`{
@@ -68,18 +68,18 @@ export default function GettingStartedPage() {
         </div>
       </section>
 
-      {/* Setup Styles */}
+      {/* Configurar estilos */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Setup Styles</h2>
+        <h2 className="text-2xl font-semibold">Configurar estilos</h2>
         <p className="text-muted-foreground">
-          Import the component styles in your app entry point or layout:
+          Importa los estilos del componente en tu punto de entrada o layout:
         </p>
         <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
-          <pre className="text-sm"><code>{`// In your app/layout.tsx or _app.tsx
+          <pre className="text-sm"><code>{`// En tu app/layout.tsx o _app.tsx
 import 'ltb-components/styles.css'`}</code></pre>
         </div>
         <p className="text-muted-foreground">
-          The styles use CSS variables that you can customize in your own CSS:
+          Los estilos usan variables CSS que puedes personalizar en tu propio CSS:
         </p>
         <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
           <pre className="text-sm"><code>{`:root {
@@ -87,16 +87,16 @@ import 'ltb-components/styles.css'`}</code></pre>
   --ltb-primary-hover: #1e293b;
   --ltb-user-message-bg: #3b82f6;
   --ltb-user-message-text: #ffffff;
-  /* ... more variables */
+  /* ... mas variables */
 }`}</code></pre>
         </div>
       </section>
 
-      {/* Basic Usage */}
+      {/* Uso basico */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Basic Usage</h2>
+        <h2 className="text-2xl font-semibold">Uso basico</h2>
         <p className="text-muted-foreground">
-          Here&apos;s a complete example of using the AIChatWidget component:
+          Aqui tienes un ejemplo completo de uso del componente AIChatWidget:
         </p>
         <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
           <pre className="text-sm"><code>{`'use client'
@@ -111,7 +111,7 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([])
 
   const handleSendMessage = async (content: string, attachments?: File[]) => {
-    // Add user message
+    // Agregar mensaje del usuario
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: 'user',
@@ -120,14 +120,14 @@ export default function ChatPage() {
     }
     setMessages(prev => [...prev, userMessage])
 
-    // Call your AI API here
+    // Llamar a tu API de IA aqui
     const response = await fetch('/api/chat', {
       method: 'POST',
       body: JSON.stringify({ message: content }),
     })
     const data = await response.json()
 
-    // Add assistant response
+    // Agregar respuesta del asistente
     const assistantMessage: Message = {
       id: crypto.randomUUID(),
       role: 'assistant',
@@ -140,13 +140,21 @@ export default function ChatPage() {
   const handleNewConversation = () => {
     const newConv: Conversation = {
       id: crypto.randomUUID(),
-      title: 'New Chat',
+      title: 'Nuevo chat',
       createdAt: new Date(),
       updatedAt: new Date(),
     }
     setConversations(prev => [newConv, ...prev])
     setCurrentId(newConv.id)
     setMessages([])
+  }
+
+  const handleDeleteConversation = (id: string) => {
+    setConversations(prev => prev.filter(c => c.id !== id))
+    if (currentId === id) {
+      setCurrentId(undefined)
+      setMessages([])
+    }
   }
 
   return (
@@ -158,6 +166,8 @@ export default function ChatPage() {
         onSendMessage={handleSendMessage}
         onNewConversation={handleNewConversation}
         onSelectConversation={setCurrentId}
+        onDeleteConversation={handleDeleteConversation}
+        maxAttachments={3}
       />
     </div>
   )
@@ -169,7 +179,7 @@ export default function ChatPage() {
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">TypeScript</h2>
         <p className="text-muted-foreground">
-          LTB Components exports all necessary types:
+          LTB Components exporta todos los tipos necesarios:
         </p>
         <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
           <pre className="text-sm"><code>{`import type {
@@ -182,13 +192,13 @@ export default function ChatPage() {
         </div>
       </section>
 
-      {/* Next Steps */}
+      {/* Siguientes pasos */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Next Steps</h2>
+        <h2 className="text-2xl font-semibold">Siguientes pasos</h2>
         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-          <li>Explore the <a href="/docs/components/chat" className="text-primary hover:underline">Chat Component API</a></li>
-          <li>Learn about <a href="/docs/components/chat#customization" className="text-primary hover:underline">customization options</a></li>
-          <li>Check the <a href="/docs/changelog" className="text-primary hover:underline">changelog</a> for updates</li>
+          <li>Explora la <a href="/docs/components/chat" className="text-primary hover:underline">API del componente Chat</a></li>
+          <li>Aprende sobre las <a href="/docs/components/chat#personalizacion" className="text-primary hover:underline">opciones de personalizacion</a></li>
+          <li>Revisa el <a href="/docs/changelog" className="text-primary hover:underline">historial de cambios</a> para actualizaciones</li>
         </ul>
       </section>
     </div>

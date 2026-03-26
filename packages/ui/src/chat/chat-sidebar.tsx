@@ -2,15 +2,54 @@
  * LTB Components - ChatSidebar
  * @version 1.0.0
  * 
- * Sidebar component displaying conversation history with actions.
+ * Componente de sidebar que muestra el historial de conversaciones con acciones.
  */
 
 'use client'
 
 import * as React from 'react'
-import { Plus, MessageSquare, Trash2, Pencil, Check, X } from 'lucide-react'
-import { cn, formatDate, truncateText } from '../utils'
+import { Plus, MessageSquare, Trash2, Pencil, Check, X, AlertTriangle } from 'lucide-react'
+import { cn, truncateText } from '../utils'
 import type { ChatSidebarProps, Conversation } from './types'
+
+interface DeleteConfirmDialogProps {
+  isOpen: boolean
+  message: string
+  onConfirm: () => void
+  onCancel: () => void
+}
+
+function DeleteConfirmDialog({ isOpen, message, onConfirm, onCancel }: DeleteConfirmDialogProps) {
+  if (!isOpen) return null
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="mx-4 w-full max-w-sm rounded-lg border border-[var(--ltb-border)] bg-[var(--ltb-bg)] p-6 shadow-lg">
+        <div className="flex items-center gap-3 text-[var(--ltb-error)]">
+          <AlertTriangle className="h-6 w-6" />
+          <h3 className="text-lg font-semibold text-[var(--ltb-foreground)]">Confirmar eliminacion</h3>
+        </div>
+        <p className="mt-4 text-sm text-[var(--ltb-muted-foreground)]">
+          {message}
+        </p>
+        <div className="mt-6 flex gap-3">
+          <button
+            onClick={onCancel}
+            className="flex-1 rounded-lg border border-[var(--ltb-border)] bg-transparent px-4 py-2 text-sm font-medium text-[var(--ltb-foreground)] transition-colors hover:bg-[var(--ltb-border)]"
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={onConfirm}
+            className="flex-1 rounded-lg bg-[var(--ltb-error)] px-4 py-2 text-sm font-medium text-white transition-colors hover:opacity-90"
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 interface ConversationItemProps {
   conversation: Conversation
@@ -81,19 +120,19 @@ function ConversationItem({
             onChange={(e) => setEditTitle(e.target.value)}
             onKeyDown={handleKeyDown}
             className="flex-1 bg-transparent text-sm outline-none"
-            aria-label="Edit conversation title"
+            aria-label="Editar titulo de conversacion"
           />
           <button
             onClick={handleSaveTitle}
             className="rounded p-0.5 hover:bg-[var(--ltb-border)]"
-            aria-label="Save title"
+            aria-label="Guardar titulo"
           >
             <Check className="h-3 w-3" />
           </button>
           <button
             onClick={handleCancelEdit}
             className="rounded p-0.5 hover:bg-[var(--ltb-border)]"
-            aria-label="Cancel editing"
+            aria-label="Cancelar edicion"
           >
             <X className="h-3 w-3" />
           </button>
@@ -119,7 +158,7 @@ function ConversationItem({
               <button
                 onClick={() => setIsEditing(true)}
                 className="rounded p-1 text-[var(--ltb-muted-foreground)] hover:bg-[var(--ltb-border)] hover:text-[var(--ltb-foreground)]"
-                aria-label="Rename conversation"
+                aria-label="Renombrar conversacion"
               >
                 <Pencil className="h-3 w-3" />
               </button>
@@ -128,7 +167,7 @@ function ConversationItem({
               <button
                 onClick={onDelete}
                 className="rounded p-1 text-[var(--ltb-muted-foreground)] hover:bg-[var(--ltb-error-bg)] hover:text-[var(--ltb-error)]"
-                aria-label="Delete conversation"
+                aria-label="Eliminar conversacion"
               >
                 <Trash2 className="h-3 w-3" />
               </button>
@@ -147,11 +186,29 @@ export function ChatSidebar({
   onSelectConversation,
   onDeleteConversation,
   onRenameConversation,
-  emptyMessage = 'No conversations yet',
+  emptyMessage = 'No hay conversaciones',
+  deleteConfirmMessage = '¿Estas seguro de que deseas eliminar esta conversacion? Esta accion no se puede deshacer.',
   className,
   classNames,
 }: ChatSidebarProps) {
-  // Group conversations by date
+  const [deleteId, setDeleteId] = React.useState<string | null>(null)
+
+  const handleDeleteClick = (id: string) => {
+    setDeleteId(id)
+  }
+
+  const handleConfirmDelete = () => {
+    if (deleteId && onDeleteConversation) {
+      onDeleteConversation(deleteId)
+    }
+    setDeleteId(null)
+  }
+
+  const handleCancelDelete = () => {
+    setDeleteId(null)
+  }
+
+  // Agrupar conversaciones por fecha
   const groupedConversations = React.useMemo(() => {
     const groups: { label: string; conversations: Conversation[] }[] = []
     const today: Conversation[] = []
@@ -177,78 +234,87 @@ export function ChatSidebar({
       }
     })
 
-    if (today.length > 0) groups.push({ label: 'Today', conversations: today })
-    if (yesterday.length > 0) groups.push({ label: 'Yesterday', conversations: yesterday })
-    if (thisWeek.length > 0) groups.push({ label: 'This Week', conversations: thisWeek })
-    if (older.length > 0) groups.push({ label: 'Older', conversations: older })
+    if (today.length > 0) groups.push({ label: 'Hoy', conversations: today })
+    if (yesterday.length > 0) groups.push({ label: 'Ayer', conversations: yesterday })
+    if (thisWeek.length > 0) groups.push({ label: 'Esta semana', conversations: thisWeek })
+    if (older.length > 0) groups.push({ label: 'Anteriores', conversations: older })
 
     return groups
   }, [conversations])
 
   return (
-    <aside
-      className={cn(
-        'flex h-full w-64 flex-col border-r border-[var(--ltb-border)] bg-[var(--ltb-sidebar-bg)]',
-        className,
-        classNames?.sidebar
-      )}
-    >
-      {/* Header */}
-      <div
+    <>
+      <DeleteConfirmDialog
+        isOpen={deleteId !== null}
+        message={deleteConfirmMessage}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
+      
+      <aside
         className={cn(
-          'flex items-center justify-between border-b border-[var(--ltb-border)] p-4',
-          classNames?.sidebarHeader
+          'flex h-full w-64 flex-col border-r border-[var(--ltb-border)] bg-[var(--ltb-sidebar-bg)]',
+          className,
+          classNames?.sidebar
         )}
       >
-        <h2 className="text-sm font-semibold text-[var(--ltb-foreground)]">
-          Conversations
-        </h2>
-        <button
-          onClick={() => onNewConversation()}
-          className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--ltb-primary)] text-[var(--ltb-primary-foreground)] transition-colors hover:bg-[var(--ltb-primary-hover)]"
-          aria-label="New conversation"
+        {/* Header */}
+        <div
+          className={cn(
+            'flex items-center justify-between border-b border-[var(--ltb-border)] p-4',
+            classNames?.sidebarHeader
+          )}
         >
-          <Plus className="h-4 w-4" />
-        </button>
-      </div>
+          <h2 className="text-sm font-semibold text-[var(--ltb-foreground)]">
+            Conversaciones
+          </h2>
+          <button
+            onClick={() => onNewConversation()}
+            className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--ltb-primary)] text-[var(--ltb-primary-foreground)] transition-colors hover:bg-[var(--ltb-primary-hover)]"
+            aria-label="Nueva conversacion"
+          >
+            <Plus className="h-4 w-4" />
+          </button>
+        </div>
 
-      {/* Conversation list */}
-      <div
-        className={cn(
-          'flex-1 overflow-y-auto p-2',
-          classNames?.sidebarContent
-        )}
-      >
-        {conversations.length === 0 ? (
-          <div className="flex h-full items-center justify-center text-center text-sm text-[var(--ltb-muted-foreground)]">
-            {emptyMessage}
-          </div>
-        ) : (
-          <div className="flex flex-col gap-4">
-            {groupedConversations.map((group) => (
-              <div key={group.label}>
-                <div className="mb-1 px-3 text-xs font-medium uppercase tracking-wider text-[var(--ltb-muted-foreground)]">
-                  {group.label}
+        {/* Lista de conversaciones */}
+        <div
+          className={cn(
+            'flex-1 overflow-y-auto p-2',
+            classNames?.sidebarContent
+          )}
+        >
+          {conversations.length === 0 ? (
+            <div className="flex h-full items-center justify-center text-center text-sm text-[var(--ltb-muted-foreground)]">
+              {emptyMessage}
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4">
+              {groupedConversations.map((group) => (
+                <div key={group.label}>
+                  <div className="mb-1 px-3 text-xs font-medium uppercase tracking-wider text-[var(--ltb-muted-foreground)]">
+                    {group.label}
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    {group.conversations.map((conversation) => (
+                      <ConversationItem
+                        key={conversation.id}
+                        conversation={conversation}
+                        isActive={conversation.id === currentConversationId}
+                        onSelect={() => onSelectConversation(conversation.id)}
+                        onDelete={onDeleteConversation ? () => handleDeleteClick(conversation.id) : undefined}
+                        onRename={onRenameConversation ? (title) => onRenameConversation(conversation.id, title) : undefined}
+                        classNames={classNames}
+                      />
+                    ))}
+                  </div>
                 </div>
-                <div className="flex flex-col gap-1">
-                  {group.conversations.map((conversation) => (
-                    <ConversationItem
-                      key={conversation.id}
-                      conversation={conversation}
-                      isActive={conversation.id === currentConversationId}
-                      onSelect={() => onSelectConversation(conversation.id)}
-                      onDelete={onDeleteConversation ? () => onDeleteConversation(conversation.id) : undefined}
-                      onRename={onRenameConversation ? (title) => onRenameConversation(conversation.id, title) : undefined}
-                      classNames={classNames}
-                    />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </aside>
+              ))}
+            </div>
+          )}
+        </div>
+      </aside>
+    </>
   )
 }
 

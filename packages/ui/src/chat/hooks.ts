@@ -21,21 +21,23 @@ export function useAutoScroll<T extends HTMLElement>(deps: unknown[]) {
 }
 
 /**
- * Hook for handling file attachments
+ * Hook para manejar archivos adjuntos
  */
 export function useFileAttachments(options?: {
   maxFileSize?: number
+  maxAttachments?: number
   allowedFileTypes?: string[]
 }) {
   const [files, setFiles] = useState<File[]>([])
   const [error, setError] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const maxSize = (options?.maxFileSize ?? 10) * 1024 * 1024 // Convert MB to bytes
+  const maxSize = (options?.maxFileSize ?? 10) * 1024 * 1024 // Convertir MB a bytes
+  const maxAttachments = options?.maxAttachments ?? 1
 
   const validateFile = useCallback((file: File): string | null => {
     if (file.size > maxSize) {
-      return `File "${file.name}" exceeds maximum size of ${options?.maxFileSize ?? 10}MB`
+      return `El archivo "${file.name}" excede el tamano maximo de ${options?.maxFileSize ?? 10}MB`
     }
     if (options?.allowedFileTypes && options.allowedFileTypes.length > 0) {
       const isAllowed = options.allowedFileTypes.some(type => {
@@ -45,7 +47,7 @@ export function useFileAttachments(options?: {
         return file.type.startsWith(type.replace('*', ''))
       })
       if (!isAllowed) {
-        return `File type not allowed: ${file.type || 'unknown'}`
+        return `Tipo de archivo no permitido: ${file.type || 'desconocido'}`
       }
     }
     return null
@@ -55,18 +57,33 @@ export function useFileAttachments(options?: {
     const fileArray = Array.from(newFiles)
     const validFiles: File[] = []
     
-    for (const file of fileArray) {
-      const validationError = validateFile(file)
-      if (validationError) {
-        setError(validationError)
-        return
+    setFiles(prev => {
+      const remainingSlots = maxAttachments - prev.length
+      if (remainingSlots <= 0) {
+        setError(`Solo puedes adjuntar un maximo de ${maxAttachments} archivo(s) por mensaje`)
+        return prev
       }
-      validFiles.push(file)
-    }
-    
-    setError(null)
-    setFiles(prev => [...prev, ...validFiles])
-  }, [validateFile])
+      
+      const filesToAdd = fileArray.slice(0, remainingSlots)
+      
+      for (const file of filesToAdd) {
+        const validationError = validateFile(file)
+        if (validationError) {
+          setError(validationError)
+          return prev
+        }
+        validFiles.push(file)
+      }
+      
+      if (fileArray.length > remainingSlots) {
+        setError(`Solo puedes adjuntar un maximo de ${maxAttachments} archivo(s) por mensaje`)
+      } else {
+        setError(null)
+      }
+      
+      return [...prev, ...validFiles]
+    })
+  }, [validateFile, maxAttachments])
 
   const removeFile = useCallback((index: number) => {
     setFiles(prev => prev.filter((_, i) => i !== index))

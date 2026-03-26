@@ -2,7 +2,7 @@
  * LTB Components - ChatInput
  * @version 1.0.0
  * 
- * Input component for sending messages with file attachment support.
+ * Componente de entrada para enviar mensajes con soporte de archivos adjuntos.
  */
 
 'use client'
@@ -14,8 +14,9 @@ import { useFileAttachments, useAutoResize } from './hooks'
 import type { ChatInputProps } from './types'
 
 export function ChatInput({
-  placeholder = 'Type a message...',
+  placeholder = 'Escribe un mensaje...',
   maxFileSize = 10,
+  maxAttachments = 1,
   allowedFileTypes,
   onSendMessage,
   isLoading = false,
@@ -34,7 +35,7 @@ export function ChatInput({
     removeFile,
     clearFiles,
     openFilePicker,
-  } = useFileAttachments({ maxFileSize, allowedFileTypes })
+  } = useFileAttachments({ maxFileSize, maxAttachments, allowedFileTypes })
 
   const canSend = (message.trim() || files.length > 0) && !isLoading && !disabled
 
@@ -65,7 +66,7 @@ export function ChatInput({
 
   return (
     <div className={cn('border-t border-[var(--ltb-border)] bg-[var(--ltb-input-bg)] p-4', className, classNames?.inputContainer)}>
-      {/* File preview */}
+      {/* Vista previa de archivos */}
       {files.length > 0 && (
         <div className="mb-3 flex flex-wrap gap-2">
           {files.map((file, index) => (
@@ -81,7 +82,7 @@ export function ChatInput({
                 type="button"
                 onClick={() => removeFile(index)}
                 className="rounded-full p-0.5 text-[var(--ltb-muted-foreground)] hover:bg-[var(--ltb-border)] hover:text-[var(--ltb-foreground)]"
-                aria-label={`Remove ${file.name}`}
+                aria-label={`Eliminar ${file.name}`}
               >
                 <X className="h-3 w-3" />
               </button>
@@ -90,34 +91,34 @@ export function ChatInput({
         </div>
       )}
 
-      {/* Error message */}
+      {/* Mensaje de error */}
       {error && (
         <div className="mb-3 text-sm text-[var(--ltb-error)]">
           {error}
         </div>
       )}
 
-      {/* Input area */}
-      <div className="flex items-end gap-2">
+      {/* Area de entrada */}
+      <div className="flex items-center gap-2">
         <input
           ref={inputRef}
           type="file"
-          multiple
+          multiple={maxAttachments > 1}
           onChange={handleFileChange}
           accept={allowedFileTypes?.join(',')}
           className="hidden"
-          aria-label="Attach files"
+          aria-label="Adjuntar archivos"
         />
         
         <button
           type="button"
           onClick={openFilePicker}
-          disabled={disabled || isLoading}
+          disabled={disabled || isLoading || files.length >= maxAttachments}
           className={cn(
-            'flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--ltb-input-border)] bg-transparent text-[var(--ltb-muted-foreground)] transition-colors hover:bg-[var(--ltb-border)] hover:text-[var(--ltb-foreground)] disabled:cursor-not-allowed disabled:opacity-50',
+            'flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-[var(--ltb-input-border)] bg-transparent text-[var(--ltb-muted-foreground)] transition-colors hover:bg-[var(--ltb-border)] hover:text-[var(--ltb-foreground)] disabled:cursor-not-allowed disabled:opacity-50',
             classNames?.attachButton
           )}
-          aria-label="Attach file"
+          aria-label="Adjuntar archivo"
         >
           <Paperclip className="h-5 w-5" />
         </button>
@@ -135,10 +136,10 @@ export function ChatInput({
             disabled={disabled || isLoading}
             rows={1}
             className={cn(
-              'w-full resize-none rounded-lg border border-[var(--ltb-input-border)] bg-[var(--ltb-input-bg)] px-4 py-2.5 text-[var(--ltb-foreground)] placeholder:text-[var(--ltb-muted-foreground)] focus:border-[var(--ltb-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--ltb-primary)] disabled:cursor-not-allowed disabled:opacity-50',
+              'w-full resize-none rounded-lg border border-[var(--ltb-input-border)] bg-[var(--ltb-input-bg)] px-4 py-2 text-[var(--ltb-foreground)] placeholder:text-[var(--ltb-muted-foreground)] focus:border-[var(--ltb-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--ltb-primary)] disabled:cursor-not-allowed disabled:opacity-50',
               classNames?.input
             )}
-            style={{ maxHeight: '200px' }}
+            style={{ maxHeight: '200px', minHeight: '40px' }}
           />
         </div>
 
@@ -147,10 +148,10 @@ export function ChatInput({
           onClick={handleSubmit}
           disabled={!canSend}
           className={cn(
-            'flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--ltb-primary)] text-[var(--ltb-primary-foreground)] transition-colors hover:bg-[var(--ltb-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50',
+            'flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--ltb-primary)] text-[var(--ltb-primary-foreground)] transition-colors hover:bg-[var(--ltb-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50',
             classNames?.sendButton
           )}
-          aria-label="Send message"
+          aria-label="Enviar mensaje"
         >
           {isLoading ? (
             <Loader2 className="h-5 w-5 animate-spin" />

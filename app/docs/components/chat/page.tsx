@@ -4,19 +4,19 @@ import { useState } from 'react'
 import { AIChatWidget, type Message, type Conversation } from '@/packages/ui/src/chat'
 import '@/packages/ui/src/styles.css'
 
-// Demo data
+// Datos de demo
 const demoConversations: Conversation[] = [
   {
     id: '1',
-    title: 'Project ideas',
-    preview: 'Can you help me brainstorm...',
+    title: 'Ideas de proyecto',
+    preview: 'Puedes ayudarme a generar...',
     createdAt: new Date(),
     updatedAt: new Date(),
   },
   {
     id: '2',
-    title: 'Code review',
-    preview: 'Please review this function...',
+    title: 'Revision de codigo',
+    preview: 'Por favor revisa esta funcion...',
     createdAt: new Date(Date.now() - 86400000),
     updatedAt: new Date(Date.now() - 86400000),
   },
@@ -26,13 +26,13 @@ const demoMessages: Message[] = [
   {
     id: '1',
     role: 'user',
-    content: 'Hello! Can you help me with a React component?',
+    content: 'Hola! Puedes ayudarme con un componente React?',
     createdAt: new Date(Date.now() - 60000),
   },
   {
     id: '2',
     role: 'assistant',
-    content: 'Of course! I would be happy to help you with your React component. What would you like to build?',
+    content: 'Por supuesto! Estare encantado de ayudarte con tu componente React. Que te gustaria construir?',
     createdAt: new Date(Date.now() - 30000),
   },
 ]
@@ -53,12 +53,12 @@ function ChatDemo() {
     setMessages(prev => [...prev, userMessage])
     setIsLoading(true)
 
-    // Simulate AI response
+    // Simular respuesta de IA
     setTimeout(() => {
       const assistantMessage: Message = {
         id: crypto.randomUUID(),
         role: 'assistant',
-        content: `This is a demo response to: "${content}"`,
+        content: `Esta es una respuesta de demo a: "${content}"`,
         createdAt: new Date(),
       }
       setMessages(prev => [...prev, assistantMessage])
@@ -69,7 +69,7 @@ function ChatDemo() {
   const handleNewConversation = () => {
     const newConv: Conversation = {
       id: crypto.randomUUID(),
-      title: 'New Chat',
+      title: 'Nuevo chat',
       createdAt: new Date(),
       updatedAt: new Date(),
     }
@@ -89,6 +89,7 @@ function ChatDemo() {
         onSelectConversation={setCurrentId}
         onDeleteConversation={(id) => setConversations(prev => prev.filter(c => c.id !== id))}
         isLoading={isLoading}
+        maxAttachments={2}
       />
     </div>
   )
@@ -98,29 +99,29 @@ export default function ChatDocsPage() {
   return (
     <div className="space-y-12">
       <div>
-        <h1 className="text-4xl font-bold tracking-tight">Chat Component</h1>
+        <h1 className="text-4xl font-bold tracking-tight">Componente Chat</h1>
         <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-          A complete AI chat interface with conversation sidebar, message list, and input with file attachments.
+          Una interfaz completa de chat con IA con sidebar de conversaciones, lista de mensajes e input con adjuntos.
         </p>
       </div>
 
-      {/* Interactive Demo */}
+      {/* Demo interactiva */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Interactive Demo</h2>
+        <h2 className="text-2xl font-semibold">Demo interactiva</h2>
         <p className="text-muted-foreground">
-          Try the chat component below. Send messages, create new conversations, and explore the interface.
+          Prueba el componente de chat a continuacion. Envia mensajes, crea nuevas conversaciones y explora la interfaz.
         </p>
         <ChatDemo />
       </section>
 
       {/* Import */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Import</h2>
+        <h2 className="text-2xl font-semibold">Importacion</h2>
         <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
-          <pre className="text-sm"><code>{`// Full widget
+          <pre className="text-sm"><code>{`// Widget completo
 import { AIChatWidget } from 'ltb-components/chat'
 
-// Individual components
+// Componentes individuales
 import {
   ChatMessage,
   ChatMessageList,
@@ -129,23 +130,23 @@ import {
   ChatHeader,
 } from 'ltb-components/chat'
 
-// Don't forget styles
+// No olvides los estilos
 import 'ltb-components/styles.css'`}</code></pre>
         </div>
       </section>
 
-      {/* Props Reference */}
+      {/* Referencia de Props */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Props Reference</h2>
+        <h2 className="text-2xl font-semibold">Referencia de Props</h2>
         
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border">
                 <th className="py-3 px-4 text-left font-medium">Prop</th>
-                <th className="py-3 px-4 text-left font-medium">Type</th>
-                <th className="py-3 px-4 text-left font-medium">Default</th>
-                <th className="py-3 px-4 text-left font-medium">Description</th>
+                <th className="py-3 px-4 text-left font-medium">Tipo</th>
+                <th className="py-3 px-4 text-left font-medium">Por defecto</th>
+                <th className="py-3 px-4 text-left font-medium">Descripcion</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
@@ -153,64 +154,82 @@ import 'ltb-components/styles.css'`}</code></pre>
                 <td className="py-3 px-4 font-mono text-xs">conversations</td>
                 <td className="py-3 px-4 font-mono text-xs">Conversation[]</td>
                 <td className="py-3 px-4">-</td>
-                <td className="py-3 px-4 text-muted-foreground">List of all conversations</td>
+                <td className="py-3 px-4 text-muted-foreground">Lista de todas las conversaciones</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-mono text-xs">currentConversationId</td>
                 <td className="py-3 px-4 font-mono text-xs">string</td>
                 <td className="py-3 px-4">-</td>
-                <td className="py-3 px-4 text-muted-foreground">ID of the active conversation</td>
+                <td className="py-3 px-4 text-muted-foreground">ID de la conversacion activa</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-mono text-xs">messages</td>
                 <td className="py-3 px-4 font-mono text-xs">Message[]</td>
                 <td className="py-3 px-4">-</td>
-                <td className="py-3 px-4 text-muted-foreground">Messages for current conversation</td>
+                <td className="py-3 px-4 text-muted-foreground">Mensajes de la conversacion actual</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">maxAttachments</td>
+                <td className="py-3 px-4 font-mono text-xs">number</td>
+                <td className="py-3 px-4">1</td>
+                <td className="py-3 px-4 text-muted-foreground">Numero maximo de archivos adjuntos por mensaje</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-mono text-xs">onSendMessage</td>
                 <td className="py-3 px-4 font-mono text-xs">(content, files?) =&gt; void</td>
                 <td className="py-3 px-4">-</td>
-                <td className="py-3 px-4 text-muted-foreground">Called when user sends a message</td>
+                <td className="py-3 px-4 text-muted-foreground">Se llama cuando el usuario envia un mensaje</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-mono text-xs">onNewConversation</td>
                 <td className="py-3 px-4 font-mono text-xs">() =&gt; void</td>
                 <td className="py-3 px-4">-</td>
-                <td className="py-3 px-4 text-muted-foreground">Called when user creates new conversation</td>
+                <td className="py-3 px-4 text-muted-foreground">Se llama cuando el usuario crea nueva conversacion</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-mono text-xs">onSelectConversation</td>
                 <td className="py-3 px-4 font-mono text-xs">(id) =&gt; void</td>
                 <td className="py-3 px-4">-</td>
-                <td className="py-3 px-4 text-muted-foreground">Called when user selects a conversation</td>
+                <td className="py-3 px-4 text-muted-foreground">Se llama cuando el usuario selecciona una conversacion</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">onDeleteConversation</td>
+                <td className="py-3 px-4 font-mono text-xs">(id) =&gt; void</td>
+                <td className="py-3 px-4">-</td>
+                <td className="py-3 px-4 text-muted-foreground">Se llama cuando el usuario elimina una conversacion (con confirmacion)</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">deleteConfirmMessage</td>
+                <td className="py-3 px-4 font-mono text-xs">string</td>
+                <td className="py-3 px-4">Mensaje por defecto</td>
+                <td className="py-3 px-4 text-muted-foreground">Mensaje de confirmacion al eliminar</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-mono text-xs">showSidebar</td>
                 <td className="py-3 px-4 font-mono text-xs">boolean</td>
                 <td className="py-3 px-4">true</td>
-                <td className="py-3 px-4 text-muted-foreground">Show/hide the sidebar</td>
+                <td className="py-3 px-4 text-muted-foreground">Mostrar/ocultar el sidebar</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-mono text-xs">isLoading</td>
                 <td className="py-3 px-4 font-mono text-xs">boolean</td>
                 <td className="py-3 px-4">false</td>
-                <td className="py-3 px-4 text-muted-foreground">Show loading state</td>
+                <td className="py-3 px-4 text-muted-foreground">Mostrar estado de carga</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-mono text-xs">classNames</td>
                 <td className="py-3 px-4 font-mono text-xs">ChatClassNames</td>
                 <td className="py-3 px-4">-</td>
-                <td className="py-3 px-4 text-muted-foreground">Custom class names for parts</td>
+                <td className="py-3 px-4 text-muted-foreground">Clases CSS personalizadas por parte</td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      {/* Types */}
+      {/* Tipos */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Types</h2>
+        <h2 className="text-2xl font-semibold">Tipos</h2>
         
         <div className="space-y-6">
           <div>
@@ -254,19 +273,19 @@ import 'ltb-components/styles.css'`}</code></pre>
         </div>
       </section>
 
-      {/* Customization */}
-      <section id="customization" className="space-y-4">
-        <h2 className="text-2xl font-semibold">Customization</h2>
+      {/* Personalizacion */}
+      <section id="personalizacion" className="space-y-4">
+        <h2 className="text-2xl font-semibold">Personalizacion</h2>
         
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium mb-2">CSS Variables</h3>
+            <h3 className="text-lg font-medium mb-2">Variables CSS</h3>
             <p className="text-muted-foreground mb-3">
-              Override these CSS variables to customize the appearance:
+              Sobrescribe estas variables CSS para personalizar la apariencia:
             </p>
             <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
               <pre className="text-sm"><code>{`:root {
-  /* Colors */
+  /* Colores */
   --ltb-primary: #0f172a;
   --ltb-user-message-bg: #0f172a;
   --ltb-user-message-text: #ffffff;
@@ -277,22 +296,22 @@ import 'ltb-components/styles.css'`}</code></pre>
   --ltb-sidebar-bg: #f8fafc;
   --ltb-sidebar-active: #e2e8f0;
   
-  /* Border radius */
+  /* Bordes redondeados */
   --ltb-radius: 0.5rem;
 }`}</code></pre>
             </div>
           </div>
 
           <div>
-            <h3 className="text-lg font-medium mb-2">Class Names</h3>
+            <h3 className="text-lg font-medium mb-2">Nombres de clase</h3>
             <p className="text-muted-foreground mb-3">
-              Use the classNames prop to override specific parts:
+              Usa la prop classNames para sobrescribir partes especificas:
             </p>
             <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
               <pre className="text-sm"><code>{`<AIChatWidget
   classNames={{
-    container: 'my-custom-container',
-    sidebar: 'my-sidebar',
+    container: 'mi-contenedor-personalizado',
+    sidebar: 'mi-sidebar',
     userMessage: 'bg-blue-600 text-white',
     assistantMessage: 'bg-gray-100',
     input: 'rounded-full',
@@ -304,11 +323,11 @@ import 'ltb-components/styles.css'`}</code></pre>
         </div>
       </section>
 
-      {/* Modular Usage */}
+      {/* Uso modular */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Modular Usage</h2>
+        <h2 className="text-2xl font-semibold">Uso modular</h2>
         <p className="text-muted-foreground">
-          For custom layouts, use individual components:
+          Para layouts personalizados, usa los componentes individuales:
         </p>
         <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
           <pre className="text-sm"><code>{`import {
@@ -318,7 +337,7 @@ import 'ltb-components/styles.css'`}</code></pre>
   ChatInput,
 } from 'ltb-components/chat'
 
-export default function CustomChat() {
+export default function ChatPersonalizado() {
   return (
     <div className="flex h-screen">
       <ChatSidebar
@@ -326,11 +345,15 @@ export default function CustomChat() {
         currentConversationId={currentId}
         onNewConversation={handleNew}
         onSelectConversation={handleSelect}
+        onDeleteConversation={handleDelete}
       />
       <div className="flex flex-1 flex-col">
-        <ChatHeader title="My Custom Chat" />
+        <ChatHeader title="Mi Chat Personalizado" />
         <ChatMessageList messages={messages} />
-        <ChatInput onSendMessage={handleSend} />
+        <ChatInput 
+          onSendMessage={handleSend}
+          maxAttachments={5}
+        />
       </div>
     </div>
   )

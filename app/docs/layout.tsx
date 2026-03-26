@@ -6,10 +6,10 @@ import { cn } from '@/lib/utils'
 import { Book, Package, FileCode, History, Home } from 'lucide-react'
 
 const navItems = [
-  { href: '/docs', label: 'Introduction', icon: Book },
-  { href: '/docs/getting-started', label: 'Getting Started', icon: Package },
-  { href: '/docs/components/chat', label: 'Chat Component', icon: FileCode },
-  { href: '/docs/changelog', label: 'Changelog', icon: History },
+  { href: '/docs', label: 'Introduccion', icon: Book },
+  { href: '/docs/getting-started', label: 'Primeros pasos', icon: Package },
+  { href: '/docs/components/chat', label: 'Componente Chat', icon: FileCode },
+  { href: '/docs/changelog', label: 'Historial', icon: History },
 ]
 
 export default function DocsLayout({
@@ -60,7 +60,7 @@ export default function DocsLayout({
         </div>
       </aside>
 
-      {/* Main content */}
+      {/* Contenido principal */}
       <main className="flex-1 overflow-y-auto">
         <div className="mx-auto max-w-4xl px-8 py-12">
           {children}

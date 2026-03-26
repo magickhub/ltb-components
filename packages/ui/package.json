@@ -46,6 +46,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/ltb-components"
-  }
+    "url": "https://github.com/magickhub/ltb-components",
+    "directory": "packages/ui"
+  },
+  "bugs": {
+    "url": "https://github.com/magickhub/ltb-components/issues"
+  },
+  "homepage": "https://github.com/magickhub/ltb-components#readme"
 }

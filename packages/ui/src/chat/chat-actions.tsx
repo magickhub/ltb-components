@@ -120,10 +120,7 @@ export function ChatActions({
                   onClick={() => handleActionClick(action)}
                   className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-left text-sm text-[var(--ltb-foreground)] transition-colors hover:bg-[var(--ltb-muted)]"
                 >
-                  <Icon 
-                    className="h-4 w-4 flex-shrink-0" 
-                    style={{ color: action.color || 'var(--ltb-primary)' }}
-                  />
+                  <Icon className="h-4 w-4 flex-shrink-0 text-[var(--ltb-muted-foreground)]" />
                   <div className="flex-1 min-w-0">
                     <div className="font-medium truncate">{action.label}</div>
                     {action.description && (

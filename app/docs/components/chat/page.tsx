@@ -7,25 +7,22 @@ import '@/packages/ui/src/styles.css'
 // Acciones de demo
 const demoActions: ChatAction[] = [
   {
-    id: 'buyer-persona',
-    label: 'Buyer Persona',
-    description: 'Inyectar contexto del buyer persona',
-    icon: 'users',
-    color: '#2563eb',
-  },
-  {
     id: 'benchmark',
     label: 'Benchmark',
     description: 'Analisis comparativo de mercado',
     icon: 'bar-chart',
-    color: '#16a34a',
+  },
+  {
+    id: 'buyer-persona',
+    label: 'Buyer Persona',
+    description: 'Genera el buyer persona',
+    icon: 'users',
   },
   {
     id: 'objetivo',
     label: 'Objetivo',
-    description: 'Definir objetivo de negocio',
+    description: 'Define el objetivo de negocio',
     icon: 'target',
-    color: '#dc2626',
   },
 ]
 
@@ -105,38 +102,42 @@ function ChatDemo() {
     setMessages([])
   }
 
-  const handleExecuteAction = async (action: ChatAction) => {
+  // El consumidor recibe la accion y el ID de la conversacion activa.
+  // Genera el contenido de la plantilla (llamada a API, etc.) y luego
+  // llama a onSendMessage con ese contenido y la referencia a la accion.
+  const handleExecuteAction = async (action: ChatAction, conversationId: string | undefined) => {
     setExecutingAction(action)
     
-    // Simular generacion de contenido (en produccion, aqui llamarias a tu API)
+    // Simular generacion del contenido de la plantilla (en produccion: llamada a tu API)
     await new Promise(resolve => setTimeout(resolve, 1500))
     
-    // Crear el mensaje con la accion
-    const actionContent = `Contexto de ${action.label} generado automaticamente...`
+    // El texto generado por la plantilla es el contenido visible del mensaje
+    const generatedContent = `[Demo] Contenido generado para la plantilla "${action.label}" en la conversacion ${conversationId ?? 'sin ID'}. En produccion, aqui iria el texto real producido por tu backend.`
+    
     const messageAction: MessageAction = {
       actionId: action.id,
       label: action.label,
-      content: actionContent,
+      content: generatedContent,
     }
     
-    // Enviar mensaje con la accion
+    // El mensaje muestra el contenido generado; el badge identifica la plantilla
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: 'user',
-      content: `Analiza esto basandote en el contexto de ${action.label}`,
+      content: generatedContent,
       action: messageAction,
       createdAt: new Date(),
     }
     setMessages(prev => [...prev, userMessage])
     setExecutingAction(null)
     
-    // Simular respuesta
+    // Simular respuesta del asistente
     setIsLoading(true)
     setTimeout(() => {
       const assistantMessage: Message = {
         id: crypto.randomUUID(),
         role: 'assistant',
-        content: `He analizado la informacion usando el contexto de **${action.label}**. Aqui tienes mi analisis detallado...`,
+        content: `Recibido el contexto de **${action.label}**. Puedes hacerme preguntas basandote en esta informacion.`,
         createdAt: new Date(),
       }
       setMessages(prev => [...prev, assistantMessage])
@@ -336,9 +337,9 @@ import 'ltb-components/styles.css'`}</code></pre>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-mono text-xs">onExecuteAction</td>
-                <td className="py-3 px-4 font-mono text-xs">(action) =&gt; void</td>
+                <td className="py-3 px-4 font-mono text-xs">(action, conversationId) =&gt; void</td>
                 <td className="py-3 px-4">-</td>
-                <td className="py-3 px-4 text-muted-foreground">Se llama cuando el usuario selecciona una accion</td>
+                <td className="py-3 px-4 text-muted-foreground">Se llama al seleccionar una accion. Recibe la accion y el ID de la conversacion activa</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-mono text-xs">actionsButtonText</td>
@@ -418,7 +419,6 @@ import 'ltb-components/styles.css'`}</code></pre>
   label: string        // Nombre visible (ej: "Buyer Persona")
   description?: string // Descripcion en el menu
   icon?: string        // Icono Lucide (ej: "users", "bar-chart")
-  color?: string       // Color del badge (hex)
 }`}</code></pre>
             </div>
           </div>

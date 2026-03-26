@@ -18,7 +18,7 @@ function ActionBadge({ action }: { action: MessageAction }) {
   return (
     <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-[var(--ltb-action-badge-bg,#dbeafe)] px-3 py-1 text-xs font-medium text-[var(--ltb-action-badge-text,#1e40af)]">
       <Zap className="h-3 w-3" />
-      <span>Contexto: {action.label}</span>
+      <span>Plantilla: {action.label}</span>
     </div>
   )
 }

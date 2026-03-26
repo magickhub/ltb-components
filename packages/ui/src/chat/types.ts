@@ -24,8 +24,6 @@ export interface ChatAction {
   description?: string
   /** Icono de la accion (nombre de Lucide icon) */
   icon?: string
-  /** Color del badge (por defecto usa el primario) */
-  color?: string
 }
 
 /**
@@ -130,8 +128,8 @@ export interface AIChatWidgetProps {
   
   /** Called when user sends a message (con accion opcional) */
   onSendMessage: (content: string, attachments?: File[], action?: MessageAction) => void | Promise<void>
-  /** Called when user triggers an action (el consumidor genera el contenido y luego envia) */
-  onExecuteAction?: (action: ChatAction) => void | Promise<void>
+  /** Called when user triggers an action. Recibe la accion y el ID de la conversacion activa */
+  onExecuteAction?: (action: ChatAction, conversationId: string | undefined) => void | Promise<void>
   /** Called when user creates a new conversation */
   onNewConversation: () => void | Promise<void>
   /** Called when user selects a conversation */
@@ -170,7 +168,7 @@ export interface ChatInputProps {
   /** Accion en ejecucion */
   executingAction?: ChatAction | null
   /** Callback cuando se selecciona una accion */
-  onExecuteAction?: (action: ChatAction) => void | Promise<void>
+  onExecuteAction?: (action: ChatAction, conversationId: string | undefined) => void | Promise<void>
   /** Texto del boton de acciones */
   actionsButtonText?: string
 }

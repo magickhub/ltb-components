@@ -71,6 +71,14 @@ export function AIChatWidget({
     setSidebarOpen((prev) => !prev)
   }, [])
 
+  // Envuelve onExecuteAction para inyectar el ID de la conversacion activa
+  const handleExecuteAction = React.useCallback(
+    (action: import('./types').ChatAction) => {
+      onExecuteAction?.(action, currentConversationId)
+    },
+    [onExecuteAction, currentConversationId]
+  )
+
   return (
     <div
       className={cn(
@@ -135,7 +143,7 @@ export function AIChatWidget({
           classNames={classNames}
           actions={actions}
           executingAction={executingAction}
-          onExecuteAction={onExecuteAction}
+          onExecuteAction={handleExecuteAction}
           actionsButtonText={actionsButtonText}
         />
       </div>

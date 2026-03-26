@@ -57,7 +57,6 @@ export function AIChatWidget({
   
   // Estados
   isLoading = false,
-  isStreaming = false,
   disabled = false,
 }: AIChatWidgetProps) {
   const [sidebarOpen, setSidebarOpen] = React.useState(showSidebar)
@@ -124,7 +123,6 @@ export function AIChatWidget({
         <ChatMessageList
           messages={messages}
           isLoading={isLoading}
-          isStreaming={isStreaming}
           emptyMessage={emptyStateMessage}
           emptyHint={emptyStateHint}
           loadingText={loadingText}

@@ -378,12 +378,6 @@ import 'ltb-components/styles.css'`}</code></pre>
                 <td className="py-3 px-4 text-muted-foreground">Mostrar estado de carga (esperando respuesta)</td>
               </tr>
               <tr>
-                <td className="py-3 px-4 font-mono text-xs">isStreaming</td>
-                <td className="py-3 px-4 font-mono text-xs">boolean</td>
-                <td className="py-3 px-4">false</td>
-                <td className="py-3 px-4 text-muted-foreground">Estado de streaming (recibiendo respuesta)</td>
-              </tr>
-              <tr>
                 <td className="py-3 px-4 font-mono text-xs">disabled</td>
                 <td className="py-3 px-4 font-mono text-xs">boolean</td>
                 <td className="py-3 px-4">false</td>

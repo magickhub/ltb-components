@@ -141,8 +141,6 @@ export interface AIChatWidgetProps {
   
   /** Loading state while waiting for response */
   isLoading?: boolean
-  /** Streaming state while receiving response */
-  isStreaming?: boolean
   /** Disabled state */
   disabled?: boolean
 }
@@ -198,7 +196,6 @@ export interface ChatHeaderProps {
 export interface ChatMessageListProps {
   messages: Message[]
   isLoading?: boolean
-  isStreaming?: boolean
   emptyMessage?: string
   emptyHint?: string
   loadingText?: string

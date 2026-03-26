@@ -17,14 +17,13 @@ import type { ChatMessageListProps } from './types'
 export function ChatMessageList({
   messages,
   isLoading = false,
-  isStreaming = false,
   emptyMessage = 'Inicia una conversacion',
   emptyHint = 'Envia un mensaje para comenzar',
   loadingText = 'Pensando...',
   className,
   classNames,
 }: ChatMessageListProps) {
-  const scrollRef = useAutoScroll<HTMLDivElement>([messages, isLoading, isStreaming])
+  const scrollRef = useAutoScroll<HTMLDivElement>([messages, isLoading])
 
   return (
     <div
@@ -58,22 +57,11 @@ export function ChatMessageList({
           ))}
           
           {/* Indicador de carga */}
-          {isLoading && !isStreaming && (
+          {isLoading && (
             <div className="flex justify-start">
               <div className="flex items-center gap-2 rounded-lg bg-[var(--ltb-assistant-message-bg)] px-4 py-3 text-[var(--ltb-assistant-message-text)]">
                 <Loader2 className="h-4 w-4 animate-spin" />
                 <span className="text-sm">{loadingText}</span>
-              </div>
-            </div>
-          )}
-          
-          {/* Indicador de streaming */}
-          {isStreaming && (
-            <div className="flex justify-start">
-              <div className="flex items-center gap-1 rounded-lg bg-[var(--ltb-assistant-message-bg)] px-4 py-3">
-                <span className="h-2 w-2 animate-bounce rounded-full bg-[var(--ltb-muted-foreground)] [animation-delay:-0.3s]" />
-                <span className="h-2 w-2 animate-bounce rounded-full bg-[var(--ltb-muted-foreground)] [animation-delay:-0.15s]" />
-                <span className="h-2 w-2 animate-bounce rounded-full bg-[var(--ltb-muted-foreground)]" />
               </div>
             </div>
           )}

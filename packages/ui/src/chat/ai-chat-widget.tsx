@@ -29,7 +29,7 @@ export function AIChatWidget({
   allowedFileTypes,
   showSidebar = true,
   showHeader = true,
-  headerTitle = 'Chat',
+  headerTitle = 'Asistente de negocio',
   emptyStateMessage = 'Inicia una conversacion',
   emptyConversationsMessage = 'No hay conversaciones',
   deleteConfirmMessage = '¿Estas seguro de que deseas eliminar esta conversacion? Esta accion no se puede deshacer.',

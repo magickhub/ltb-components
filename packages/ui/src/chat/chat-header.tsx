@@ -13,7 +13,7 @@ import { cn } from '../utils'
 import type { ChatHeaderProps } from './types'
 
 export function ChatHeader({
-  title = 'Chat',
+  title = 'Asistente de negocio',
   onToggleSidebar,
   showSidebarToggle = false,
   className,

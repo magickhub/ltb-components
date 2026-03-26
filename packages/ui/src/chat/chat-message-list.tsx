@@ -42,7 +42,7 @@ export function ChatMessageList({
             {emptyMessage}
           </p>
           <p className="mt-1 text-sm text-[var(--ltb-muted-foreground)]">
-            Send a message to begin
+            Envia un mensaje para comenzar
           </p>
         </div>
       ) : (
@@ -60,7 +60,7 @@ export function ChatMessageList({
             <div className="flex justify-start">
               <div className="flex items-center gap-2 rounded-lg bg-[var(--ltb-assistant-message-bg)] px-4 py-3 text-[var(--ltb-assistant-message-text)]">
                 <Loader2 className="h-4 w-4 animate-spin" />
-                <span className="text-sm">Thinking...</span>
+                <span className="text-sm">Pensando...</span>
               </div>
             </div>
           )}

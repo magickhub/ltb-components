@@ -6,42 +6,35 @@ import '@/packages/ui/src/styles.css'
 
 // Acciones de demo con grupos multinivel
 const demoActions: ChatAction[] = [
-  // Sin grupo → aparece en la raiz
-  {
-    id: 'resumen',
-    label: 'Resumen rapido',
-    description: 'Genera un resumen del contexto actual',
-    icon: 'file-text',
-  },
-  // Grupo: Analisis
+  // Grupo: Evaluacion
   {
     id: 'benchmark',
     label: 'Benchmark',
-    description: 'Analisis comparativo de mercado',
+    description: 'Analisis comparativo de mercado y competencia',
     icon: 'bar-chart',
-    group: 'Analisis',
+    group: 'Evaluacion',
   },
   {
-    id: 'buyer-persona',
-    label: 'Buyer Persona',
-    description: 'Genera el buyer persona del proyecto',
+    id: 'icp',
+    label: 'ICP',
+    description: 'Define el perfil de cliente ideal',
+    icon: 'user-check',
+    group: 'Evaluacion',
+  },
+  // Grupo: Generacion
+  {
+    id: 'segmentacion-prospectos',
+    label: 'Segmentacion prospectos',
+    description: 'Segmenta y clasifica los prospectos objetivo',
     icon: 'users',
-    group: 'Analisis',
-  },
-  // Grupo: Estrategia
-  {
-    id: 'propuesta-valor',
-    label: 'Propuesta de valor',
-    description: 'Define la propuesta de valor unica',
-    icon: 'target',
-    group: 'Estrategia',
+    group: 'Generacion',
   },
   {
-    id: 'plan-accion',
-    label: 'Plan de accion',
-    description: 'Crea un plan de accion paso a paso',
-    icon: 'lightbulb',
-    group: 'Estrategia',
+    id: 'business-case',
+    label: 'Business Case',
+    description: 'Genera un caso de negocio completo',
+    icon: 'briefcase',
+    group: 'Generacion',
   },
 ]
 

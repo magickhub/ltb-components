@@ -24,6 +24,8 @@ export interface ChatAction {
   description?: string
   /** Icono de la accion (nombre de Lucide icon) */
   icon?: string
+  /** Grupo o etapa al que pertenece la accion (ej: "Analisis", "Estrategia"). Si no se define, aparece en la raiz */
+  group?: string
 }
 
 /**

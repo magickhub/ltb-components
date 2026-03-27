@@ -4,19 +4,44 @@ import { useState } from 'react'
 import { AIChatWidget, type Message, type Conversation, type ChatAction, type MessageAction } from '@/packages/ui/src/chat'
 import '@/packages/ui/src/styles.css'
 
-// Acciones de demo
+// Acciones de demo con grupos multinivel
 const demoActions: ChatAction[] = [
+  // Sin grupo → aparece en la raiz
+  {
+    id: 'resumen',
+    label: 'Resumen rapido',
+    description: 'Genera un resumen del contexto actual',
+    icon: 'file-text',
+  },
+  // Grupo: Analisis
   {
     id: 'benchmark',
     label: 'Benchmark',
     description: 'Analisis comparativo de mercado',
     icon: 'bar-chart',
+    group: 'Analisis',
   },
   {
     id: 'buyer-persona',
     label: 'Buyer Persona',
-    description: 'Genera el buyer persona',
+    description: 'Genera el buyer persona del proyecto',
     icon: 'users',
+    group: 'Analisis',
+  },
+  // Grupo: Estrategia
+  {
+    id: 'propuesta-valor',
+    label: 'Propuesta de valor',
+    description: 'Define la propuesta de valor unica',
+    icon: 'target',
+    group: 'Estrategia',
+  },
+  {
+    id: 'plan-accion',
+    label: 'Plan de accion',
+    description: 'Crea un plan de accion paso a paso',
+    icon: 'lightbulb',
+    group: 'Estrategia',
   },
 ]
 
@@ -141,7 +166,7 @@ function ChatDemo() {
         actions={demoActions}
         executingAction={executingAction}
         onExecuteAction={handleExecuteAction}
-        actionsButtonText="Plantillas"
+        actionsButtonText="Agentes"
       />
     </div>
   )
@@ -349,8 +374,8 @@ import 'ltb-components/styles.css'`}</code></pre>
               <tr>
                 <td className="py-3 px-4 font-mono text-xs">actionsButtonText</td>
                 <td className="py-3 px-4 font-mono text-xs">string</td>
-                <td className="py-3 px-4">'Acciones'</td>
-                <td className="py-3 px-4 text-muted-foreground">Texto del boton de acciones</td>
+                <td className="py-3 px-4">'Agentes'</td>
+                <td className="py-3 px-4 text-muted-foreground">Texto del boton de agentes</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-mono text-xs">isLoading</td>
@@ -434,6 +459,7 @@ import 'ltb-components/styles.css'`}</code></pre>
   label: string        // Nombre visible (ej: "Buyer Persona")
   description?: string // Descripcion en el menu
   icon?: string        // Icono Lucide (ej: "users", "bar-chart")
+  group?: string       // Grupo/etapa al que pertenece. Si no se define, aparece en la raiz
 }`}</code></pre>
             </div>
           </div>

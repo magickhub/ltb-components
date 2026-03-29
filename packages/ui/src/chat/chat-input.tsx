@@ -80,15 +80,6 @@ export function ChatInput({
     setPendingAction(null)
   }, [])
 
-  // Exponer setPendingAction para que el widget padre pueda establecer la accion pendiente
-  React.useImperativeHandle(
-    React.useRef(null),
-    () => ({
-      setPendingAction,
-    }),
-    []
-  )
-
   const hasActions = actions && actions.length > 0
 
   return (

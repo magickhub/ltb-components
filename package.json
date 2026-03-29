@@ -1,7 +1,39 @@
 {
-  "name": "my-project",
-  "version": "0.1.0",
-  "private": true,
+  "name": "ltb-components",
+  "version": "1.0.0",
+  "description": "A React component library built on shadcn/ui with customizable AI chat widgets",
+  "author": "MagickHub",
+  "license": "MIT",
+  "type": "module",
+  "main": "./packages/ui/src/index.ts",
+  "module": "./packages/ui/src/index.ts",
+  "types": "./packages/ui/src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./packages/ui/src/index.ts",
+      "types": "./packages/ui/src/index.ts"
+    },
+    "./chat": {
+      "import": "./packages/ui/src/chat/index.ts",
+      "types": "./packages/ui/src/chat/index.ts"
+    },
+    "./styles.css": "./packages/ui/src/styles.css"
+  },
+  "files": [
+    "packages/ui/src"
+  ],
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "lucide-react": "^0.400.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^2.0.0 || ^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/magickhub/ltb-components"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -7,7 +7,6 @@
 
 'use client'
 
-import * as React from 'react'
 import { PanelLeft } from 'lucide-react'
 import { cn } from '../utils'
 import type { ChatHeaderProps } from './types'

@@ -168,7 +168,9 @@ export interface ChatInputProps {
   /** Accion en ejecucion */
   executingAction?: ChatAction | null
   /** Callback cuando se selecciona una accion */
-  onExecuteAction?: (action: ChatAction, conversationId: string | undefined) => void | Promise<void>
+  onExecuteAction?: (action: ChatAction, conversationId?: string) => void | Promise<void>
+  /** ID de la conversacion actual (para pasarlo a las acciones) */
+  conversationId?: string
   /** Texto del boton de acciones */
   actionsButtonText?: string
 }

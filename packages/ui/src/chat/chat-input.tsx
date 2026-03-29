@@ -27,6 +27,7 @@ export function ChatInput({
   actions,
   executingAction,
   onExecuteAction,
+  conversationId,
   actionsButtonText = 'Acciones',
 }: ChatInputProps) {
   const [message, setMessage] = React.useState('')
@@ -173,6 +174,7 @@ export function ChatInput({
             actions={actions}
             executingAction={executingAction}
             onExecuteAction={onExecuteAction}
+            conversationId={conversationId}
             buttonText={actionsButtonText}
             disabled={disabled || isLoading}
           />

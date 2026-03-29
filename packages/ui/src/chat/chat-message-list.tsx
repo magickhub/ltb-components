@@ -7,7 +7,6 @@
 
 'use client'
 
-import * as React from 'react'
 import { MessageSquare, Loader2 } from 'lucide-react'
 import { cn } from '../utils'
 import { useAutoScroll } from './hooks'

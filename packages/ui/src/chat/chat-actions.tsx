@@ -45,7 +45,8 @@ function getIcon(iconName?: string): LucideIcon {
 interface ChatActionsProps {
   actions: ChatAction[]
   executingAction?: ChatAction | null
-  onExecuteAction: (action: ChatAction) => void | Promise<void>
+  onExecuteAction: (action: ChatAction, conversationId?: string) => void | Promise<void>
+  conversationId?: string
   buttonText?: string
   disabled?: boolean
   className?: string
@@ -150,6 +151,7 @@ export function ChatActions({
   actions,
   executingAction,
   onExecuteAction,
+  conversationId,
   buttonText = 'Agentes',
   disabled = false,
   className,
@@ -173,9 +175,9 @@ export function ChatActions({
   const handleActionClick = React.useCallback(
     async (action: ChatAction) => {
       setIsOpen(false)
-      await onExecuteAction(action)
+      await onExecuteAction(action, conversationId)
     },
-    [onExecuteAction],
+    [onExecuteAction, conversationId],
   )
 
   if (actions.length === 0) return null

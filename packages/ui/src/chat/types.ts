@@ -104,9 +104,9 @@ export interface AIChatWidgetProps {
   showHeader?: boolean
   /** Titulo del header (por defecto: 'Chat') */
   headerTitle?: string
-  /** Mensaje cuando no hay mensajes (por defecto: 'Inicia una conversacion') */
+  /** Mensaje cuando no hay mensajes (por defecto: 'Inicia una conversación') */
   emptyStateMessage?: string
-  /** Texto secundario en estado vacio (por defecto: 'Envia un mensaje para comenzar') */
+  /** Texto secundario en estado vacio (por defecto: 'Envía un mensaje para comenzar') */
   emptyStateHint?: string
   /** Mensaje cuando no hay conversaciones (por defecto: 'No hay conversaciones') */
   emptyConversationsMessage?: string

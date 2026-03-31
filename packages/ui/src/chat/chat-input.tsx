@@ -187,7 +187,7 @@ export function ChatInput({
             disabled={disabled || isLoading || !!executingAction}
             rows={1}
             className={cn(
-              'w-full resize-none rounded-lg border border-[var(--ltb-input-border)] bg-[var(--ltb-input-bg)] px-4 py-2 text-[var(--ltb-foreground)] placeholder:text-[var(--ltb-muted-foreground)] focus:border-[var(--ltb-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--ltb-primary)] disabled:cursor-not-allowed disabled:opacity-50',
+              'w-full resize-none overflow-hidden rounded-lg border border-[var(--ltb-input-border)] bg-[var(--ltb-input-bg)] px-4 py-2 text-[var(--ltb-foreground)] placeholder:text-[var(--ltb-muted-foreground)] focus:border-[var(--ltb-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--ltb-primary)] disabled:cursor-not-allowed disabled:opacity-50',
               classNames?.input
             )}
             style={{ maxHeight: '200px', minHeight: '40px' }}

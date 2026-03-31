@@ -132,15 +132,15 @@ function ChatDemo() {
       content: generatedContent,
     }
     
-    // El mensaje es del usuario, contiene el contenido generado y muestra el badge de la plantilla
-    const userMessage: Message = {
+    // El mensaje es de tipo 'action': solo muestra el badge, el contenido queda oculto (contexto para la IA)
+    const actionMessage: Message = {
       id: crypto.randomUUID(),
-      role: 'user',
+      role: 'action',
       content: generatedContent,
       action: messageAction,
       createdAt: new Date(),
     }
-    setMessages(prev => [...prev, userMessage])
+    setMessages(prev => [...prev, actionMessage])
     setExecutingAction(null)
   }
 

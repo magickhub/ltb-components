@@ -43,7 +43,13 @@ export interface MessageAction {
 
 export interface Message {
   id: string
-  role: 'user' | 'assistant' | 'system'
+  /**
+   * - 'user': mensaje del usuario
+   * - 'assistant': respuesta de la IA
+   * - 'system': mensaje de sistema (centrado, italica)
+   * - 'action': contexto inyectado por una plantilla (solo muestra badge, contenido oculto)
+   */
+  role: 'user' | 'assistant' | 'system' | 'action'
   content: string
   attachments?: Attachment[]
   /** Accion ejecutada con este mensaje (muestra badge, inyecta contexto) */

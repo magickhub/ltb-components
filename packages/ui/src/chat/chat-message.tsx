@@ -220,6 +220,7 @@ export function ChatMessage({ message, className, classNames }: ChatMessageProps
   const isUser = message.role === 'user'
   const isAssistant = message.role === 'assistant'
   const isSystem = message.role === 'system'
+  const isAction = message.role === 'action'
 
   const parsedContent = React.useMemo(() => {
     if (isAssistant) {
@@ -227,6 +228,15 @@ export function ChatMessage({ message, className, classNames }: ChatMessageProps
     }
     return message.content
   }, [message.content, isAssistant])
+
+  // Mensajes de tipo 'action': solo muestra el badge, sin contenido visible
+  if (isAction && message.action) {
+    return (
+      <div className={cn('flex w-full justify-end', className, classNames?.message)}>
+        <ActionBadge action={message.action} />
+      </div>
+    )
+  }
 
   return (
     <div
@@ -253,7 +263,7 @@ export function ChatMessage({ message, className, classNames }: ChatMessageProps
           ]
         )}
       >
-        {/* Badge de accion si existe */}
+        {/* Badge de accion si existe (en mensajes user normales) */}
         {message.action && (
           <ActionBadge action={message.action} />
         )}

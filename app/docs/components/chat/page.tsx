@@ -132,15 +132,15 @@ function ChatDemo() {
       content: generatedContent,
     }
     
-    // El mensaje es del sistema, contiene el contenido generado y muestra el badge de la plantilla
-    const systemMessage: Message = {
+    // El mensaje es del usuario, contiene el contenido generado y muestra el badge de la plantilla
+    const userMessage: Message = {
       id: crypto.randomUUID(),
-      role: 'system',
+      role: 'user',
       content: generatedContent,
       action: messageAction,
       createdAt: new Date(),
     }
-    setMessages(prev => [...prev, systemMessage])
+    setMessages(prev => [...prev, userMessage])
     setExecutingAction(null)
   }
 

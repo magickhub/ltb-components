@@ -246,6 +246,9 @@ export function ChatActions({
           <>
             <Bot className="h-4 w-4" />
             <span className="hidden sm:inline">{buttonText}</span>
+            <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--ltb-muted)] px-1 text-[10px] font-medium text-[var(--ltb-muted-foreground)]">
+              {actions.length}
+            </span>
             <ChevronDown className={cn('h-3 w-3 transition-transform', isOpen && 'rotate-180')} />
           </>
         )}

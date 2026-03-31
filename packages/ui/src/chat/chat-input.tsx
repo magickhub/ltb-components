@@ -146,18 +146,20 @@ export function ChatInput({
         />
         
         {/* Boton de adjuntar */}
-        <button
-          type="button"
-          onClick={openFilePicker}
-          disabled={disabled || isLoading || files.length >= maxAttachments || !!executingAction}
-          className={cn(
-            'flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-[var(--ltb-input-border)] bg-transparent text-[var(--ltb-muted-foreground)] transition-colors hover:bg-[var(--ltb-border)] hover:text-[var(--ltb-foreground)] disabled:cursor-not-allowed disabled:opacity-50',
-            classNames?.attachButton
-          )}
-          aria-label="Adjuntar archivo"
-        >
-          <Paperclip className="h-5 w-5" />
-        </button>
+        {maxAttachments > 0 && (
+          <button
+            type="button"
+            onClick={openFilePicker}
+            disabled={disabled || isLoading || files.length >= maxAttachments || !!executingAction}
+            className={cn(
+              'flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-[var(--ltb-input-border)] bg-transparent text-[var(--ltb-muted-foreground)] transition-colors hover:bg-[var(--ltb-border)] hover:text-[var(--ltb-foreground)] disabled:cursor-not-allowed disabled:opacity-50',
+              classNames?.attachButton
+            )}
+            aria-label="Adjuntar archivo"
+          >
+            <Paperclip className="h-5 w-5" />
+          </button>
+        )}
 
         {/* Boton de acciones */}
         {hasActions && onExecuteAction && (

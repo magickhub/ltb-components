@@ -157,12 +157,48 @@ export function ChatActions({
   className,
 }: ChatActionsProps) {
   const [isOpen, setIsOpen] = React.useState(false)
+  const [menuStyle, setMenuStyle] = React.useState<React.CSSProperties>({})
   const menuRef = React.useRef<HTMLDivElement>(null)
+  const buttonRef = React.useRef<HTMLButtonElement>(null)
 
-  // Cerrar menu al hacer clic fuera
+  // Calcular posicion del menu usando coordenadas absolutas en el viewport
+  // para evitar que overflow:hidden o contextos de apilamiento lo rompan.
+  React.useEffect(() => {
+    if (!isOpen || !buttonRef.current) return
+
+    const rect = buttonRef.current.getBoundingClientRect()
+    const menuHeight = 320 // max-h-80 = 320px
+    const spaceAbove = rect.top
+    const spaceBelow = window.innerHeight - rect.bottom
+
+    const openUpward = spaceAbove >= menuHeight || spaceAbove > spaceBelow
+
+    if (openUpward) {
+      setMenuStyle({
+        position: 'fixed',
+        bottom: window.innerHeight - rect.top + 8,
+        left: rect.left,
+        width: 256,
+        zIndex: 9999,
+      })
+    } else {
+      setMenuStyle({
+        position: 'fixed',
+        top: rect.bottom + 8,
+        left: rect.left,
+        width: 256,
+        zIndex: 9999,
+      })
+    }
+  }, [isOpen])
+
+  // Cerrar menu al hacer clic fuera (considera tanto el boton como el menu flotante)
   React.useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      const target = event.target as Node
+      const insideMenu = menuRef.current?.contains(target)
+      const insideButton = buttonRef.current?.contains(target)
+      if (!insideMenu && !insideButton) {
         setIsOpen(false)
       }
     }
@@ -187,9 +223,10 @@ export function ChatActions({
   const hasGroups = groupOrder.length > 0
 
   return (
-    <div ref={menuRef} className={cn('relative', className)}>
+    <div className={cn('relative', className)}>
       {/* Boton principal */}
       <button
+        ref={buttonRef}
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         disabled={disabled || isExecuting}
@@ -209,14 +246,21 @@ export function ChatActions({
           <>
             <Bot className="h-4 w-4" />
             <span className="hidden sm:inline">{buttonText}</span>
+            <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--ltb-muted)] px-1 text-[10px] font-medium text-[var(--ltb-muted-foreground)]">
+              {actions.length}
+            </span>
             <ChevronDown className={cn('h-3 w-3 transition-transform', isOpen && 'rotate-180')} />
           </>
         )}
       </button>
 
-      {/* Menu dropdown */}
+      {/* Menu dropdown — posicionado con fixed+coords para evitar overflow:hidden del padre */}
       {isOpen && !isExecuting && (
-        <div className="absolute bottom-full left-0 z-50 mb-2 w-64 overflow-hidden rounded-lg border border-[var(--ltb-border)] bg-[var(--ltb-bg)] shadow-lg">
+        <div
+          ref={menuRef}
+          style={menuStyle}
+          className="overflow-hidden rounded-lg border border-[var(--ltb-border)] bg-[var(--ltb-bg)] shadow-lg"
+        >
           <div className="p-1 max-h-80 overflow-y-auto">
             {/* Acciones sin grupo en la raiz */}
             {root.map((action) => (

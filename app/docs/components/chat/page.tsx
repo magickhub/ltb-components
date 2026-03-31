@@ -142,6 +142,18 @@ function ChatDemo() {
     }
     setMessages(prev => [...prev, actionMessage])
     setExecutingAction(null)
+    
+    // Simular respuesta del asistente despues de la accion
+    setIsLoading(true)
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    const assistantResponse: Message = {
+      id: crypto.randomUUID(),
+      role: 'assistant',
+      content: `He recibido el contexto de la plantilla **${action.label}**. Ahora puedo ayudarte con informacion personalizada basada en ese contexto.\n\n¿En que te puedo ayudar?`,
+      createdAt: new Date(),
+    }
+    setMessages(prev => [...prev, assistantResponse])
+    setIsLoading(false)
   }
 
   return (

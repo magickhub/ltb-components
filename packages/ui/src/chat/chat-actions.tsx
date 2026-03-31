@@ -157,48 +157,12 @@ export function ChatActions({
   className,
 }: ChatActionsProps) {
   const [isOpen, setIsOpen] = React.useState(false)
-  const [menuStyle, setMenuStyle] = React.useState<React.CSSProperties>({})
   const menuRef = React.useRef<HTMLDivElement>(null)
-  const buttonRef = React.useRef<HTMLButtonElement>(null)
 
-  // Calcular posicion del menu usando coordenadas absolutas en el viewport
-  // para evitar que overflow:hidden o contextos de apilamiento lo rompan.
-  React.useEffect(() => {
-    if (!isOpen || !buttonRef.current) return
-
-    const rect = buttonRef.current.getBoundingClientRect()
-    const menuHeight = 320 // max-h-80 = 320px
-    const spaceAbove = rect.top
-    const spaceBelow = window.innerHeight - rect.bottom
-
-    const openUpward = spaceAbove >= menuHeight || spaceAbove > spaceBelow
-
-    if (openUpward) {
-      setMenuStyle({
-        position: 'fixed',
-        bottom: window.innerHeight - rect.top + 8,
-        left: rect.left,
-        width: 256,
-        zIndex: 9999,
-      })
-    } else {
-      setMenuStyle({
-        position: 'fixed',
-        top: rect.bottom + 8,
-        left: rect.left,
-        width: 256,
-        zIndex: 9999,
-      })
-    }
-  }, [isOpen])
-
-  // Cerrar menu al hacer clic fuera (considera tanto el boton como el menu flotante)
+  // Cerrar menu al hacer clic fuera
   React.useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      const target = event.target as Node
-      const insideMenu = menuRef.current?.contains(target)
-      const insideButton = buttonRef.current?.contains(target)
-      if (!insideMenu && !insideButton) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsOpen(false)
       }
     }
@@ -226,7 +190,6 @@ export function ChatActions({
     <div className={cn('relative', className)}>
       {/* Boton principal */}
       <button
-        ref={buttonRef}
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         disabled={disabled || isExecuting}
@@ -254,12 +217,11 @@ export function ChatActions({
         )}
       </button>
 
-      {/* Menu dropdown — posicionado con fixed+coords para evitar overflow:hidden del padre */}
+      {/* Menu dropdown */}
       {isOpen && !isExecuting && (
         <div
           ref={menuRef}
-          style={menuStyle}
-          className="overflow-hidden rounded-lg border border-[var(--ltb-border)] bg-[var(--ltb-bg)] shadow-lg"
+          className="absolute bottom-full left-0 z-50 mb-2 w-64 overflow-hidden rounded-lg border border-[var(--ltb-border)] bg-[var(--ltb-bg)] shadow-lg"
         >
           <div className="p-1 max-h-80 overflow-y-auto">
             {/* Acciones sin grupo en la raiz */}

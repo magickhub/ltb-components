@@ -3,12 +3,13 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { Book, Package, FileCode, History, Home } from 'lucide-react'
+import { Book, Package, FileCode, History, Home, MessageSquare } from 'lucide-react'
 
 const navItems = [
   { href: '/docs', label: 'Introduccion', icon: Book },
   { href: '/docs/getting-started', label: 'Primeros pasos', icon: Package },
   { href: '/docs/components/chat', label: 'Componente Chat', icon: FileCode },
+  { href: '/docs/components/chat-v2', label: 'Chat v2 (assistant-ui)', icon: MessageSquare },
   { href: '/docs/changelog', label: 'Historial', icon: History },
 ]
 

@@ -165,14 +165,20 @@ function ChatDemo() {
   )
 }
 
-export default function ChatDocsPage() {
+export default function ChatV1DocsPage() {
   return (
     <div className="space-y-12">
       <div>
-        <h1 className="text-4xl font-bold tracking-tight">Componente Chat</h1>
+        <h1 className="text-4xl font-bold tracking-tight">Chat v1 - Custom</h1>
         <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-          Una interfaz completa de chat con IA con sidebar de conversaciones, lista de mensajes e input con adjuntos.
+          Componente de chat personalizado con interfaz completa: sidebar de conversaciones, lista de mensajes, input con adjuntos y sistema de acciones/agentes.
         </p>
+        <div className="mt-4 rounded-lg border border-amber-500/50 bg-amber-500/10 p-4">
+          <p className="text-sm text-amber-600 dark:text-amber-400">
+            <strong>Nota:</strong> Esta es la version personalizada del chat. Si buscas una solucion con streaming en tiempo real e integracion con AI SDK, consulta{' '}
+            <a href="/docs/components/chat-v2" className="underline hover:text-amber-700 dark:hover:text-amber-300">Chat v2 (assistant-ui)</a>.
+          </p>
+        </div>
       </div>
 
       {/* Demo interactiva */}

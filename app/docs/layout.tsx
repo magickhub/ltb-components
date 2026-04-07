@@ -8,7 +8,7 @@ import { Book, Package, FileCode, History, Home, MessageSquare } from 'lucide-re
 const navItems = [
   { href: '/docs', label: 'Introduccion', icon: Book },
   { href: '/docs/getting-started', label: 'Primeros pasos', icon: Package },
-  { href: '/docs/components/chat', label: 'Componente Chat', icon: FileCode },
+  { href: '/docs/components/chat-v1', label: 'Chat v1 (Custom)', icon: FileCode },
   { href: '/docs/components/chat-v2', label: 'Chat v2 (assistant-ui)', icon: MessageSquare },
   { href: '/docs/changelog', label: 'Historial', icon: History },
 ]

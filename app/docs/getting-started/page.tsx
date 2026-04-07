@@ -13,9 +13,44 @@ export default function GettingStartedPage() {
         </p>
       </div>
 
-      {/* Instalacion */}
+      {/* Comparativa de versiones */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Instalacion</h2>
+        <h2 className="text-2xl font-semibold">Versiones del Chat</h2>
+        <p className="text-muted-foreground">
+          LTB Components ofrece dos versiones del componente de chat:
+        </p>
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-lg border border-border p-4 space-y-2">
+            <h3 className="font-semibold">Chat v1 - Custom</h3>
+            <ul className="text-sm text-muted-foreground space-y-1">
+              <li>Componente personalizado sin dependencias externas</li>
+              <li>Sidebar de conversaciones integrado</li>
+              <li>Sistema de acciones/agentes</li>
+              <li>Soporte para adjuntos</li>
+              <li>Tu manejas la logica de IA</li>
+            </ul>
+            <a href="/docs/components/chat-v1" className="text-sm text-primary hover:underline">Ver documentacion</a>
+          </div>
+          <div className="rounded-lg border border-primary/50 bg-primary/5 p-4 space-y-2">
+            <h3 className="font-semibold flex items-center gap-2">
+              Chat v2 - assistant-ui
+              <span className="text-xs bg-primary text-primary-foreground px-2 py-0.5 rounded">Recomendado</span>
+            </h3>
+            <ul className="text-sm text-muted-foreground space-y-1">
+              <li>Basado en assistant-ui (open source)</li>
+              <li>Streaming en tiempo real</li>
+              <li>Integracion con AI SDK 6</li>
+              <li>Multiples proveedores de IA</li>
+              <li>Auto-scroll inteligente</li>
+            </ul>
+            <a href="/docs/components/chat-v2" className="text-sm text-primary hover:underline">Ver documentacion</a>
+          </div>
+        </div>
+      </section>
+
+      {/* Instalacion Chat v1 */}
+      <section className="space-y-4">
+        <h2 className="text-2xl font-semibold">Instalacion - Chat v1</h2>
         <p className="text-muted-foreground">
           Instala LTB Components directamente desde GitHub usando tu gestor de paquetes preferido:
         </p>
@@ -47,6 +82,114 @@ export default function GettingStartedPage() {
           <p className="text-sm">
             <strong>Fijar una version especifica:</strong> Agrega <code className="bg-muted px-1 rounded">#v1.0.0</code> al final para bloquear una version especifica.
           </p>
+        </div>
+      </section>
+
+      {/* Instalacion Chat v2 */}
+      <section className="space-y-4">
+        <h2 className="text-2xl font-semibold">Instalacion - Chat v2 (assistant-ui)</h2>
+        <p className="text-muted-foreground">
+          Instala las dependencias necesarias para usar Chat v2 con assistant-ui y AI SDK:
+        </p>
+        
+        <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
+          <pre className="text-sm"><code>{`npm install @assistant-ui/react @assistant-ui/react-ai-sdk ai @ai-sdk/react`}</code></pre>
+        </div>
+
+        <h3 className="text-lg font-medium mt-6">Variables de entorno</h3>
+        <p className="text-muted-foreground">
+          Configura las siguientes variables en tu archivo <code className="rounded bg-muted px-1.5 py-0.5 text-sm">.env.local</code>:
+        </p>
+        <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
+          <pre className="text-sm"><code>{`# Seleccion de proveedor de IA
+# Opciones: openai, anthropic, google, grok, groq, fireworks
+AI_PROVIDER=openai
+
+# Modelo especifico (opcional)
+# Si no incluye prefijo, se agrega automaticamente segun AI_PROVIDER
+# Ejemplo: gpt-4o → openai/gpt-4o
+AI_MODEL=gpt-4o-mini
+
+# API Key del proveedor seleccionado
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`}</code></pre>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="py-3 px-4 text-left font-medium">Variable</th>
+                <th className="py-3 px-4 text-left font-medium">Descripcion</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">AI_PROVIDER</td>
+                <td className="py-3 px-4 text-muted-foreground">openai, anthropic, google, grok, groq, fireworks</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">AI_MODEL</td>
+                <td className="py-3 px-4 text-muted-foreground">Modelo a usar (ej: gpt-4o-mini, claude-sonnet-4-20250514)</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">OPENAI_API_KEY</td>
+                <td className="py-3 px-4 text-muted-foreground">API key de OpenAI</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">ANTHROPIC_API_KEY</td>
+                <td className="py-3 px-4 text-muted-foreground">API key de Anthropic (Claude)</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">XAI_API_KEY</td>
+                <td className="py-3 px-4 text-muted-foreground">API key de xAI (Grok)</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">GROQ_API_KEY</td>
+                <td className="py-3 px-4 text-muted-foreground">API key de Groq</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 className="text-lg font-medium mt-6">Modelos por defecto</h3>
+        <p className="text-muted-foreground">
+          Si no especificas <code className="rounded bg-muted px-1.5 py-0.5 text-sm">AI_MODEL</code>, se usa el modelo por defecto del proveedor:
+        </p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="py-3 px-4 text-left font-medium">Proveedor</th>
+                <th className="py-3 px-4 text-left font-medium">Modelo por defecto</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              <tr>
+                <td className="py-3 px-4">openai</td>
+                <td className="py-3 px-4 font-mono text-xs">gpt-4o-mini</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4">anthropic</td>
+                <td className="py-3 px-4 font-mono text-xs">claude-sonnet-4-20250514</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4">google</td>
+                <td className="py-3 px-4 font-mono text-xs">gemini-2.0-flash</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4">grok</td>
+                <td className="py-3 px-4 font-mono text-xs">grok-3-mini-fast-latest</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4">groq</td>
+                <td className="py-3 px-4 font-mono text-xs">llama-3.3-70b-versatile</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4">fireworks</td>
+                <td className="py-3 px-4 font-mono text-xs">llama-v3p1-70b-instruct</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -196,8 +339,8 @@ export default function ChatPage() {
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">Siguientes pasos</h2>
         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-          <li>Explora la <a href="/docs/components/chat" className="text-primary hover:underline">API del componente Chat</a></li>
-          <li>Aprende sobre las <a href="/docs/components/chat#personalizacion" className="text-primary hover:underline">opciones de personalizacion</a></li>
+          <li>Explora la <a href="/docs/components/chat-v2" className="text-primary hover:underline">documentacion de Chat v2 (recomendado)</a></li>
+          <li>O la <a href="/docs/components/chat-v1" className="text-primary hover:underline">API del componente Chat v1</a></li>
           <li>Revisa el <a href="/docs/changelog" className="text-primary hover:underline">historial de cambios</a> para actualizaciones</li>
         </ul>
       </section>

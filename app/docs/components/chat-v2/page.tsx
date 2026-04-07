@@ -3,6 +3,7 @@
 import { AssistantRuntimeProvider } from '@assistant-ui/react'
 import { useChatRuntime } from '@assistant-ui/react-ai-sdk'
 import { Thread, ThreadList } from '@/components/assistant-ui'
+import { ModelSelector } from '@/components/assistant-ui/model-selector'
 
 function ChatV2Demo() {
   const runtime = useChatRuntime({
@@ -11,12 +12,15 @@ function ChatV2Demo() {
 
   return (
     <AssistantRuntimeProvider runtime={runtime}>
-      <div className="grid h-[600px] grid-cols-[220px_1fr] gap-4 rounded-lg border border-border overflow-hidden">
-        <div className="border-r border-border bg-muted/30">
-          <ThreadList />
-        </div>
-        <div className="flex flex-col">
-          <Thread />
+      <div className="space-y-4">
+        <ModelSelector />
+        <div className="grid h-[600px] grid-cols-[220px_1fr] gap-4 rounded-lg border border-border overflow-hidden bg-background">
+          <div className="border-r border-border bg-muted/30 overflow-hidden">
+            <ThreadList />
+          </div>
+          <div className="flex flex-col min-h-0">
+            <Thread />
+          </div>
         </div>
       </div>
     </AssistantRuntimeProvider>
@@ -46,7 +50,7 @@ export default function ChatV2DocsPage() {
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">Demo interactiva</h2>
         <p className="text-muted-foreground">
-          Prueba el componente de chat a continuacion. Escribe mensajes y recibe respuestas en tiempo real con streaming.
+          Prueba el componente de chat a continuacion. Selecciona un proveedor de IA y escribe mensajes para recibir respuestas en tiempo real con streaming.
         </p>
         <ChatV2Demo />
       </section>

@@ -85,16 +85,12 @@ export default function GettingStartedPage() {
         </div>
       </section>
 
-      {/* Instalacion Chat v2 */}
+      {/* Configuracion Chat v2 */}
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">Configuracion de Chat v2 (Recomendado)</h2>
         <p className="text-muted-foreground">
-          Chat v2 con assistant-ui es la version recomendada. Instala las dependencias necesarias:
+          Chat v2 con assistant-ui es la version recomendada. Todas las dependencias necesarias (<code className="rounded bg-muted px-1.5 py-0.5 text-xs">@assistant-ui/react</code>, <code className="rounded bg-muted px-1.5 py-0.5 text-xs">@assistant-ui/react-ai-sdk</code>, <code className="rounded bg-muted px-1.5 py-0.5 text-xs">ai</code>, <code className="rounded bg-muted px-1.5 py-0.5 text-xs">@ai-sdk/react</code>) ya estan incluidas en el paquete.
         </p>
-        
-        <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
-          <pre className="text-sm"><code>{`npm install @assistant-ui/react @assistant-ui/react-ai-sdk ai @ai-sdk/react`}</code></pre>
-        </div>
 
         <h3 className="text-lg font-medium mt-6">Variables de entorno</h3>
         <p className="text-muted-foreground">

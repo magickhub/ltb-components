@@ -34,9 +34,12 @@ function getModelId(): string {
 export async function POST(req: Request) {
   const { messages }: { messages: UIMessage[] } = await req.json()
 
+  console.log('[v0] Title endpoint called with', messages.length, 'messages')
+
   // Extraer el texto del primer mensaje del usuario
   const firstUserMessage = messages.find((m) => m.role === 'user')
   if (!firstUserMessage) {
+    console.log('[v0] No user message found')
     return Response.json({ title: 'Nueva conversacion' })
   }
 
@@ -45,13 +48,19 @@ export async function POST(req: Request) {
     .map((p) => p.text)
     .join('') || ''
 
+  console.log('[v0] First message text:', firstMessageText.slice(0, 100))
+
   if (!firstMessageText.trim()) {
+    console.log('[v0] Empty message text')
     return Response.json({ title: 'Nueva conversacion' })
   }
 
   try {
+    const modelId = getModelId()
+    console.log('[v0] Using model:', modelId)
+
     const { text } = await generateText({
-      model: getModelId(),
+      model: modelId,
       system:
         'Generate a short, concise title (3-6 words max) for a conversation that starts with the following message. ' +
         'Respond ONLY with the title, no quotes, no punctuation at the end. ' +
@@ -59,10 +68,13 @@ export async function POST(req: Request) {
       prompt: firstMessageText,
     })
 
+    console.log('[v0] Generated title:', text.trim())
     return Response.json({ title: text.trim() })
-  } catch {
+  } catch (error) {
+    console.error('[v0] Error generating title:', error)
     // Si falla la generacion del titulo, usar las primeras palabras del mensaje
     const fallback = firstMessageText.split(' ').slice(0, 5).join(' ')
+    console.log('[v0] Using fallback title:', fallback)
     return Response.json({ title: fallback || 'Nueva conversacion' })
   }
 }

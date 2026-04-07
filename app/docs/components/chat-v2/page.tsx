@@ -5,13 +5,23 @@ import { useChatRuntime } from '@assistant-ui/react-ai-sdk'
 import { Thread, ThreadList } from '@/components/assistant-ui'
 import { ModelSelector } from '@/components/assistant-ui/model-selector'
 
-async function generateTitle(messages: { role: string; content: string }[]) {
+async function generateTitle(messages: { role: string; content?: string; parts?: Array<{ type: string; text?: string }> }[]) {
+  console.log('[v0] generateTitle called with', messages.length, 'messages')
+  console.log('[v0] First message structure:', messages[0])
+  
   const res = await fetch('/api/chat/title', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ messages }),
   })
+  
+  if (!res.ok) {
+    console.error('[v0] Title generation failed:', res.status)
+    return 'Nueva conversacion'
+  }
+  
   const { title } = await res.json()
+  console.log('[v0] Generated title:', title)
   return title as string
 }
 

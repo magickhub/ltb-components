@@ -1,17 +1,14 @@
 'use client'
 
-import { MessagePrimitive, AuiIf } from '@assistant-ui/react'
+import { MessagePrimitive, ActionBarPrimitive, AuiIf } from '@assistant-ui/react'
 import { cn } from '@/lib/utils'
 import { Bot, Copy, Check, RefreshCw } from 'lucide-react'
-import { useState } from 'react'
 
 interface AssistantMessageProps {
   className?: string
 }
 
 export function AssistantMessage({ className }: AssistantMessageProps) {
-  const [copied, setCopied] = useState(false)
-
   return (
     <MessagePrimitive.Root
       className={cn(
@@ -28,33 +25,16 @@ export function AssistantMessage({ className }: AssistantMessageProps) {
         </div>
         
         <AuiIf condition={(s) => !s.thread.isRunning}>
-          <div className="mt-1 flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
-            <MessagePrimitive.Copy asChild>
-              <button
-                className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                aria-label="Copiar mensaje"
-                onClick={() => {
-                  setCopied(true)
-                  setTimeout(() => setCopied(false), 2000)
-                }}
-              >
-                {copied ? (
-                  <Check className="h-3.5 w-3.5" />
-                ) : (
-                  <Copy className="h-3.5 w-3.5" />
-                )}
-              </button>
-            </MessagePrimitive.Copy>
+          <ActionBarPrimitive.Root className="mt-1 flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+            <ActionBarPrimitive.Copy className="group/copy flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+              <Copy className="h-3.5 w-3.5 group-data-[copied]/copy:hidden" />
+              <Check className="hidden h-3.5 w-3.5 group-data-[copied]/copy:block" />
+            </ActionBarPrimitive.Copy>
             
-            <MessagePrimitive.Reload asChild>
-              <button
-                className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                aria-label="Regenerar respuesta"
-              >
-                <RefreshCw className="h-3.5 w-3.5" />
-              </button>
-            </MessagePrimitive.Reload>
-          </div>
+            <ActionBarPrimitive.Reload className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+              <RefreshCw className="h-3.5 w-3.5" />
+            </ActionBarPrimitive.Reload>
+          </ActionBarPrimitive.Root>
         </AuiIf>
       </div>
     </MessagePrimitive.Root>

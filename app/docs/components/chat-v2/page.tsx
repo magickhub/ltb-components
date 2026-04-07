@@ -97,11 +97,55 @@ export default function ChatV2DocsPage() {
           Configura las siguientes variables de entorno en tu archivo <code className="rounded bg-muted px-1.5 py-0.5 text-sm">.env.local</code>:
         </p>
         <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
-          <pre className="text-sm"><code>{`# OpenAI API Key (requerida)
-OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          <pre className="text-sm"><code>{`# Seleccion de proveedor de IA
+# Opciones: openai, anthropic, google, grok, groq, fireworks
+AI_PROVIDER=openai
 
-# O usa el Vercel AI Gateway (sin configuracion adicional)
-# El modelo se especifica como "openai/gpt-4o-mini" en el codigo`}</code></pre>
+# Modelo especifico (opcional - sobrescribe AI_PROVIDER)
+# AI_MODEL=openai/gpt-4o
+
+# API Keys segun proveedor seleccionado
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# ANTHROPIC_API_KEY=your_anthropic_key
+# XAI_API_KEY=your_xai_key
+# GROQ_API_KEY=your_groq_key`}</code></pre>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="py-3 px-4 text-left font-medium">Variable</th>
+                <th className="py-3 px-4 text-left font-medium">Descripcion</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">AI_PROVIDER</td>
+                <td className="py-3 px-4 text-muted-foreground">Proveedor a usar: openai, anthropic, google, grok, groq, fireworks</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">AI_MODEL</td>
+                <td className="py-3 px-4 text-muted-foreground">Modelo especifico (ej: openai/gpt-4o). Sobrescribe AI_PROVIDER</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">OPENAI_API_KEY</td>
+                <td className="py-3 px-4 text-muted-foreground">API key de OpenAI</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">ANTHROPIC_API_KEY</td>
+                <td className="py-3 px-4 text-muted-foreground">API key de Anthropic (Claude)</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">XAI_API_KEY</td>
+                <td className="py-3 px-4 text-muted-foreground">API key de xAI (Grok)</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">GROQ_API_KEY</td>
+                <td className="py-3 px-4 text-muted-foreground">API key de Groq</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 

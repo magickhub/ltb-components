@@ -14,14 +14,14 @@ interface ThreadProps {
 
 export function Thread({ className }: ThreadProps) {
   return (
-    <ThreadPrimitive.Root className={cn('flex h-full flex-col', className)}>
-      <ThreadPrimitive.Viewport className="flex flex-1 flex-col overflow-y-auto scroll-smooth">
+    <ThreadPrimitive.Root className={cn('relative flex h-full min-h-0 flex-col', className)}>
+      <ThreadPrimitive.Viewport className="absolute inset-0 flex flex-col overflow-y-auto scroll-smooth">
         <AuiIf condition={(s) => s.thread.isEmpty}>
           <ThreadWelcome />
         </AuiIf>
 
         <AuiIf condition={(s) => !s.thread.isEmpty}>
-          <div className="min-h-8 grow" />
+          <div className="min-h-8 flex-1" />
         </AuiIf>
 
         <ThreadPrimitive.Messages>

@@ -5,9 +5,20 @@ import { useChatRuntime } from '@assistant-ui/react-ai-sdk'
 import { Thread, ThreadList } from '@/components/assistant-ui'
 import { ModelSelector } from '@/components/assistant-ui/model-selector'
 
+async function generateTitle(messages: { role: string; content: string }[]) {
+  const res = await fetch('/api/chat/title', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messages }),
+  })
+  const { title } = await res.json()
+  return title as string
+}
+
 function ChatV2Demo() {
   const runtime = useChatRuntime({
     api: '/api/chat',
+    unstable_generateTitle: generateTitle,
   })
 
   return (

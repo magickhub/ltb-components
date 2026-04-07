@@ -48,9 +48,9 @@ export default function GettingStartedPage() {
         </div>
       </section>
 
-      {/* Instalacion Chat v1 */}
+      {/* Instalacion del paquete */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Instalacion - Chat v1</h2>
+        <h2 className="text-2xl font-semibold">Instalacion del paquete</h2>
         <p className="text-muted-foreground">
           Instala LTB Components directamente desde GitHub usando tu gestor de paquetes preferido:
         </p>
@@ -59,37 +59,37 @@ export default function GettingStartedPage() {
           <div>
             <p className="text-sm font-medium mb-2">npm</p>
             <div className="rounded-lg border border-border bg-muted/50 p-4">
-              <code className="text-sm">npm install github:magickhub/ltb-components</code>
+              <code className="text-sm">npm install github:magickhub/ltb-components#v1.1.0</code>
             </div>
           </div>
           
           <div>
             <p className="text-sm font-medium mb-2">yarn</p>
             <div className="rounded-lg border border-border bg-muted/50 p-4">
-              <code className="text-sm">yarn add github:magickhub/ltb-components</code>
+              <code className="text-sm">yarn add github:magickhub/ltb-components#v1.1.0</code>
             </div>
           </div>
           
           <div>
             <p className="text-sm font-medium mb-2">pnpm</p>
             <div className="rounded-lg border border-border bg-muted/50 p-4">
-              <code className="text-sm">pnpm add github:magickhub/ltb-components</code>
+              <code className="text-sm">pnpm add github:magickhub/ltb-components#v1.1.0</code>
             </div>
           </div>
         </div>
 
         <div className="rounded-lg border border-border bg-muted/30 p-4">
           <p className="text-sm">
-            <strong>Fijar una version especifica:</strong> Agrega <code className="bg-muted px-1 rounded">#v1.0.0</code> al final para bloquear una version especifica.
+            <strong>Usar otra version:</strong> Reemplaza <code className="bg-muted px-1 rounded">v1.1.0</code> con la version deseada (ej: <code className="bg-muted px-1 rounded">v1.0.0</code>). Omite la version para instalar desde <code className="bg-muted px-1 rounded">main</code>.
           </p>
         </div>
       </section>
 
       {/* Instalacion Chat v2 */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Instalacion - Chat v2 (assistant-ui)</h2>
+        <h2 className="text-2xl font-semibold">Configuracion de Chat v2 (Recomendado)</h2>
         <p className="text-muted-foreground">
-          Instala las dependencias necesarias para usar Chat v2 con assistant-ui y AI SDK:
+          Chat v2 con assistant-ui es la version recomendada. Instala las dependencias necesarias:
         </p>
         
         <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
@@ -191,6 +191,17 @@ OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`}</code></pre>
             </tbody>
           </table>
         </div>
+      </section>
+
+      {/* Instalacion Chat v1 */}
+      <section className="space-y-4">
+        <h2 className="text-2xl font-semibold">Chat v1 (Custom) - Alternativa</h2>
+        <p className="text-muted-foreground">
+          Si prefieres usar Chat v1 sin dependencias externas de IA, no necesitas configuracion adicional. Solo instala LTB Components (paso anterior).
+        </p>
+        <p className="text-muted-foreground">
+          Chat v1 incluye todos los componentes visuales y logica, pero tu manejas la integracion con IA. Consulta la <a href="/docs/components/chat-v1" className="text-primary hover:underline">documentacion completa de Chat v1</a> para mas detalles.
+        </p>
       </section>
 
       {/* Dependencias */}

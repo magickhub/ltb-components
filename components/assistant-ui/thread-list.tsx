@@ -1,6 +1,6 @@
 'use client'
 
-import { ThreadListPrimitive } from '@assistant-ui/react'
+import { ThreadListPrimitive, ThreadListItemPrimitive } from '@assistant-ui/react'
 import { cn } from '@/lib/utils'
 import { MessageSquare, Plus } from 'lucide-react'
 
@@ -34,13 +34,15 @@ export function ThreadList({ className }: ThreadListProps) {
 
 function ThreadListItem() {
   return (
-    <ThreadListPrimitive.Item asChild>
-      <button className="flex w-full items-center gap-3 rounded-lg p-3 text-left text-sm transition-colors hover:bg-muted data-[active]:bg-muted">
-        <MessageSquare className="h-4 w-4 shrink-0 text-muted-foreground" />
-        <div className="flex-1 truncate">
-          <ThreadListPrimitive.ItemTitle className="truncate font-medium" />
-        </div>
-      </button>
-    </ThreadListPrimitive.Item>
+    <ThreadListItemPrimitive.Root className="flex w-full items-center gap-3 rounded-lg p-3 text-left text-sm transition-colors hover:bg-muted data-[active]:bg-muted">
+      <ThreadListItemPrimitive.Trigger asChild>
+        <button className="flex flex-1 items-center gap-3 text-left">
+          <MessageSquare className="h-4 w-4 shrink-0 text-muted-foreground" />
+          <div className="flex-1 truncate">
+            <ThreadListItemPrimitive.Title className="truncate font-medium" />
+          </div>
+        </button>
+      </ThreadListItemPrimitive.Trigger>
+    </ThreadListItemPrimitive.Root>
   )
 }

@@ -2,22 +2,27 @@
 
 import { ThreadPrimitive, AuiIf } from '@assistant-ui/react'
 import { cn } from '@/lib/utils'
-import { ArrowDown } from 'lucide-react'
+import { ArrowDown, LucideIcon } from 'lucide-react'
 import { Composer } from './composer'
 import { UserMessage } from './user-message'
 import { AssistantMessage } from './assistant-message'
-import { ThreadWelcome } from './thread-welcome'
+import { ThreadWelcome, ThreadWelcomeProps } from './thread-welcome'
+import { ReactNode } from 'react'
 
 interface ThreadProps {
   className?: string
+  /** Props de personalizacion para la pantalla de bienvenida */
+  welcome?: ThreadWelcomeProps
+  /** Placeholder del input (default: "Escribe tu mensaje...") */
+  placeholder?: string
 }
 
-export function Thread({ className }: ThreadProps) {
+export function Thread({ className, welcome, placeholder }: ThreadProps) {
   return (
     <ThreadPrimitive.Root className={cn('relative flex h-full min-h-0 flex-col', className)}>
       <ThreadPrimitive.Viewport className="absolute inset-0 flex flex-col overflow-y-auto scroll-smooth">
         <AuiIf condition={(s) => s.thread.isEmpty}>
-          <ThreadWelcome />
+          <ThreadWelcome {...welcome} />
         </AuiIf>
 
         <AuiIf condition={(s) => !s.thread.isEmpty}>
@@ -40,7 +45,7 @@ export function Thread({ className }: ThreadProps) {
               <ArrowDown className="h-4 w-4" />
             </button>
           </ThreadPrimitive.ScrollToBottom>
-          <Composer />
+          <Composer placeholder={placeholder} />
         </ThreadPrimitive.ViewportFooter>
       </ThreadPrimitive.Viewport>
     </ThreadPrimitive.Root>

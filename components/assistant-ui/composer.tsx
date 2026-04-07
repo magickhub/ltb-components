@@ -6,9 +6,11 @@ import { SendHorizontal, Square } from 'lucide-react'
 
 interface ComposerProps {
   className?: string
+  /** Placeholder del input (default: "Escribe tu mensaje...") */
+  placeholder?: string
 }
 
-export function Composer({ className }: ComposerProps) {
+export function Composer({ className, placeholder = 'Escribe tu mensaje...' }: ComposerProps) {
   return (
     <ComposerPrimitive.Root
       className={cn(
@@ -18,7 +20,7 @@ export function Composer({ className }: ComposerProps) {
     >
       <ComposerPrimitive.Input
         autoFocus
-        placeholder="Escribe tu mensaje..."
+        placeholder={placeholder}
         rows={1}
         className="flex-1 resize-none bg-transparent px-3 py-2 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
       />

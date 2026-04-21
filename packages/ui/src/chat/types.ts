@@ -45,7 +45,7 @@ export interface MessageAction {
 export type MessageType = 'text' | 'html'
 
 export interface Message {
-  id: string
+  id: string | number
   role: 'user' | 'assistant' | 'system'
   content: string
   /** Tipo de contenido: 'text' (por defecto) o 'html' para renderizado aislado */
@@ -53,7 +53,10 @@ export interface Message {
   attachments?: Attachment[]
   /** Accion ejecutada con este mensaje (muestra badge, inyecta contexto) */
   action?: MessageAction
-  createdAt: Date
+  /** Fecha de creacion (acepta createdAt o created_at) */
+  createdAt?: Date
+  /** Alias para createdAt (snake_case) */
+  created_at?: Date
 }
 
 export interface Conversation {

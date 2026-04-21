@@ -1,4 +1,4 @@
-export { AIChatWidget, AIChatWidgetProps, Attachment, ChatAction, ChatActions, ChatClassNames, ChatHeader, ChatHeaderProps, ChatInput, ChatInputProps, ChatMessage, ChatMessageList, ChatMessageListProps, ChatMessageProps, ChatSidebar, ChatSidebarProps, Conversation, Message, MessageAction, useAutoResize, useAutoScroll, useFileAttachments } from './chat.js';
+export { AIChatWidget, AIChatWidgetProps, Attachment, ChatAction, ChatActions, ChatClassNames, ChatHeader, ChatHeaderProps, ChatInput, ChatInputProps, ChatMessage, ChatMessageList, ChatMessageListProps, ChatMessageProps, ChatSidebar, ChatSidebarProps, Conversation, Message, MessageAction, MessageType, useAutoResize, useAutoScroll, useFileAttachments } from './chat.js';
 import { ClassValue } from 'clsx';
 import 'react/jsx-runtime';
 import 'react';

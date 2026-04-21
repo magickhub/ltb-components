@@ -40,14 +40,21 @@ interface MessageAction {
     /** Contenido completo inyectado (no visible, enviado a la IA) */
     content: string;
 }
+/** Tipo de contenido del mensaje */
+type MessageType = 'text' | 'html';
 interface Message {
-    id: string;
+    id: string | number;
     role: 'user' | 'assistant' | 'system';
     content: string;
+    /** Tipo de contenido: 'text' (por defecto) o 'html' para renderizado aislado */
+    type?: MessageType;
     attachments?: Attachment[];
     /** Accion ejecutada con este mensaje (muestra badge, inyecta contexto) */
     action?: MessageAction;
-    createdAt: Date;
+    /** Fecha de creacion (acepta createdAt o created_at) */
+    createdAt?: Date;
+    /** Alias para createdAt (snake_case) */
+    created_at?: Date;
 }
 interface Conversation {
     id: string;
@@ -99,9 +106,9 @@ interface AIChatWidgetProps {
     showHeader?: boolean;
     /** Titulo del header (por defecto: 'Chat') */
     headerTitle?: string;
-    /** Mensaje cuando no hay mensajes (por defecto: 'Inicia una conversacion') */
+    /** Mensaje cuando no hay mensajes (por defecto: 'Inicia una conversación') */
     emptyStateMessage?: string;
-    /** Texto secundario en estado vacio (por defecto: 'Envia un mensaje para comenzar') */
+    /** Texto secundario en estado vacio (por defecto: 'Envía un mensaje para comenzar') */
     emptyStateHint?: string;
     /** Mensaje cuando no hay conversaciones (por defecto: 'No hay conversaciones') */
     emptyConversationsMessage?: string;
@@ -269,4 +276,4 @@ declare function useAutoResize<T extends HTMLTextAreaElement>(): {
     resize: () => void;
 };
 
-export { AIChatWidget, type AIChatWidgetProps, type Attachment, type ChatAction, ChatActions, type ChatClassNames, ChatHeader, type ChatHeaderProps, ChatInput, type ChatInputProps, ChatMessage, ChatMessageList, type ChatMessageListProps, type ChatMessageProps, ChatSidebar, type ChatSidebarProps, type Conversation, type Message, type MessageAction, useAutoResize, useAutoScroll, useFileAttachments };
+export { AIChatWidget, type AIChatWidgetProps, type Attachment, type ChatAction, ChatActions, type ChatClassNames, ChatHeader, type ChatHeaderProps, ChatInput, type ChatInputProps, ChatMessage, ChatMessageList, type ChatMessageListProps, type ChatMessageProps, ChatSidebar, type ChatSidebarProps, type Conversation, type Message, type MessageAction, type MessageType, useAutoResize, useAutoScroll, useFileAttachments };

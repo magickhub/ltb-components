@@ -41,10 +41,15 @@ export interface MessageAction {
   content: string
 }
 
+/** Tipo de contenido del mensaje */
+export type MessageType = 'text' | 'html'
+
 export interface Message {
   id: string
   role: 'user' | 'assistant' | 'system'
   content: string
+  /** Tipo de contenido: 'text' (por defecto) o 'html' para renderizado aislado */
+  type?: MessageType
   attachments?: Attachment[]
   /** Accion ejecutada con este mensaje (muestra badge, inyecta contexto) */
   action?: MessageAction

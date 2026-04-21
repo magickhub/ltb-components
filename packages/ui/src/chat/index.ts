@@ -19,6 +19,7 @@ export { ChatActions } from './chat-actions'
 // Types
 export type {
   Message,
+  MessageType,
   Conversation,
   Attachment,
   ChatAction,

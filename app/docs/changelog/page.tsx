@@ -5,6 +5,29 @@ export const metadata = {
 
 const releases = [
   {
+    version: '1.0.1',
+    date: '2026-04-21',
+    changes: {
+      added: [
+        'Tipo de mensaje HTML: renderizado HTML aislado en iframe',
+        'MessageType enum: "text" (defecto) o "html"',
+        'Auto-altura dinámica para iframes según contenido',
+        'Sandbox seguro para scripts y estilos propios',
+        'Soporte para widgets interactivos en mensajes',
+        'Componente HtmlRenderer con MutationObserver para detectar cambios',
+        'Ejemplos de IA generando contenido HTML (tablas, código, widgets)',
+        'Documentación completa de mensajes HTML con browser support',
+        'Demo component mostrando uso de mensajes HTML',
+      ],
+      documentation: [
+        'Guía de mensajes HTML aislados (docs/HTML_MESSAGES.md)',
+        'Ejemplos de respuestas de IA con contenido HTML',
+        'Limitaciones y consideraciones de seguridad',
+        'Casos de uso para renderizado HTML en mensajes',
+      ],
+    },
+  },
+  {
     version: '1.0.0',
     date: '2026-03-26',
     changes: {

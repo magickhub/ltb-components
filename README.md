@@ -2,21 +2,21 @@
 
 Una librería de componentes React construida sobre shadcn/ui con widgets de chat AI personalizables.
 
-**Versión:** 1.0.0 | **Repositorio:** [magickhub/ltb-components](https://github.com/magickhub/ltb-components)
+**Versión:** 1.0.1 | **Repositorio:** [magickhub/ltb-components](https://github.com/magickhub/ltb-components)
 
 ## Instalación
 
-### Instalar desde GitHub (v1.0.0)
+### Instalar desde GitHub (v1.0.1)
 
 ```bash
 # Con npm
-npm install github:magickhub/ltb-components#v1.0.0
+npm install github:magickhub/ltb-components#v1.0.1
 
 # Con pnpm
-pnpm add github:magickhub/ltb-components#v1.0.0
+pnpm add github:magickhub/ltb-components#v1.0.1
 
 # Con yarn
-yarn add github:magickhub/ltb-components#v1.0.0
+yarn add github:magickhub/ltb-components#v1.0.1
 ```
 
 ### Instalación en tu proyecto React externo
@@ -26,7 +26,7 @@ yarn add github:magickhub/ltb-components#v1.0.0
 ```json
 {
   "dependencies": {
-    "ltb-components": "github:magickhub/ltb-components#v1.0.0"
+    "ltb-components": "github:magickhub/ltb-components#v1.0.1"
   }
 }
 ```
@@ -56,7 +56,7 @@ import { ChatMessage, ChatInput } from 'ltb-components/chat';
 
 ### Componentes Modulares
 
-- **`ChatMessage`** - Renderiza un mensaje individual
+- **`ChatMessage`** - Renderiza un mensaje individual (texto o HTML)
 - **`ChatMessageList`** - Contenedor scrollable para mensajes
 - **`ChatInput`** - Input con soporte para adjuntos
 - **`ChatSidebar`** - Lista de conversaciones
@@ -70,6 +70,8 @@ import { ChatMessage, ChatInput } from 'ltb-components/chat';
 ✅ Personalizable via CSS variables y classNames
 ✅ Compatible con React 18 y 19
 ✅ Construido sobre Radix UI y Tailwind CSS
+✅ **Nuevo en v1.0.1**: Renderizado HTML aislado en mensajes
+✅ **Nuevo en v1.0.1**: Soporte para contenido interactivo y widgets
 
 ## Uso Básico
 
@@ -87,6 +89,33 @@ export default function App() {
   );
 }
 ```
+
+## Mensajes HTML (v1.0.1)
+
+Ahora puedes renderizar contenido HTML aislado dentro de mensajes:
+
+```tsx
+const htmlMessage: Message = {
+  id: '1',
+  role: 'assistant',
+  type: 'html',  // Activa el renderizado HTML aislado
+  content: `
+    <style>
+      .card { background: #3b82f6; color: white; padding: 16px; border-radius: 8px; }
+    </style>
+    <div class="card">
+      <h3>Contenido HTML Aislado</h3>
+      <button onclick="alert('Funciona!')">Click me</button>
+    </div>
+  `,
+  createdAt: new Date(),
+}
+```
+
+Los mensajes HTML se renderizaban en un iframe con sandbox para:
+- Mantener estilos CSS aislados
+- Ejecutar JavaScript sin interferencia
+- Mostrar widgets interactivos, tablas, gráficos, etc.
 
 ## Personalización
 
@@ -116,6 +145,7 @@ Para ver ejemplos interactivos y documentación completa, visita:
 - [Página de documentación](./app/docs)
 - [Componentes](./app/docs/components/chat)
 - [Changelog](./CHANGELOG.md)
+- [Guía de Mensajes HTML](./docs/HTML_MESSAGES.md)
 
 ## Para Desarrolladores
 

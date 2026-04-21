@@ -109,6 +109,13 @@ function CodeBlock({ code, language }: CodeBlockProps) {
 function HtmlRenderer({ content, className }: { content: string; className?: string }) {
   const iframeRef = React.useRef<HTMLIFrameElement>(null)
   const [height, setHeight] = React.useState(100)
+  
+  // Debug: verificar que se está renderizando HtmlRenderer
+  console.log('[v0] HtmlRenderer - Rendering HTML content:', {
+    contentLength: content?.length,
+    contentPreview: content?.substring(0, 100),
+    iframeRef: !!iframeRef
+  })
 
   React.useEffect(() => {
     const iframe = iframeRef.current
@@ -323,6 +330,16 @@ export function ChatMessage({ message, className, classNames }: ChatMessageProps
   const isAssistant = message.role === 'assistant'
   const isSystem = message.role === 'system'
   const isHtml = message.type === 'html'
+  
+  // Debug logs
+  console.log('[v0] ChatMessage - Message received:', {
+    id: message.id,
+    role: message.role,
+    type: message.type,
+    isHtml,
+    contentLength: message.content?.length,
+    hasHtmlRenderer: isHtml ? 'YES - Should render HtmlRenderer' : 'NO - Will render as text'
+  })
 
   const parsedContent = React.useMemo(() => {
     // Si es HTML, no parsear markdown

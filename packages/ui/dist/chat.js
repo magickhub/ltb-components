@@ -492,6 +492,95 @@ function CodeBlock({ code, language }) {
     )
   ] });
 }
+function HtmlRenderer({ content, className }) {
+  const iframeRef = React.useRef(null);
+  const [height, setHeight] = React.useState(100);
+  React.useEffect(() => {
+    const iframe = iframeRef.current;
+    if (!iframe) return;
+    const updateHeight = () => {
+      var _a;
+      try {
+        const doc = iframe.contentDocument || ((_a = iframe.contentWindow) == null ? void 0 : _a.document);
+        if (doc == null ? void 0 : doc.body) {
+          const newHeight = doc.body.scrollHeight;
+          if (newHeight > 0 && newHeight !== height) {
+            setHeight(newHeight);
+          }
+        }
+      } catch (e) {
+      }
+    };
+    iframe.addEventListener("load", updateHeight);
+    const handleMessage = (event) => {
+      var _a;
+      if (((_a = event.data) == null ? void 0 : _a.type) === "ltb-iframe-resize" && typeof event.data.height === "number") {
+        setHeight(event.data.height);
+      }
+    };
+    window.addEventListener("message", handleMessage);
+    return () => {
+      iframe.removeEventListener("load", updateHeight);
+      window.removeEventListener("message", handleMessage);
+    };
+  }, [content, height]);
+  const wrappedContent = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+          * { box-sizing: border-box; }
+          body { 
+            margin: 0; 
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.5;
+            overflow: hidden;
+          }
+        </style>
+      </head>
+      <body>
+        ${content}
+        <script>
+          function reportHeight() {
+            const height = document.body.scrollHeight;
+            window.parent.postMessage({ type: 'ltb-iframe-resize', height }, '*');
+          }
+          // Reportar altura inicial y en cambios
+          reportHeight();
+          new MutationObserver(reportHeight).observe(document.body, { 
+            childList: true, 
+            subtree: true, 
+            attributes: true 
+          });
+          window.addEventListener('load', reportHeight);
+          // Re-check despues de que carguen imagenes u otros recursos
+          window.addEventListener('load', () => setTimeout(reportHeight, 100));
+        </script>
+      </body>
+    </html>
+  `;
+  return /* @__PURE__ */ jsx(
+    "iframe",
+    {
+      ref: iframeRef,
+      srcDoc: wrappedContent,
+      sandbox: "allow-scripts allow-same-origin",
+      className: cn(
+        "w-full border-0 rounded-lg bg-white",
+        className
+      ),
+      style: {
+        height: `${height}px`,
+        minHeight: "50px",
+        transition: "height 0.2s ease-out"
+      },
+      title: "Contenido HTML"
+    }
+  );
+}
 function parseMessageContent(content) {
   const elements = [];
   let lastIndex = 0;
@@ -559,12 +648,16 @@ function ChatMessage({ message, className, classNames }) {
   const isUser = message.role === "user";
   const isAssistant = message.role === "assistant";
   const isSystem = message.role === "system";
+  const isHtml = message.type === "html";
   const parsedContent = React.useMemo(() => {
+    if (isHtml) {
+      return null;
+    }
     if (isAssistant) {
       return parseMessageContent(message.content);
     }
     return message.content;
-  }, [message.content, isAssistant]);
+  }, [message.content, isAssistant, isHtml]);
   return /* @__PURE__ */ jsx(
     "div",
     {
@@ -604,7 +697,13 @@ function ChatMessage({ message, className, classNames }) {
                 children: message.attachments.map((attachment) => /* @__PURE__ */ jsx(AttachmentPreview, { attachment }, attachment.id))
               }
             ),
-            /* @__PURE__ */ jsx(
+            isHtml ? /* @__PURE__ */ jsx(
+              HtmlRenderer,
+              {
+                content: message.content,
+                className: classNames == null ? void 0 : classNames.messageContent
+              }
+            ) : /* @__PURE__ */ jsx(
               "div",
               {
                 className: cn(
@@ -775,7 +874,7 @@ function ChatActions({
   const isExecuting = !!executingAction;
   const { root, groups, groupOrder } = groupActions(actions);
   const hasGroups = groupOrder.length > 0;
-  return /* @__PURE__ */ jsxs("div", { ref: menuRef, className: cn("relative", className), children: [
+  return /* @__PURE__ */ jsxs("div", { className: cn("relative", className), children: [
     /* @__PURE__ */ jsx(
       "button",
       {
@@ -794,23 +893,31 @@ function ChatActions({
         ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
           /* @__PURE__ */ jsx(Bot, { className: "h-4 w-4" }),
           /* @__PURE__ */ jsx("span", { className: "hidden sm:inline", children: buttonText }),
+          /* @__PURE__ */ jsx("span", { className: "flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--ltb-muted)] px-1 text-[10px] font-medium text-[var(--ltb-muted-foreground)]", children: actions.length }),
           /* @__PURE__ */ jsx(ChevronDown, { className: cn("h-3 w-3 transition-transform", isOpen && "rotate-180") })
         ] })
       }
     ),
-    isOpen && !isExecuting && /* @__PURE__ */ jsx("div", { className: "absolute bottom-full left-0 z-50 mb-2 w-64 overflow-hidden rounded-lg border border-[var(--ltb-border)] bg-[var(--ltb-bg)] shadow-lg", children: /* @__PURE__ */ jsxs("div", { className: "p-1 max-h-80 overflow-y-auto", children: [
-      root.map((action) => /* @__PURE__ */ jsx(ActionItem, { action, onClick: handleActionClick }, action.id)),
-      root.length > 0 && hasGroups && /* @__PURE__ */ jsx("div", { className: "my-1 border-t border-[var(--ltb-border)]" }),
-      groupOrder.map((groupName) => /* @__PURE__ */ jsx(
-        GroupSection,
-        {
-          name: groupName,
-          actions: groups.get(groupName),
-          onActionClick: handleActionClick
-        },
-        groupName
-      ))
-    ] }) })
+    isOpen && !isExecuting && /* @__PURE__ */ jsx(
+      "div",
+      {
+        ref: menuRef,
+        className: "absolute bottom-full left-0 z-50 mb-2 w-64 overflow-hidden rounded-lg border border-[var(--ltb-border)] bg-[var(--ltb-bg)] shadow-lg",
+        children: /* @__PURE__ */ jsxs("div", { className: "p-1 max-h-80 overflow-y-auto", children: [
+          root.map((action) => /* @__PURE__ */ jsx(ActionItem, { action, onClick: handleActionClick }, action.id)),
+          root.length > 0 && hasGroups && /* @__PURE__ */ jsx("div", { className: "my-1 border-t border-[var(--ltb-border)]" }),
+          groupOrder.map((groupName) => /* @__PURE__ */ jsx(
+            GroupSection,
+            {
+              name: groupName,
+              actions: groups.get(groupName),
+              onActionClick: handleActionClick
+            },
+            groupName
+          ))
+        ] })
+      }
+    )
   ] });
 }
 ChatActions.displayName = "ChatActions";
@@ -924,7 +1031,7 @@ function ChatInput({
           "aria-label": "Adjuntar archivos"
         }
       ),
-      /* @__PURE__ */ jsx(
+      maxAttachments > 0 && /* @__PURE__ */ jsx(
         "button",
         {
           type: "button",
@@ -1000,8 +1107,8 @@ function AIChatWidget({
   showSidebar = true,
   showHeader = true,
   headerTitle = "Chat",
-  emptyStateMessage = "Inicia una conversacion",
-  emptyStateHint = "Envia un mensaje para comenzar",
+  emptyStateMessage = "Inicia una conversaci\xF3n",
+  emptyStateHint = "Env\xEDa un mensaje para comenzar",
   emptyConversationsMessage = "No hay conversaciones",
   deleteConfirmMessage = "\xBFEstas seguro de que deseas eliminar esta conversacion? Esta accion no se puede deshacer.",
   sidebarTitle = "Conversaciones",

@@ -512,11 +512,6 @@ function CodeBlock({ code, language }) {
 function HtmlRenderer({ content, className }) {
   const iframeRef = React.useRef(null);
   const [height, setHeight] = React.useState(100);
-  console.log("[v0] HtmlRenderer - Rendering HTML content:", {
-    contentLength: content == null ? void 0 : content.length,
-    contentPreview: content == null ? void 0 : content.substring(0, 100),
-    iframeRef: !!iframeRef
-  });
   React.useEffect(() => {
     const iframe = iframeRef.current;
     if (!iframe) return;
@@ -667,19 +662,10 @@ function parseInlineElements(text) {
   });
 }
 function ChatMessage({ message, className, classNames }) {
-  var _a;
   const isUser = message.role === "user";
   const isAssistant = message.role === "assistant";
   const isSystem = message.role === "system";
   const isHtml = message.type === "html";
-  console.log("[v0] ChatMessage - Message received:", {
-    id: message.id,
-    role: message.role,
-    type: message.type,
-    isHtml,
-    contentLength: (_a = message.content) == null ? void 0 : _a.length,
-    hasHtmlRenderer: isHtml ? "YES - Should render HtmlRenderer" : "NO - Will render as text"
-  });
   const parsedContent = React.useMemo(() => {
     if (isHtml) {
       return null;

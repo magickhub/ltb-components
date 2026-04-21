@@ -69,6 +69,41 @@ const demoMessages: Message[] = [
     content: 'Por supuesto! Estare encantado de ayudarte con tu componente React. Que te gustaria construir?',
     createdAt: new Date(Date.now() - 30000),
   },
+  {
+    id: '3',
+    role: 'assistant',
+    type: 'html',
+    content: `
+      <style>
+        .demo-card {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          border-radius: 12px;
+          padding: 20px;
+          color: white;
+          font-family: system-ui;
+        }
+        .demo-card h3 { margin: 0 0 8px; font-size: 18px; }
+        .demo-card p { margin: 0; opacity: 0.9; font-size: 14px; }
+        .demo-card button {
+          margin-top: 12px;
+          background: white;
+          color: #667eea;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 500;
+        }
+        .demo-card button:hover { opacity: 0.9; }
+      </style>
+      <div class="demo-card">
+        <h3>Componente HTML Aislado</h3>
+        <p>Este contenido tiene sus propios estilos y scripts sin afectar la pagina principal.</p>
+        <button onclick="alert('Script ejecutado desde el iframe!')">Probar Script</button>
+      </div>
+    `,
+    createdAt: new Date(Date.now() - 15000),
+  },
 ]
 
 function ChatDemo() {
@@ -401,16 +436,44 @@ import 'ltb-components/styles.css'`}</code></pre>
           <div>
             <h3 className="text-lg font-medium mb-2">Message</h3>
             <p className="text-muted-foreground mb-2">
-              Representa un mensaje en la conversacion. Incluye soporte para adjuntos y acciones de plantilla.
+              Representa un mensaje en la conversacion. Incluye soporte para adjuntos, acciones de plantilla y renderizado HTML aislado.
             </p>
             <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
-              <pre className="text-sm"><code>{`interface Message {
+              <pre className="text-sm"><code>{`type MessageType = 'text' | 'html'
+
+interface Message {
   id: string                              // Identificador unico del mensaje
   role: 'user' | 'assistant' | 'system'   // Rol del autor del mensaje
   content: string                         // Contenido del mensaje
+  type?: MessageType                      // 'text' (defecto) o 'html' para renderizado aislado
   attachments?: Attachment[]              // Archivos adjuntos (opcional)
   action?: MessageAction                  // Plantilla ejecutada (opcional, muestra badge)
   createdAt: Date                         // Fecha de creacion
+}`}</code></pre>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-medium mb-2">Mensajes HTML Aislados</h3>
+            <p className="text-muted-foreground mb-2">
+              Cuando un mensaje tiene <code className="bg-muted px-1 rounded">type: &apos;html&apos;</code>, se renderiza en un iframe aislado que permite ejecutar estilos y scripts propios sin afectar el contenido externo.
+            </p>
+            <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
+              <pre className="text-sm"><code>{`// Ejemplo de mensaje HTML con estilos y scripts propios
+const htmlMessage: Message = {
+  id: '1',
+  role: 'assistant',
+  type: 'html',  // Activa el renderizado HTML aislado
+  content: \`
+    <style>
+      .card { background: #3b82f6; color: white; padding: 16px; border-radius: 8px; }
+    </style>
+    <div class="card">
+      <h3>Contenido HTML Aislado</h3>
+      <button onclick="alert('Funciona!')">Click me</button>
+    </div>
+  \`,
+  createdAt: new Date(),
 }`}</code></pre>
             </div>
           </div>

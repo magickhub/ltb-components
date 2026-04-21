@@ -102,6 +102,108 @@ function CodeBlock({ code, language }: CodeBlockProps) {
   )
 }
 
+/**
+ * Renderiza contenido HTML de forma aislada en un iframe.
+ * Permite estilos y scripts propios sin afectar el contenido externo.
+ */
+function HtmlRenderer({ content, className }: { content: string; className?: string }) {
+  const iframeRef = React.useRef<HTMLIFrameElement>(null)
+  const [height, setHeight] = React.useState(100)
+
+  React.useEffect(() => {
+    const iframe = iframeRef.current
+    if (!iframe) return
+
+    const updateHeight = () => {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow?.document
+        if (doc?.body) {
+          const newHeight = doc.body.scrollHeight
+          if (newHeight > 0 && newHeight !== height) {
+            setHeight(newHeight)
+          }
+        }
+      } catch {
+        // Ignorar errores de CORS
+      }
+    }
+
+    // Escuchar cuando el iframe cargue
+    iframe.addEventListener('load', updateHeight)
+    
+    // Escuchar mensajes del iframe para actualizar altura dinamicamente
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'ltb-iframe-resize' && typeof event.data.height === 'number') {
+        setHeight(event.data.height)
+      }
+    }
+    window.addEventListener('message', handleMessage)
+
+    return () => {
+      iframe.removeEventListener('load', updateHeight)
+      window.removeEventListener('message', handleMessage)
+    }
+  }, [content, height])
+
+  // Envolver el contenido HTML con un script que reporta cambios de altura
+  const wrappedContent = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+          * { box-sizing: border-box; }
+          body { 
+            margin: 0; 
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.5;
+            overflow: hidden;
+          }
+        </style>
+      </head>
+      <body>
+        ${content}
+        <script>
+          function reportHeight() {
+            const height = document.body.scrollHeight;
+            window.parent.postMessage({ type: 'ltb-iframe-resize', height }, '*');
+          }
+          // Reportar altura inicial y en cambios
+          reportHeight();
+          new MutationObserver(reportHeight).observe(document.body, { 
+            childList: true, 
+            subtree: true, 
+            attributes: true 
+          });
+          window.addEventListener('load', reportHeight);
+          // Re-check despues de que carguen imagenes u otros recursos
+          window.addEventListener('load', () => setTimeout(reportHeight, 100));
+        </script>
+      </body>
+    </html>
+  `
+
+  return (
+    <iframe
+      ref={iframeRef}
+      srcDoc={wrappedContent}
+      sandbox="allow-scripts allow-same-origin"
+      className={cn(
+        'w-full border-0 rounded-lg bg-white',
+        className
+      )}
+      style={{ 
+        height: `${height}px`,
+        minHeight: '50px',
+        transition: 'height 0.2s ease-out'
+      }}
+      title="Contenido HTML"
+    />
+  )
+}
+
 function parseMessageContent(content: string): React.ReactNode[] {
   const elements: React.ReactNode[] = []
   let lastIndex = 0
@@ -220,13 +322,18 @@ export function ChatMessage({ message, className, classNames }: ChatMessageProps
   const isUser = message.role === 'user'
   const isAssistant = message.role === 'assistant'
   const isSystem = message.role === 'system'
+  const isHtml = message.type === 'html'
 
   const parsedContent = React.useMemo(() => {
+    // Si es HTML, no parsear markdown
+    if (isHtml) {
+      return null
+    }
     if (isAssistant) {
       return parseMessageContent(message.content)
     }
     return message.content
-  }, [message.content, isAssistant])
+  }, [message.content, isAssistant, isHtml])
 
   return (
     <div
@@ -271,14 +378,22 @@ export function ChatMessage({ message, className, classNames }: ChatMessageProps
             ))}
           </div>
         )}
-        <div
-          className={cn(
-            isUser ? 'whitespace-pre-wrap break-words' : 'break-words leading-relaxed',
-            classNames?.messageContent
-          )}
-        >
-          {isAssistant ? parsedContent : message.content}
-        </div>
+        {/* Renderizar contenido HTML aislado o texto normal */}
+        {isHtml ? (
+          <HtmlRenderer 
+            content={message.content} 
+            className={classNames?.messageContent}
+          />
+        ) : (
+          <div
+            className={cn(
+              isUser ? 'whitespace-pre-wrap break-words' : 'break-words leading-relaxed',
+              classNames?.messageContent
+            )}
+          >
+            {isAssistant ? parsedContent : message.content}
+          </div>
+        )}
       </div>
     </div>
   )

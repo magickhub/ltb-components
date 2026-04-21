@@ -141,7 +141,7 @@ export default function HomePage() {
         <div className="text-center">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-4 py-1.5 text-sm">
             <span className="flex h-2 w-2 rounded-full bg-emerald-500" />
-            Version 1.0.0 disponible
+            Version 1.0.1 disponible
           </div>
           <h1 className="text-5xl font-bold tracking-tight sm:text-6xl text-balance">
             Componentes React elegantes
@@ -173,7 +173,7 @@ export default function HomePage() {
         {/* Comando de instalacion */}
         <div className="mx-auto mt-12 max-w-xl">
           <div className="rounded-lg border border-border bg-muted/50 p-4 text-center">
-            <code className="text-sm">npm install github:magickhub/ltb-components</code>
+            <code className="text-sm">npm install github:magickhub/ltb-components#v1.0.1</code>
           </div>
         </div>
       </section>

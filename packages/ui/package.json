@@ -1,6 +1,6 @@
 {
   "name": "ltb-components",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A React component library built on shadcn/ui with customizable AI chat widgets",
   "author": "LTB",
   "license": "MIT",

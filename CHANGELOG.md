@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-04-21
+
+### Added
+
+- **HTML Message Type**: New `type: 'html'` for rendering isolated HTML content in messages
+  - Uses iframe with srcdoc for secure content isolation
+  - Allows custom styles and scripts within messages without affecting parent page
+  - Auto-height adjustment based on content
+  - Sandbox configuration for security (allow-scripts, allow-same-origin)
+- **Message Type Support**: 
+  - Type `'text'` (default) for normal text messages with markdown support
+  - Type `'html'` for rendering custom HTML with full isolation
+  - Added `MessageType` export for TypeScript support
+- **Interactive HTML Examples**: 
+  - Data visualization tables with dynamic styling
+  - Code blocks with syntax highlighting and copy functionality
+  - Live demo components with JavaScript interaction
+  - Real-time widgets that update content
+- **Documentation**:
+  - Comprehensive HTML message guide in `docs/HTML_MESSAGES.md`
+  - Demo component showcasing various HTML message use cases
+  - Examples of IA-generated content rendering (tables, code, widgets)
+  - Browser support and sandbox limitation documentation
+
+### Changed
+
+- `ChatMessage` component now handles both text and HTML message rendering based on type
+- Message interface updated with optional `type` field
+
 ## [1.0.0] - 2026-03-26
 
 ### Added

@@ -15,6 +15,7 @@ export { ChatInput } from './chat-input'
 export { ChatSidebar } from './chat-sidebar'
 export { ChatHeader } from './chat-header'
 export { ChatActions } from './chat-actions'
+export { HtmlActionCard } from './html-action-card'
 
 // Types
 export type {

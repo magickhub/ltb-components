@@ -432,16 +432,101 @@ export function HtmlMessagesDemo() {
     },
     {
       id: '9',
+      role: 'user',
+      type: 'text',
+      content: 'Puedes mostrarme ejemplos de HtmlActionCard?',
+      createdAt: new Date(Date.now() - 8000),
+    },
+    {
+      id: '10',
       role: 'assistant',
       type: 'html',
-      content: 'Este es un mensaje con acción integrada',
+      content: 'Puedo generar un documento PDF con tu reporte',
       htmlAction: {
-        id: 'action-1',
+        id: 'action-pdf',
         title: 'Método ltb increnta',
         subtitle: 'Código · HTML',
         icon: 'Code2',
       },
+      createdAt: new Date(Date.now() - 7000),
+    },
+    {
+      id: '11',
+      role: 'assistant',
+      type: 'html',
+      content: 'Aqui esta el archivo de configuración que necesitas',
+      htmlAction: {
+        id: 'action-file',
+        title: 'Descargar config.json',
+        subtitle: 'JSON · 2.4 KB',
+        icon: 'File',
+      },
+      createdAt: new Date(Date.now() - 6000),
+    },
+    {
+      id: '12',
+      role: 'assistant',
+      type: 'html',
+      content: 'Te genere una imagen con el diseño que pediste',
+      htmlAction: {
+        id: 'action-image',
+        title: 'Ver diseño final',
+        subtitle: 'Imagen · PNG · 1920x1080',
+        icon: 'Image',
+      },
+      createdAt: new Date(Date.now() - 5500),
+    },
+    {
+      id: '13',
+      role: 'assistant',
+      type: 'html',
+      content: 'Aquí está el repositorio con el código',
+      htmlAction: {
+        id: 'action-repo',
+        title: 'Abrir repositorio',
+        subtitle: 'GitHub · magickhub/ltb-components',
+        icon: 'Github',
+      },
       createdAt: new Date(Date.now() - 5000),
+    },
+    {
+      id: '14',
+      role: 'assistant',
+      type: 'html',
+      content: 'Descarga la presentación completa',
+      htmlAction: {
+        id: 'action-slides',
+        title: 'Descargar presentación',
+        subtitle: 'PowerPoint · 15 MB',
+        icon: 'FileText',
+      },
+      createdAt: new Date(Date.now() - 4000),
+    },
+    {
+      id: '15',
+      role: 'assistant',
+      type: 'html',
+      content: 'Abre el dashboard con los resultados',
+      htmlAction: {
+        id: 'action-dashboard',
+        title: 'Ir al dashboard',
+        subtitle: 'Analytics · En tiempo real',
+        icon: 'BarChart3',
+      },
+      createdAt: new Date(Date.now() - 3000),
+    },
+    {
+      id: '16',
+      role: 'assistant',
+      type: 'html',
+      content: 'Obtén la documentación completa',
+      htmlAction: {
+        id: 'action-docs',
+        title: 'Leer documentación',
+        subtitle: 'Wiki · 42 páginas',
+        icon: 'BookOpen',
+      },
+      createdAt: new Date(Date.now() - 2000),
     },
   ])
 
@@ -451,16 +536,27 @@ export function HtmlMessagesDemo() {
   }
 
   const handleMessageActionClicked = (message: Message, action: HtmlMessageAction) => {
-    console.log('[v0] Action clicked on message:', {
+    console.log('[v0] Action clicked:', {
       messageId: message.id,
       actionId: action.id,
       actionTitle: action.title,
-      message: message,
-      action: action,
+      actionSubtitle: action.subtitle,
+      actionIcon: action.icon,
     })
-    // Aquí puedes hacer lo que necesites cuando se hace clic en una acción
-    // Por ejemplo: abrir un modal, descargar un archivo, ejecutar una acción, etc.
-    alert(`Se hizo clic en la acción: "${action.title}" del mensaje ID: ${message.id}`)
+    
+    // Ejemplo de diferentes acciones basadas en el ID
+    const actionMessages: Record<string, string> = {
+      'action-pdf': `✅ Se estaría generando un PDF con el reporte de "${action.title}"`,
+      'action-file': `✅ Se descargaría "${action.title}" (${action.subtitle})`,
+      'action-image': `✅ Se abriría la imagen: "${action.title}"`,
+      'action-repo': `✅ Se abriría en GitHub: ${action.subtitle}`,
+      'action-slides': `✅ Se descargaría la presentación`,
+      'action-dashboard': `✅ Redirigiendo al dashboard de analytics...`,
+      'action-docs': `✅ Se abrirían los documentos de ${action.subtitle}`,
+    }
+    
+    const message_text = actionMessages[action.id] || `✅ Se ejecutó la acción: "${action.title}"`
+    alert(message_text)
   }
 
   return (

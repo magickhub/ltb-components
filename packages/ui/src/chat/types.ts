@@ -47,6 +47,7 @@ export type MessageType = 'text' | 'html'
 /**
  * Accion que puede asignarse a un mensaje HTML.
  * Cuando está presente, se muestra una tarjeta especial en lugar del contenido HTML.
+ * El código HTML se almacena aquí para que esté disponible en onMessageActionClicked.
  */
 export interface HtmlMessageAction {
   /** Identificador único de la acción */
@@ -57,6 +58,8 @@ export interface HtmlMessageAction {
   subtitle?: string
   /** Icono de la acción (nombre de Lucide icon, por defecto: 'Code2') */
   icon?: string
+  /** Código HTML asociado a esta acción, enviado al callback onMessageActionClicked */
+  html: string
 }
 
 export interface Message {

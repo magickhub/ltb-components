@@ -676,6 +676,7 @@ const htmlMessage: Message = {
   title: string               // Título de la acción
   subtitle?: string           // Descripción (formato, tamaño, ubicación)
   icon?: string               // Icono de Lucide (por defecto: 'Code2')
+  html: string                // Código HTML enviado al callback onMessageActionClicked
 }
 
 // Ejemplo: Mensaje con acción para descargar código
@@ -689,16 +690,17 @@ const actionMessage: Message = {
     title: 'Método ltb increnta',
     subtitle: 'Código · HTML',
     icon: 'Code2',
+    html: '<h1>Método ltb increnta</h1><p>Implementación completa.</p>',
   },
   createdAt: new Date(),
 }
 
-// Escuchar el evento en el widget
+// Escuchar el evento en el widget — action.html contiene el código HTML completo
 <AIChatWidget
   messages={messages}
   onMessageActionClicked={(message, action) => {
-    console.log(\`Usuario hizo clic en: \${action.title}\`)
-    // Tu lógica aquí
+    console.log(\`Código HTML recibido:\`, action.html)
+    // action.html contiene el contenido HTML para renderizar, descargar, etc.
   }}
 />`}</code></pre>
             </div>

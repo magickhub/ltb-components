@@ -219,6 +219,24 @@ export default function ChatDocsPage() {
         <ChatDemo />
       </section>
 
+      {/* Demo de HTML Action Card */}
+      <section className="space-y-4">
+        <h2 className="text-2xl font-semibold">HTML Action Card</h2>
+        <p className="text-muted-foreground">
+          Muestra acciones asociadas a mensajes HTML con múltiples opciones de personalización. Haz clic en cualquier botón "Abrir" para ver el evento en acción.
+        </p>
+        <div className="rounded-lg border border-border overflow-hidden bg-background">
+          <iframe
+            src="/docs/components/chat/html-action-card-showcase"
+            className="w-full h-[600px] border-0"
+            title="HTML Action Card Showcase"
+          />
+        </div>
+        <p className="text-sm text-muted-foreground">
+          Ver demo completa en <a href="/docs/components/chat/html-action-card-showcase" className="text-blue-500 hover:underline">página dedicada</a>
+        </p>
+      </section>
+
       {/* Import */}
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">Importacion</h2>
@@ -423,8 +441,176 @@ import 'ltb-components/styles.css'`}</code></pre>
                 <td className="py-3 px-4">-</td>
                 <td className="py-3 px-4 text-muted-foreground">Clases CSS personalizadas por parte</td>
               </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">onMessageActionClicked</td>
+                <td className="py-3 px-4 font-mono text-xs">(message, action) =&gt; void</td>
+                <td className="py-3 px-4">-</td>
+                <td className="py-3 px-4 text-muted-foreground">Se llama cuando el usuario hace clic en una acción de mensaje HTML</td>
+              </tr>
             </tbody>
           </table>
+        </div>
+
+        {/* ChatMessageList Props */}
+        <div className="mt-8 pt-8 border-t border-border">
+          <h3 className="text-xl font-semibold mb-4">ChatMessageList Props</h3>
+          <p className="text-muted-foreground mb-4">Componente que muestra la lista de mensajes con soporte para mensajes HTML y acciones.</p>
+          <div className="overflow-x-auto rounded-lg border border-border">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border bg-muted/50">
+                  <th className="py-3 px-4 text-left font-medium">Prop</th>
+                  <th className="py-3 px-4 text-left font-medium">Tipo</th>
+                  <th className="py-3 px-4 text-left font-medium">Default</th>
+                  <th className="py-3 px-4 text-left font-medium">Descripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">messages</td>
+                  <td className="py-3 px-4 font-mono text-xs">Message[]</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Lista de mensajes a mostrar</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">isLoading</td>
+                  <td className="py-3 px-4 font-mono text-xs">boolean</td>
+                  <td className="py-3 px-4">false</td>
+                  <td className="py-3 px-4 text-muted-foreground">Mostrar indicador de carga</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">emptyMessage</td>
+                  <td className="py-3 px-4 font-mono text-xs">string</td>
+                  <td className="py-3 px-4">'Inicia una conversacion'</td>
+                  <td className="py-3 px-4 text-muted-foreground">Mensaje cuando la lista está vacía</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">emptyHint</td>
+                  <td className="py-3 px-4 font-mono text-xs">string</td>
+                  <td className="py-3 px-4">'Envia un mensaje para comenzar'</td>
+                  <td className="py-3 px-4 text-muted-foreground">Hint secundario cuando está vacía</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">loadingText</td>
+                  <td className="py-3 px-4 font-mono text-xs">string</td>
+                  <td className="py-3 px-4">'Pensando...'</td>
+                  <td className="py-3 px-4 text-muted-foreground">Texto del indicador de carga</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">className</td>
+                  <td className="py-3 px-4 font-mono text-xs">string</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Clases CSS personalizadas</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">classNames</td>
+                  <td className="py-3 px-4 font-mono text-xs">ChatClassNames</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Clases CSS por componente</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">onMessageActionClicked</td>
+                  <td className="py-3 px-4 font-mono text-xs">(message, action) =&gt; void</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Se llama cuando se hace clic en una acción HTML</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* ChatMessage Props */}
+        <div className="mt-8 pt-8 border-t border-border">
+          <h3 className="text-xl font-semibold mb-4">ChatMessage Props</h3>
+          <p className="text-muted-foreground mb-4">Componente individual que renderiza un mensaje único con soporte para HTML, adjuntos y acciones.</p>
+          <div className="overflow-x-auto rounded-lg border border-border">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border bg-muted/50">
+                  <th className="py-3 px-4 text-left font-medium">Prop</th>
+                  <th className="py-3 px-4 text-left font-medium">Tipo</th>
+                  <th className="py-3 px-4 text-left font-medium">Default</th>
+                  <th className="py-3 px-4 text-left font-medium">Descripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">message</td>
+                  <td className="py-3 px-4 font-mono text-xs">Message</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Mensaje a renderizar</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">className</td>
+                  <td className="py-3 px-4 font-mono text-xs">string</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Clases CSS personalizadas</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">classNames</td>
+                  <td className="py-3 px-4 font-mono text-xs">ChatClassNames</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Clases CSS por parte del mensaje</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">onMessageActionClicked</td>
+                  <td className="py-3 px-4 font-mono text-xs">(message, action) =&gt; void</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Se llama cuando se hace clic en una acción HTML</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* ChatWindow Props */}
+        <div className="mt-8 pt-8 border-t border-border">
+          <h3 className="text-xl font-semibold mb-4">ChatWindow Props</h3>
+          <p className="text-muted-foreground mb-4">Componente simplificado sin sidebar que combina ChatMessageList e ChatInput para un chat básico.</p>
+          <div className="overflow-x-auto rounded-lg border border-border">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border bg-muted/50">
+                  <th className="py-3 px-4 text-left font-medium">Prop</th>
+                  <th className="py-3 px-4 text-left font-medium">Tipo</th>
+                  <th className="py-3 px-4 text-left font-medium">Default</th>
+                  <th className="py-3 px-4 text-left font-medium">Descripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">messages</td>
+                  <td className="py-3 px-4 font-mono text-xs">Message[]</td>
+                  <td className="py-3 px-4">[]</td>
+                  <td className="py-3 px-4 text-muted-foreground">Lista inicial de mensajes</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">onSendMessage</td>
+                  <td className="py-3 px-4 font-mono text-xs">(message: string) =&gt; void</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Callback cuando se envía un mensaje</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">isLoading</td>
+                  <td className="py-3 px-4 font-mono text-xs">boolean</td>
+                  <td className="py-3 px-4">false</td>
+                  <td className="py-3 px-4 text-muted-foreground">Mostrar estado de carga</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">placeholder</td>
+                  <td className="py-3 px-4 font-mono text-xs">string</td>
+                  <td className="py-3 px-4">'Escribe un mensaje...'</td>
+                  <td className="py-3 px-4 text-muted-foreground">Placeholder del input</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">onMessageActionClicked</td>
+                  <td className="py-3 px-4 font-mono text-xs">(message, action) =&gt; void</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Se llama cuando se hace clic en una acción HTML</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
@@ -448,6 +634,7 @@ interface Message {
   type?: MessageType                      // 'text' (defecto) o 'html' para renderizado aislado
   attachments?: Attachment[]              // Archivos adjuntos (opcional)
   action?: MessageAction                  // Plantilla ejecutada (opcional, muestra badge)
+  htmlAction?: HtmlMessageAction          // Accion para mensaje HTML (muestra tarjeta)
   createdAt: Date                         // Fecha de creacion
 }`}</code></pre>
             </div>
@@ -475,6 +662,47 @@ const htmlMessage: Message = {
   \`,
   createdAt: new Date(),
 }`}</code></pre>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-medium mb-2">HTML Action Card</h3>
+            <p className="text-muted-foreground mb-2">
+              Cuando un mensaje HTML tiene <code className="bg-muted px-1 rounded">htmlAction</code>, se muestra una tarjeta interactiva en lugar del contenido HTML. Perfecta para descargas, enlaces, o acciones ejecutables.
+            </p>
+            <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
+              <pre className="text-sm"><code>{`interface HtmlMessageAction {
+  id: string                  // Identificador único para el handler
+  title: string               // Título de la acción
+  subtitle?: string           // Descripción (formato, tamaño, ubicación)
+  icon?: string               // Icono de Lucide (por defecto: 'Code2')
+  html: string                // Código HTML enviado al callback onMessageActionClicked
+}
+
+// Ejemplo: Mensaje con acción para descargar código
+const actionMessage: Message = {
+  id: '2',
+  role: 'assistant',
+  type: 'html',
+  content: 'Aquí generé el código que pediste',
+  htmlAction: {
+    id: 'download-code',
+    title: 'Método ltb increnta',
+    subtitle: 'Código · HTML',
+    icon: 'Code2',
+    html: '<h1>Método ltb increnta</h1><p>Implementación completa.</p>',
+  },
+  createdAt: new Date(),
+}
+
+// Escuchar el evento en el widget — action.html contiene el código HTML completo
+<AIChatWidget
+  messages={messages}
+  onMessageActionClicked={(message, action) => {
+    console.log(\`Código HTML recibido:\`, action.html)
+    // action.html contiene el contenido HTML para renderizar, descargar, etc.
+  }}
+/>`}</code></pre>
             </div>
           </div>
 

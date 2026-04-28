@@ -44,6 +44,24 @@ export interface MessageAction {
 /** Tipo de contenido del mensaje */
 export type MessageType = 'text' | 'html'
 
+/**
+ * Accion que puede asignarse a un mensaje HTML.
+ * Cuando está presente, se muestra una tarjeta especial en lugar del contenido HTML.
+ * El código HTML se almacena aquí para que esté disponible en onMessageActionClicked.
+ */
+export interface HtmlMessageAction {
+  /** Identificador único de la acción */
+  id: string
+  /** Título que se muestra en la tarjeta */
+  title: string
+  /** Subtítulo o descripción adicional */
+  subtitle?: string
+  /** Icono de la acción (nombre de Lucide icon, por defecto: 'Code2') */
+  icon?: string
+  /** Código HTML asociado a esta acción, enviado al callback onMessageActionClicked */
+  html: string
+}
+
 export interface Message {
   id: string | number
   role: 'user' | 'assistant' | 'system'
@@ -53,6 +71,8 @@ export interface Message {
   attachments?: Attachment[]
   /** Accion ejecutada con este mensaje (muestra badge, inyecta contexto) */
   action?: MessageAction
+  /** Accion para mensajes HTML que muestra una tarjeta especial en lugar del contenido */
+  htmlAction?: HtmlMessageAction
   /** Fecha de creacion (acepta createdAt o created_at) */
   createdAt?: Date
   /** Alias para createdAt (snake_case) */
@@ -148,6 +168,8 @@ export interface AIChatWidgetProps {
   onDeleteConversation?: (id: string) => void | Promise<void>
   /** Called when user renames a conversation */
   onRenameConversation?: (id: string, newTitle: string) => void | Promise<void>
+  /** Called when user clicks on an HTML message action */
+  onMessageActionClicked?: (message: Message, action: HtmlMessageAction) => void | Promise<void>
   
   /** Loading state while waiting for response */
   isLoading?: boolean
@@ -159,6 +181,8 @@ export interface ChatMessageProps {
   message: Message
   className?: string
   classNames?: Pick<ChatClassNames, 'message' | 'userMessage' | 'assistantMessage' | 'systemMessage' | 'messageContent' | 'messageAttachments'>
+  /** Callback cuando se hace clic en una acción HTML */
+  onMessageActionClicked?: (message: Message, action: HtmlMessageAction) => void | Promise<void>
 }
 
 export interface ChatInputProps {
@@ -213,4 +237,6 @@ export interface ChatMessageListProps {
   loadingText?: string
   className?: string
   classNames?: Pick<ChatClassNames, 'messageList' | 'message' | 'userMessage' | 'assistantMessage' | 'systemMessage' | 'messageContent' | 'messageAttachments'>
+  /** Callback cuando se hace clic en una acción HTML */
+  onMessageActionClicked?: (message: Message, action: HtmlMessageAction) => void | Promise<void>
 }

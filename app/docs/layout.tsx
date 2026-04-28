@@ -55,7 +55,7 @@ export default function DocsLayout({
         </nav>
         <div className="border-t border-border p-4">
           <p className="text-xs text-muted-foreground">
-            Version 1.0.0
+            Version 1.0.2
           </p>
         </div>
       </aside>

@@ -54,6 +54,7 @@ export function AIChatWidget({
   onDeleteConversation,
   onRenameConversation,
   onExecuteAction,
+  onMessageActionClicked,
   
   // Estados
   isLoading = false,
@@ -127,6 +128,7 @@ export function AIChatWidget({
           emptyHint={emptyStateHint}
           loadingText={loadingText}
           classNames={classNames}
+          onMessageActionClicked={onMessageActionClicked}
         />
 
         {/* Input */}

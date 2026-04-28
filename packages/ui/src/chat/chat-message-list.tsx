@@ -21,6 +21,7 @@ export function ChatMessageList({
   loadingText = 'Pensando...',
   className,
   classNames,
+  onMessageActionClicked,
 }: ChatMessageListProps) {
   const scrollRef = useAutoScroll<HTMLDivElement>([messages, isLoading])
 
@@ -52,6 +53,7 @@ export function ChatMessageList({
               key={message.id}
               message={message}
               classNames={classNames}
+              onMessageActionClicked={onMessageActionClicked}
             />
           ))}
           

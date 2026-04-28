@@ -2,21 +2,21 @@
 
 Una librería de componentes React construida sobre shadcn/ui con widgets de chat AI personalizables.
 
-**Versión:** 1.0.1 | **Repositorio:** [magickhub/ltb-components](https://github.com/magickhub/ltb-components)
+**Versión:** 1.0.2 | **Repositorio:** [magickhub/ltb-components](https://github.com/magickhub/ltb-components)
 
 ## Instalación
 
-### Instalar desde GitHub (v1.0.1)
+### Instalar desde GitHub (v1.0.2)
 
 ```bash
 # Con npm
-npm install github:magickhub/ltb-components#v1.0.1
+npm install github:magickhub/ltb-components#v1.0.2
 
 # Con pnpm
-pnpm add github:magickhub/ltb-components#v1.0.1
+pnpm add github:magickhub/ltb-components#v1.0.2
 
 # Con yarn
-yarn add github:magickhub/ltb-components#v1.0.1
+yarn add github:magickhub/ltb-components#v1.0.2
 ```
 
 ### Instalación en tu proyecto React externo
@@ -26,7 +26,7 @@ yarn add github:magickhub/ltb-components#v1.0.1
 ```json
 {
   "dependencies": {
-    "ltb-components": "github:magickhub/ltb-components#v1.0.1"
+    "ltb-components": "github:magickhub/ltb-components#v1.0.2"
   }
 }
 ```

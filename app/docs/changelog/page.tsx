@@ -5,6 +5,51 @@ export const metadata = {
 
 const releases = [
   {
+    version: '1.0.2',
+    date: '2026-04-28',
+    changes: {
+      added: [
+        'HTML Action Card Component: Tarjeta interactiva para mensajes HTML',
+        'HtmlMessageAction Interface con campo html requerido',
+        'onMessageActionClicked Callback en AIChatWidget, ChatMessageList y ChatMessage',
+        'ChatWindow Component: Chat simplificado sin sidebar',
+        'HTML Action Card Showcase Demo con 19+ ejemplos interactivos',
+        'Soporte para 30+ iconos de Lucide en HtmlActionCard',
+        'Props reference completa para todos los componentes individuales',
+        'Documentación de types con ejemplos de uso de htmlAction',
+      ],
+      changed: [
+        'Message interface ahora soporta htmlAction con campo html requerido',
+        'ChatMessage renderiza action card cuando htmlAction está presente (prioridad sobre iframe)',
+        'HtmlMessageAction requiere campo html para enviar contenido al callback',
+        'TypeScript type safety mejorado para htmlAction parameter',
+        'ChatMessageList props extendidas con onMessageActionClicked',
+        'AIChatWidgetProps extendidas con onMessageActionClicked',
+      ],
+      fixed: [
+        'Routing para HTML Action Card demo como ruta separada /html-action-card-showcase',
+        'Path aliases en tsconfig.json para @ltb/ui imports',
+        'Removed duplicate documentation files (html-action-card-examples.mdx, html-action-card-guide.md)',
+        'Fixed non-null assertion para htmlAction en ChatMessage rendering',
+      ],
+      improved: [
+        'Action card priorizado sobre iframe cuando htmlAction está presente',
+        'Props reference con tablas separadas por componente (AIChatWidget, ChatMessageList, ChatMessage, ChatWindow)',
+        'Callback onMessageActionClicked siempre proporciona action.html con contenido',
+        'Comprehensive demo mostrando todas las posibilidades de personalización',
+        'Better documentation con ejemplos de uso real del callback',
+      ],
+      documentation: [
+        'HTML Action Card guide con opciones de personalización',
+        'Props reference actualizado con nuevos callbacks',
+        'Examples y casos de uso en documentación de componentes',
+        'Detailed props tables con acción callback documentation',
+        'Type documentation actualizado mostrando campo html en HtmlMessageAction',
+        'Nueva página de historial de cambios (changelog)',
+      ],
+    },
+  },
+  {
     version: '1.0.1',
     date: '2026-04-21',
     changes: {
@@ -105,16 +150,67 @@ export default function ChangelogPage() {
               </div>
             )}
 
-            {release.changes.documentation && release.changes.documentation.length > 0 && (
+            {release.changes.changed && release.changes.changed.length > 0 && (
               <div>
                 <h3 className="mb-3 flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-blue-600">
-                  <span className="flex h-5 w-5 items-center justify-center rounded bg-blue-100 text-xs">D</span>
+                  <span className="flex h-5 w-5 items-center justify-center rounded bg-blue-100 text-xs">~</span>
+                  Cambios
+                </h3>
+                <ul className="space-y-2">
+                  {release.changes.changed.map((item, index) => (
+                    <li key={index} className="flex gap-3 text-muted-foreground">
+                      <span className="text-blue-500">-</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {release.changes.fixed && release.changes.fixed.length > 0 && (
+              <div>
+                <h3 className="mb-3 flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-red-600">
+                  <span className="flex h-5 w-5 items-center justify-center rounded bg-red-100 text-xs">✓</span>
+                  Corregido
+                </h3>
+                <ul className="space-y-2">
+                  {release.changes.fixed.map((item, index) => (
+                    <li key={index} className="flex gap-3 text-muted-foreground">
+                      <span className="text-red-500">-</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {release.changes.improved && release.changes.improved.length > 0 && (
+              <div>
+                <h3 className="mb-3 flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-purple-600">
+                  <span className="flex h-5 w-5 items-center justify-center rounded bg-purple-100 text-xs">⚡</span>
+                  Mejorado
+                </h3>
+                <ul className="space-y-2">
+                  {release.changes.improved.map((item, index) => (
+                    <li key={index} className="flex gap-3 text-muted-foreground">
+                      <span className="text-purple-500">-</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {release.changes.documentation && release.changes.documentation.length > 0 && (
+              <div>
+                <h3 className="mb-3 flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-orange-600">
+                  <span className="flex h-5 w-5 items-center justify-center rounded bg-orange-100 text-xs">D</span>
                   Documentacion
                 </h3>
                 <ul className="space-y-2">
                   {release.changes.documentation.map((item, index) => (
                     <li key={index} className="flex gap-3 text-muted-foreground">
-                      <span className="text-blue-500">-</span>
+                      <span className="text-orange-500">-</span>
                       {item}
                     </li>
                   ))}

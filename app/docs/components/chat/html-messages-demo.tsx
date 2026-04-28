@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { ChatWindow } from '@ltb/ui/chat'
-import type { Message } from '@ltb/ui/chat'
+import type { Message, HtmlMessageAction } from '@ltb/ui/chat'
 
 /**
  * Demo de mensajes HTML con renderizado aislado
@@ -430,6 +430,111 @@ export function HtmlMessagesDemo() {
       `,
       createdAt: new Date(Date.now() - 10000),
     },
+    {
+      id: '9',
+      role: 'user',
+      type: 'text',
+      content: 'Puedes mostrarme ejemplos de HtmlActionCard?',
+      createdAt: new Date(Date.now() - 8000),
+    },
+    {
+      id: '10',
+      role: 'assistant',
+      type: 'html',
+      content: 'Puedo generar un documento PDF con tu reporte',
+      htmlAction: {
+        id: 'action-pdf',
+        title: 'Método ltb increnta',
+        subtitle: 'Código · HTML',
+        icon: 'Code2',
+        html: '<h1>Método ltb increnta</h1><p>Implementación del método increnta en HTML.</p>',
+      },
+      createdAt: new Date(Date.now() - 7000),
+    },
+    {
+      id: '11',
+      role: 'assistant',
+      type: 'html',
+      content: 'Aqui esta el archivo de configuración que necesitas',
+      htmlAction: {
+        id: 'action-file',
+        title: 'Descargar config.json',
+        subtitle: 'JSON · 2.4 KB',
+        icon: 'File',
+        html: '{"version":"1.0.0","env":"production","debug":false}',
+      },
+      createdAt: new Date(Date.now() - 6000),
+    },
+    {
+      id: '12',
+      role: 'assistant',
+      type: 'html',
+      content: 'Te genere una imagen con el diseño que pediste',
+      htmlAction: {
+        id: 'action-image',
+        title: 'Ver diseño final',
+        subtitle: 'Imagen · PNG · 1920x1080',
+        icon: 'Image',
+        html: '<img src="https://placehold.co/1920x1080" alt="Diseño final" style="max-width:100%" />',
+      },
+      createdAt: new Date(Date.now() - 5500),
+    },
+    {
+      id: '13',
+      role: 'assistant',
+      type: 'html',
+      content: 'Aquí está el repositorio con el código',
+      htmlAction: {
+        id: 'action-repo',
+        title: 'Abrir repositorio',
+        subtitle: 'GitHub · magickhub/ltb-components',
+        icon: 'Github',
+        html: '<a href="https://github.com/magickhub/ltb-components">magickhub/ltb-components</a>',
+      },
+      createdAt: new Date(Date.now() - 5000),
+    },
+    {
+      id: '14',
+      role: 'assistant',
+      type: 'html',
+      content: 'Descarga la presentación completa',
+      htmlAction: {
+        id: 'action-slides',
+        title: 'Descargar presentación',
+        subtitle: 'PowerPoint · 15 MB',
+        icon: 'FileText',
+        html: '<p>Presentación de 42 diapositivas lista para descargar.</p>',
+      },
+      createdAt: new Date(Date.now() - 4000),
+    },
+    {
+      id: '15',
+      role: 'assistant',
+      type: 'html',
+      content: 'Abre el dashboard con los resultados',
+      htmlAction: {
+        id: 'action-dashboard',
+        title: 'Ir al dashboard',
+        subtitle: 'Analytics · En tiempo real',
+        icon: 'BarChart3',
+        html: '<iframe src="/dashboard" width="100%" height="600"></iframe>',
+      },
+      createdAt: new Date(Date.now() - 3000),
+    },
+    {
+      id: '16',
+      role: 'assistant',
+      type: 'html',
+      content: 'Obtén la documentación completa',
+      htmlAction: {
+        id: 'action-docs',
+        title: 'Leer documentación',
+        subtitle: 'Wiki · 42 páginas',
+        icon: 'BookOpen',
+        html: '<article><h1>Documentación</h1><p>Guía completa de uso.</p></article>',
+      },
+      createdAt: new Date(Date.now() - 2000),
+    },
   ])
 
   const handleSendMessage = (content: string) => {
@@ -437,11 +542,36 @@ export function HtmlMessagesDemo() {
     console.log('Mensaje enviado:', content)
   }
 
+  const handleMessageActionClicked = (message: Message, action: HtmlMessageAction) => {
+    console.log('[v0] Action clicked:', {
+      messageId: message.id,
+      actionId: action.id,
+      actionTitle: action.title,
+      actionSubtitle: action.subtitle,
+      actionIcon: action.icon,
+    })
+    
+    // Ejemplo de diferentes acciones basadas en el ID
+    const actionMessages: Record<string, string> = {
+      'action-pdf': `✅ Se estaría generando un PDF con el reporte de "${action.title}"`,
+      'action-file': `✅ Se descargaría "${action.title}" (${action.subtitle})`,
+      'action-image': `✅ Se abriría la imagen: "${action.title}"`,
+      'action-repo': `✅ Se abriría en GitHub: ${action.subtitle}`,
+      'action-slides': `✅ Se descargaría la presentación`,
+      'action-dashboard': `✅ Redirigiendo al dashboard de analytics...`,
+      'action-docs': `✅ Se abrirían los documentos de ${action.subtitle}`,
+    }
+    
+    const message_text = actionMessages[action.id] || `✅ Se ejecutó la acción: "${action.title}"`
+    alert(message_text)
+  }
+
   return (
     <div className="w-full h-screen flex flex-col bg-background">
       <ChatWindow
         messages={messages}
         onSendMessage={handleSendMessage}
+        onMessageActionClicked={handleMessageActionClicked}
         placeholder="Escribe un mensaje o envía HTML con type: 'html'"
       />
     </div>

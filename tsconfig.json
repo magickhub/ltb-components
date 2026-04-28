@@ -25,6 +25,12 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@ltb/ui": [
+        "./packages/ui/src/index.ts"
+      ],
+      "@ltb/ui/*": [
+        "./packages/ui/src/*"
       ]
     }
   },

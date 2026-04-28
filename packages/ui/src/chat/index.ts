@@ -24,6 +24,7 @@ export type {
   Attachment,
   ChatAction,
   MessageAction,
+  HtmlMessageAction,
   ChatClassNames,
   AIChatWidgetProps,
   ChatMessageProps,

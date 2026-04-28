@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { ChatWindow } from '@ltb/ui/chat'
-import type { Message } from '@ltb/ui/chat'
+import type { Message, HtmlMessageAction } from '@ltb/ui/chat'
 
 /**
  * Demo de mensajes HTML con renderizado aislado
@@ -430,6 +430,19 @@ export function HtmlMessagesDemo() {
       `,
       createdAt: new Date(Date.now() - 10000),
     },
+    {
+      id: '9',
+      role: 'assistant',
+      type: 'html',
+      content: 'Este es un mensaje con acción integrada',
+      htmlAction: {
+        id: 'action-1',
+        title: 'Método ltb increnta',
+        subtitle: 'Código · HTML',
+        icon: 'Code2',
+      },
+      createdAt: new Date(Date.now() - 5000),
+    },
   ])
 
   const handleSendMessage = (content: string) => {
@@ -437,11 +450,25 @@ export function HtmlMessagesDemo() {
     console.log('Mensaje enviado:', content)
   }
 
+  const handleMessageActionClicked = (message: Message, action: HtmlMessageAction) => {
+    console.log('[v0] Action clicked on message:', {
+      messageId: message.id,
+      actionId: action.id,
+      actionTitle: action.title,
+      message: message,
+      action: action,
+    })
+    // Aquí puedes hacer lo que necesites cuando se hace clic en una acción
+    // Por ejemplo: abrir un modal, descargar un archivo, ejecutar una acción, etc.
+    alert(`Se hizo clic en la acción: "${action.title}" del mensaje ID: ${message.id}`)
+  }
+
   return (
     <div className="w-full h-screen flex flex-col bg-background">
       <ChatWindow
         messages={messages}
         onSendMessage={handleSendMessage}
+        onMessageActionClicked={handleMessageActionClicked}
         placeholder="Escribe un mensaje o envía HTML con type: 'html'"
       />
     </div>

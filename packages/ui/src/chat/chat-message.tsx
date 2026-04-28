@@ -11,6 +11,7 @@
 import * as React from 'react'
 import { FileText, Image as ImageIcon, File, Copy, Check, Zap } from 'lucide-react'
 import { cn, formatFileSize } from '../utils'
+import { HtmlActionCard } from './html-action-card'
 import type { ChatMessageProps, Attachment, MessageAction } from './types'
 
 /** Badge que muestra una accion inyectada en el mensaje */
@@ -109,13 +110,6 @@ function CodeBlock({ code, language }: CodeBlockProps) {
 function HtmlRenderer({ content, className }: { content: string; className?: string }) {
   const iframeRef = React.useRef<HTMLIFrameElement>(null)
   const [height, setHeight] = React.useState(100)
-  
-  // Debug: verificar que se está renderizando HtmlRenderer
-  console.log('[v0] HtmlRenderer - Rendering HTML content:', {
-    contentLength: content?.length,
-    contentPreview: content?.substring(0, 100),
-    iframeRef: !!iframeRef
-  })
 
   React.useEffect(() => {
     const iframe = iframeRef.current
@@ -325,21 +319,12 @@ function parseInlineElements(text: string): React.ReactNode {
   })
 }
 
-export function ChatMessage({ message, className, classNames }: ChatMessageProps) {
+export function ChatMessage({ message, className, classNames, onMessageActionClicked }: ChatMessageProps) {
   const isUser = message.role === 'user'
   const isAssistant = message.role === 'assistant'
   const isSystem = message.role === 'system'
   const isHtml = message.type === 'html'
-  
-  // Debug logs
-  console.log('[v0] ChatMessage - Message received:', {
-    id: message.id,
-    role: message.role,
-    type: message.type,
-    isHtml,
-    contentLength: message.content?.length,
-    hasHtmlRenderer: isHtml ? 'YES - Should render HtmlRenderer' : 'NO - Will render as text'
-  })
+  const hasHtmlAction = isHtml && message.htmlAction
 
   const parsedContent = React.useMemo(() => {
     // Si es HTML, no parsear markdown
@@ -395,8 +380,16 @@ export function ChatMessage({ message, className, classNames }: ChatMessageProps
             ))}
           </div>
         )}
-        {/* Renderizar contenido HTML aislado o texto normal */}
-        {isHtml ? (
+        
+        {/* Renderizar HTML Action Card o contenido HTML o texto normal */}
+        {hasHtmlAction ? (
+          <HtmlActionCard
+            message={message}
+            action={message.htmlAction}
+            onActionClick={onMessageActionClicked}
+            className={classNames?.messageContent}
+          />
+        ) : isHtml ? (
           <HtmlRenderer 
             content={message.content} 
             className={classNames?.messageContent}

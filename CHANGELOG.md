@@ -19,62 +19,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `title`: Action title displayed in the card
   - `subtitle`: Optional description (file type, size, location, etc.)
   - `icon`: Optional Lucide icon name (defaults to 'Code2')
+  - `html`: HTML content sent to `onMessageActionClicked` callback (required)
 - **onMessageActionClicked Callback**: New event handler for HTML message actions
   - Added to `AIChatWidget`, `ChatMessageList`, and `ChatMessage` props
-  - Receives full message and action details
+  - Receives full message and action details including HTML content
   - Enables custom handling for different action types
-- **HTML Action Card Showcase Demo**: Comprehensive demo showing 15+ examples
+  - `action.html` contains the associated HTML code for rendering/download
+- **ChatWindow Component**: Simplified chat interface without sidebar
+  - Combines `ChatMessageList` and `ChatInput` for basic chat flows
+  - Perfect for embedded or minimal chat implementations
+  - Supports all message types and action callbacks
+- **HTML Action Card Showcase Demo**: Comprehensive demo showing 19+ examples
   - Multiple icon examples (Code2, File, Image, Github, Database, etc.)
-  - Different use cases (downloads, dashboards, documentation, etc.)
+  - Different use cases (downloads, dashboards, documentation, deployment, etc.)
   - Interactive handlers demonstrating action handling patterns
-  - Console logging for debugging
+  - Real HTML content in each action for demonstration
+  - Console logging for debugging action clicks
+- **Extended Icon Support**: Added 30+ Lucide icons to HtmlActionCard
+  - Supports all common use cases: Code2, File, Image, Video, Github, Database, Copy, Share2, Lock, Unlock, TrendingUp, and many more
 - **Documentation**: 
+  - Comprehensive props reference for all components (AIChatWidget, ChatMessageList, ChatMessage, ChatWindow)
   - HTML Action Card guide with personalization options
   - Props reference updated with new callbacks
   - Examples and use cases in component documentation
   - Detailed props table with action callback documentation
+  - Updated type documentation showing `html` field in HtmlMessageAction
 
 ### Changed
 
-- `Message` interface now supports `htmlAction?: HtmlMessageAction`
-- `ChatMessage` component renders action card when `htmlAction` is present
+- `Message` interface now supports `htmlAction?: HtmlMessageAction` (with required html field)
+- `ChatMessage` component renders action card when `htmlAction` is present (prioritizes over iframe)
 - `ChatMessageList` props extended with `onMessageActionClicked` callback
 - `AIChatWidgetProps` extended with `onMessageActionClicked` callback
+- `HtmlMessageAction` now requires `html` field (previously optional, now required)
+- Fixed TypeScript type safety for htmlAction parameter
+
+### Fixed
+
+- Fixed routing for HTML Action Card demo as separate route
+- Fixed path aliases in tsconfig.json for `@ltb/ui` imports
+- Removed duplicate documentation files
+- Fixed non-null assertion for htmlAction in ChatMessage rendering
 
 ### Improved
 
 - Message rendering logic prioritizes action card over iframe when action is present
-- Enhanced props reference documentation with interactive examples
-- Better type safety with HtmlMessageAction interface
+- Enhanced props reference documentation with separate tables for each component
+- Better type safety with HtmlMessageAction interface requiring html field
+- Callback now always provides HTML content for action handling
+- Comprehensive demo showing all personalization possibilities
 
 ## [1.0.1] - 2026-04-21
-
-### Added
-
-- **HTML Message Type**: New `type: 'html'` for rendering isolated HTML content in messages
-  - Uses iframe with srcdoc for secure content isolation
-  - Allows custom styles and scripts within messages without affecting parent page
-  - Auto-height adjustment based on content
-  - Sandbox configuration for security (allow-scripts, allow-same-origin)
-- **Message Type Support**: 
-  - Type `'text'` (default) for normal text messages with markdown support
-  - Type `'html'` for rendering custom HTML with full isolation
-  - Added `MessageType` export for TypeScript support
-- **Interactive HTML Examples**: 
-  - Data visualization tables with dynamic styling
-  - Code blocks with syntax highlighting and copy functionality
-  - Live demo components with JavaScript interaction
-  - Real-time widgets that update content
-- **Documentation**:
-  - Comprehensive HTML message guide in `docs/HTML_MESSAGES.md`
-  - Demo component showcasing various HTML message use cases
-  - Examples of IA-generated content rendering (tables, code, widgets)
-  - Browser support and sandbox limitation documentation
-
-### Changed
-
-- `ChatMessage` component now handles both text and HTML message rendering based on type
-- Message interface updated with optional `type` field
 
 ### Added
 

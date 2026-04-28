@@ -385,7 +385,7 @@ export function ChatMessage({ message, className, classNames, onMessageActionCli
         {hasHtmlAction ? (
           <HtmlActionCard
             message={message}
-            action={message.htmlAction}
+            action={message.htmlAction!}
             onActionClick={onMessageActionClicked}
             className={classNames?.messageContent}
           />

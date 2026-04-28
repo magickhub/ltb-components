@@ -42,6 +42,20 @@ interface MessageAction {
 }
 /** Tipo de contenido del mensaje */
 type MessageType = 'text' | 'html';
+/**
+ * Accion que puede asignarse a un mensaje HTML.
+ * Cuando está presente, se muestra una tarjeta especial en lugar del contenido HTML.
+ */
+interface HtmlMessageAction {
+    /** Identificador único de la acción */
+    id: string;
+    /** Título que se muestra en la tarjeta */
+    title: string;
+    /** Subtítulo o descripción adicional */
+    subtitle?: string;
+    /** Icono de la acción (nombre de Lucide icon, por defecto: 'Code2') */
+    icon?: string;
+}
 interface Message {
     id: string | number;
     role: 'user' | 'assistant' | 'system';
@@ -51,6 +65,8 @@ interface Message {
     attachments?: Attachment[];
     /** Accion ejecutada con este mensaje (muestra badge, inyecta contexto) */
     action?: MessageAction;
+    /** Accion para mensajes HTML que muestra una tarjeta especial en lugar del contenido */
+    htmlAction?: HtmlMessageAction;
     /** Fecha de creacion (acepta createdAt o created_at) */
     createdAt?: Date;
     /** Alias para createdAt (snake_case) */
@@ -139,6 +155,8 @@ interface AIChatWidgetProps {
     onDeleteConversation?: (id: string) => void | Promise<void>;
     /** Called when user renames a conversation */
     onRenameConversation?: (id: string, newTitle: string) => void | Promise<void>;
+    /** Called when user clicks on an HTML message action */
+    onMessageActionClicked?: (message: Message, action: HtmlMessageAction) => void | Promise<void>;
     /** Loading state while waiting for response */
     isLoading?: boolean;
     /** Disabled state */
@@ -148,6 +166,8 @@ interface ChatMessageProps {
     message: Message;
     className?: string;
     classNames?: Pick<ChatClassNames, 'message' | 'userMessage' | 'assistantMessage' | 'systemMessage' | 'messageContent' | 'messageAttachments'>;
+    /** Callback cuando se hace clic en una acción HTML */
+    onMessageActionClicked?: (message: Message, action: HtmlMessageAction) => void | Promise<void>;
 }
 interface ChatInputProps {
     placeholder?: string;
@@ -198,19 +218,64 @@ interface ChatMessageListProps {
     loadingText?: string;
     className?: string;
     classNames?: Pick<ChatClassNames, 'messageList' | 'message' | 'userMessage' | 'assistantMessage' | 'systemMessage' | 'messageContent' | 'messageAttachments'>;
+    /** Callback cuando se hace clic en una acción HTML */
+    onMessageActionClicked?: (message: Message, action: HtmlMessageAction) => void | Promise<void>;
 }
 
-declare function AIChatWidget({ conversations, currentConversationId, messages, placeholder, maxFileSize, maxAttachments, allowedFileTypes, showSidebar, showHeader, headerTitle, emptyStateMessage, emptyStateHint, emptyConversationsMessage, deleteConfirmMessage, sidebarTitle, loadingText, actionsButtonText, actions, executingAction, className, classNames, onSendMessage, onNewConversation, onSelectConversation, onDeleteConversation, onRenameConversation, onExecuteAction, isLoading, disabled, }: AIChatWidgetProps): react_jsx_runtime.JSX.Element;
+declare function AIChatWidget({ conversations, currentConversationId, messages, placeholder, maxFileSize, maxAttachments, allowedFileTypes, showSidebar, showHeader, headerTitle, emptyStateMessage, emptyStateHint, emptyConversationsMessage, deleteConfirmMessage, sidebarTitle, loadingText, actionsButtonText, actions, executingAction, className, classNames, onSendMessage, onNewConversation, onSelectConversation, onDeleteConversation, onRenameConversation, onExecuteAction, onMessageActionClicked, isLoading, disabled, }: AIChatWidgetProps): react_jsx_runtime.JSX.Element;
 declare namespace AIChatWidget {
     var displayName: string;
 }
 
-declare function ChatMessage({ message, className, classNames }: ChatMessageProps): react_jsx_runtime.JSX.Element;
+interface ChatWindowProps {
+    /** Mensajes a mostrar */
+    messages: Message[];
+    /** Placeholder del input */
+    placeholder?: string;
+    /** Callback cuando el usuario envía un mensaje */
+    onSendMessage: (content: string, attachments?: File[], action?: MessageAction) => void | Promise<void>;
+    /** Callback cuando se hace clic en una acción HTML */
+    onMessageActionClicked?: (message: Message, action: HtmlMessageAction) => void | Promise<void>;
+    /** Estado de carga */
+    isLoading?: boolean;
+    /** Estado deshabilitado */
+    disabled?: boolean;
+    /** Acciones disponibles */
+    actions?: ChatAction[];
+    /** Acción en ejecución */
+    executingAction?: ChatAction | null;
+    /** Callback cuando se ejecuta una acción */
+    onExecuteAction?: (action: ChatAction, conversationId?: string) => void | Promise<void>;
+    /** ID de la conversación actual */
+    conversationId?: string;
+    /** Mensaje cuando no hay mensajes */
+    emptyMessage?: string;
+    /** Hint en estado vacío */
+    emptyHint?: string;
+    /** Texto de carga */
+    loadingText?: string;
+    /** Texto del botón de acciones */
+    actionsButtonText?: string;
+    /** Tamaño máximo de archivo en MB */
+    maxFileSize?: number;
+    /** Número máximo de adjuntos */
+    maxAttachments?: number;
+    /** Tipos de archivo permitidos */
+    allowedFileTypes?: string[];
+    /** Clases adicionales */
+    className?: string;
+}
+declare function ChatWindow({ messages, placeholder, onSendMessage, onMessageActionClicked, isLoading, disabled, actions, executingAction, onExecuteAction, conversationId, emptyMessage, emptyHint, loadingText, actionsButtonText, maxFileSize, maxAttachments, allowedFileTypes, className, }: ChatWindowProps): react_jsx_runtime.JSX.Element;
+declare namespace ChatWindow {
+    var displayName: string;
+}
+
+declare function ChatMessage({ message, className, classNames, onMessageActionClicked }: ChatMessageProps): react_jsx_runtime.JSX.Element;
 declare namespace ChatMessage {
     var displayName: string;
 }
 
-declare function ChatMessageList({ messages, isLoading, emptyMessage, emptyHint, loadingText, className, classNames, }: ChatMessageListProps): react_jsx_runtime.JSX.Element;
+declare function ChatMessageList({ messages, isLoading, emptyMessage, emptyHint, loadingText, className, classNames, onMessageActionClicked, }: ChatMessageListProps): react_jsx_runtime.JSX.Element;
 declare namespace ChatMessageList {
     var displayName: string;
 }
@@ -241,6 +306,17 @@ interface ChatActionsProps {
 }
 declare function ChatActions({ actions, executingAction, onExecuteAction, conversationId, buttonText, disabled, className, }: ChatActionsProps): react_jsx_runtime.JSX.Element | null;
 declare namespace ChatActions {
+    var displayName: string;
+}
+
+interface HtmlActionCardProps {
+    message: Message;
+    action: HtmlMessageAction;
+    onActionClick?: (message: Message, action: HtmlMessageAction) => void | Promise<void>;
+    className?: string;
+}
+declare function HtmlActionCard({ message, action, onActionClick, className, }: HtmlActionCardProps): react_jsx_runtime.JSX.Element;
+declare namespace HtmlActionCard {
     var displayName: string;
 }
 
@@ -276,4 +352,4 @@ declare function useAutoResize<T extends HTMLTextAreaElement>(): {
     resize: () => void;
 };
 
-export { AIChatWidget, type AIChatWidgetProps, type Attachment, type ChatAction, ChatActions, type ChatClassNames, ChatHeader, type ChatHeaderProps, ChatInput, type ChatInputProps, ChatMessage, ChatMessageList, type ChatMessageListProps, type ChatMessageProps, ChatSidebar, type ChatSidebarProps, type Conversation, type Message, type MessageAction, type MessageType, useAutoResize, useAutoScroll, useFileAttachments };
+export { AIChatWidget, type AIChatWidgetProps, type Attachment, type ChatAction, ChatActions, type ChatClassNames, ChatHeader, type ChatHeaderProps, ChatInput, type ChatInputProps, ChatMessage, ChatMessageList, type ChatMessageListProps, type ChatMessageProps, ChatSidebar, type ChatSidebarProps, ChatWindow, type ChatWindowProps, type Conversation, HtmlActionCard, type HtmlMessageAction, type Message, type MessageAction, type MessageType, useAutoResize, useAutoScroll, useFileAttachments };

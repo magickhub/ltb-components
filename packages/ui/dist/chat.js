@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { Plus, PanelLeft, MessageSquare, Loader2, Bot, ChevronDown, X, Paperclip, Send, AlertTriangle, Check, Pencil, Trash2, Zap, Image, FileText, File, ChevronRight, Copy, Lightbulb, Target, BarChart3, Users } from 'lucide-react';
+import { Plus, PanelLeft, Terminal, Globe, Link, MapPin, Clock, Calendar, Mail, Info, AlertCircle, CheckCircle, Unlock, Lock, Settings, Download, Share2, Copy, Database, Zap, ExternalLink, BookOpen, BarChart3, Github, Music, Video, Image, FileSpreadsheet, FileJson, FileText, File, Code2, MessageSquare, Loader2, Bot, ChevronDown, X, Paperclip, Send, AlertTriangle, Check, Pencil, Trash2, ChevronRight, Lightbulb, Target, Users } from 'lucide-react';
 import { jsxs, Fragment, jsx } from 'react/jsx-runtime';
 
 var __async = (__this, __arguments, generator) => {
@@ -436,6 +436,90 @@ function useAutoResize() {
   }, [resize]);
   return { ref, resize };
 }
+var iconMap = {
+  "Code2": Code2,
+  "File": File,
+  "FileText": FileText,
+  "FileJson": FileJson,
+  "FileSpreadsheet": FileSpreadsheet,
+  "Image": Image,
+  "Video": Video,
+  "Music": Music,
+  "Github": Github,
+  "BarChart3": BarChart3,
+  "BookOpen": BookOpen,
+  "ExternalLink": ExternalLink,
+  "Zap": Zap,
+  "Database": Database,
+  "Copy": Copy,
+  "Share2": Share2,
+  "Download": Download,
+  "Settings": Settings,
+  "Lock": Lock,
+  "Unlock": Unlock,
+  "CheckCircle": CheckCircle,
+  "AlertCircle": AlertCircle,
+  "Info": Info,
+  "Mail": Mail,
+  "Calendar": Calendar,
+  "Clock": Clock,
+  "MapPin": MapPin,
+  "Link": Link,
+  "Globe": Globe,
+  "Terminal": Terminal
+};
+function HtmlActionCard({
+  message,
+  action,
+  onActionClick,
+  className
+}) {
+  const [isLoading, setIsLoading] = React.useState(false);
+  const iconName = action.icon || "Code2";
+  const IconComponent = iconMap[iconName] || Code2;
+  const handleClick = () => __async(null, null, function* () {
+    if (!onActionClick) return;
+    setIsLoading(true);
+    try {
+      yield onActionClick(message, action);
+    } catch (error) {
+      console.error("[v0] Error in HtmlActionCard onClick:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  });
+  return /* @__PURE__ */ jsxs(
+    "div",
+    {
+      className: cn(
+        "flex w-full items-center gap-4 rounded-lg border border-[var(--ltb-border)] bg-[var(--ltb-bg)] p-4",
+        className
+      ),
+      children: [
+        /* @__PURE__ */ jsx("div", { className: "flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--ltb-muted)]", children: /* @__PURE__ */ jsx(IconComponent, { className: "h-6 w-6 text-[var(--ltb-muted-foreground)]" }) }),
+        /* @__PURE__ */ jsxs("div", { className: "flex-1 min-w-0", children: [
+          /* @__PURE__ */ jsx("h3", { className: "font-semibold text-[var(--ltb-foreground)]", children: action.title }),
+          action.subtitle && /* @__PURE__ */ jsx("p", { className: "text-sm text-[var(--ltb-muted-foreground)]", children: action.subtitle })
+        ] }),
+        /* @__PURE__ */ jsx(
+          "button",
+          {
+            onClick: handleClick,
+            disabled: isLoading,
+            className: cn(
+              "flex-shrink-0 rounded-lg border border-[var(--ltb-border)] px-4 py-2 font-medium transition-colors",
+              "text-[var(--ltb-foreground)] hover:bg-[var(--ltb-muted)]",
+              "disabled:opacity-50 disabled:cursor-not-allowed",
+              "whitespace-nowrap"
+            ),
+            children: isLoading ? "Abriendo..." : "Abrir"
+          }
+        )
+      ]
+    }
+  );
+}
+HtmlActionCard.displayName = "HtmlActionCard";
 function ActionBadge({ action }) {
   return /* @__PURE__ */ jsxs("div", { className: "mb-2 inline-flex items-center gap-1.5 rounded-full bg-[var(--ltb-action-badge-bg,#dbeafe)] px-3 py-1 text-xs font-medium text-[var(--ltb-action-badge-text,#1e40af)]", children: [
     /* @__PURE__ */ jsx(Zap, { className: "h-3 w-3" }),
@@ -495,11 +579,6 @@ function CodeBlock({ code, language }) {
 function HtmlRenderer({ content, className }) {
   const iframeRef = React.useRef(null);
   const [height, setHeight] = React.useState(100);
-  console.log("[v0] HtmlRenderer - Rendering HTML content:", {
-    contentLength: content == null ? void 0 : content.length,
-    contentPreview: content == null ? void 0 : content.substring(0, 100),
-    iframeRef: !!iframeRef
-  });
   React.useEffect(() => {
     const iframe = iframeRef.current;
     if (!iframe) return;
@@ -649,20 +728,12 @@ function parseInlineElements(text) {
     return part;
   });
 }
-function ChatMessage({ message, className, classNames }) {
-  var _a;
+function ChatMessage({ message, className, classNames, onMessageActionClicked }) {
   const isUser = message.role === "user";
   const isAssistant = message.role === "assistant";
   const isSystem = message.role === "system";
   const isHtml = message.type === "html";
-  console.log("[v0] ChatMessage - Message received:", {
-    id: message.id,
-    role: message.role,
-    type: message.type,
-    isHtml,
-    contentLength: (_a = message.content) == null ? void 0 : _a.length,
-    hasHtmlRenderer: isHtml ? "YES - Should render HtmlRenderer" : "NO - Will render as text"
-  });
+  const hasHtmlAction = isHtml && message.htmlAction;
   const parsedContent = React.useMemo(() => {
     if (isHtml) {
       return null;
@@ -711,7 +782,15 @@ function ChatMessage({ message, className, classNames }) {
                 children: message.attachments.map((attachment) => /* @__PURE__ */ jsx(AttachmentPreview, { attachment }, attachment.id))
               }
             ),
-            isHtml ? /* @__PURE__ */ jsx(
+            hasHtmlAction ? /* @__PURE__ */ jsx(
+              HtmlActionCard,
+              {
+                message,
+                action: message.htmlAction,
+                onActionClick: onMessageActionClicked,
+                className: classNames == null ? void 0 : classNames.messageContent
+              }
+            ) : isHtml ? /* @__PURE__ */ jsx(
               HtmlRenderer,
               {
                 content: message.content,
@@ -741,7 +820,8 @@ function ChatMessageList({
   emptyHint = "Envia un mensaje para comenzar",
   loadingText = "Pensando...",
   className,
-  classNames
+  classNames,
+  onMessageActionClicked
 }) {
   const scrollRef = useAutoScroll([messages, isLoading]);
   return /* @__PURE__ */ jsx(
@@ -762,7 +842,8 @@ function ChatMessageList({
           ChatMessage,
           {
             message,
-            classNames
+            classNames,
+            onMessageActionClicked
           },
           message.id
         )),
@@ -775,7 +856,7 @@ function ChatMessageList({
   );
 }
 ChatMessageList.displayName = "ChatMessageList";
-var iconMap = {
+var iconMap2 = {
   zap: Zap,
   users: Users,
   "bar-chart": BarChart3,
@@ -786,7 +867,7 @@ var iconMap = {
 };
 function getIcon(iconName) {
   if (!iconName) return Zap;
-  return iconMap[iconName.toLowerCase()] || Zap;
+  return iconMap2[iconName.toLowerCase()] || Zap;
 }
 function groupActions(actions) {
   const root = [];
@@ -1141,6 +1222,7 @@ function AIChatWidget({
   onDeleteConversation,
   onRenameConversation,
   onExecuteAction,
+  onMessageActionClicked,
   // Estados
   isLoading = false,
   disabled = false
@@ -1207,7 +1289,8 @@ function AIChatWidget({
                   emptyMessage: emptyStateMessage,
                   emptyHint: emptyStateHint,
                   loadingText,
-                  classNames
+                  classNames,
+                  onMessageActionClicked
                 }
               ),
               /* @__PURE__ */ jsx(
@@ -1235,7 +1318,59 @@ function AIChatWidget({
   );
 }
 AIChatWidget.displayName = "AIChatWidget";
+function ChatWindow({
+  messages,
+  placeholder = "Escribe un mensaje...",
+  onSendMessage,
+  onMessageActionClicked,
+  isLoading = false,
+  disabled = false,
+  actions,
+  executingAction,
+  onExecuteAction,
+  conversationId,
+  emptyMessage,
+  emptyHint,
+  loadingText,
+  actionsButtonText,
+  maxFileSize,
+  maxAttachments,
+  allowedFileTypes,
+  className
+}) {
+  return /* @__PURE__ */ jsxs("div", { className: cn("flex flex-col h-full bg-[var(--ltb-bg)]", className), children: [
+    /* @__PURE__ */ jsx(
+      ChatMessageList,
+      {
+        messages,
+        isLoading,
+        emptyMessage,
+        emptyHint,
+        loadingText,
+        onMessageActionClicked
+      }
+    ),
+    /* @__PURE__ */ jsx(
+      ChatInput,
+      {
+        placeholder,
+        onSendMessage,
+        isLoading,
+        disabled,
+        actions,
+        executingAction,
+        onExecuteAction,
+        conversationId,
+        actionsButtonText,
+        maxFileSize,
+        maxAttachments,
+        allowedFileTypes
+      }
+    )
+  ] });
+}
+ChatWindow.displayName = "ChatWindow";
 
-export { AIChatWidget, ChatActions, ChatHeader, ChatInput, ChatMessage, ChatMessageList, ChatSidebar, useAutoResize, useAutoScroll, useFileAttachments };
+export { AIChatWidget, ChatActions, ChatHeader, ChatInput, ChatMessage, ChatMessageList, ChatSidebar, ChatWindow, HtmlActionCard, useAutoResize, useAutoScroll, useFileAttachments };
 //# sourceMappingURL=chat.js.map
 //# sourceMappingURL=chat.js.map

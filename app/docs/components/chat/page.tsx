@@ -219,6 +219,24 @@ export default function ChatDocsPage() {
         <ChatDemo />
       </section>
 
+      {/* Demo de HTML Action Card */}
+      <section className="space-y-4">
+        <h2 className="text-2xl font-semibold">HTML Action Card</h2>
+        <p className="text-muted-foreground">
+          Muestra acciones asociadas a mensajes HTML con múltiples opciones de personalización. Haz clic en cualquier botón "Abrir" para ver el evento en acción.
+        </p>
+        <div className="rounded-lg border border-border overflow-hidden bg-background">
+          <iframe
+            src="/docs/components/chat/html-action-card-showcase"
+            className="w-full h-[600px] border-0"
+            title="HTML Action Card Showcase"
+          />
+        </div>
+        <p className="text-sm text-muted-foreground">
+          Ver demo completa en <a href="/docs/components/chat/html-action-card-showcase" className="text-blue-500 hover:underline">página dedicada</a>
+        </p>
+      </section>
+
       {/* Import */}
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">Importacion</h2>
@@ -423,6 +441,12 @@ import 'ltb-components/styles.css'`}</code></pre>
                 <td className="py-3 px-4">-</td>
                 <td className="py-3 px-4 text-muted-foreground">Clases CSS personalizadas por parte</td>
               </tr>
+              <tr>
+                <td className="py-3 px-4 font-mono text-xs">onMessageActionClicked</td>
+                <td className="py-3 px-4 font-mono text-xs">(message, action) =&gt; void</td>
+                <td className="py-3 px-4">-</td>
+                <td className="py-3 px-4 text-muted-foreground">Se llama cuando el usuario hace clic en una acción de mensaje HTML</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -448,6 +472,7 @@ interface Message {
   type?: MessageType                      // 'text' (defecto) o 'html' para renderizado aislado
   attachments?: Attachment[]              // Archivos adjuntos (opcional)
   action?: MessageAction                  // Plantilla ejecutada (opcional, muestra badge)
+  htmlAction?: HtmlMessageAction          // Accion para mensaje HTML (muestra tarjeta)
   createdAt: Date                         // Fecha de creacion
 }`}</code></pre>
             </div>
@@ -475,6 +500,45 @@ const htmlMessage: Message = {
   \`,
   createdAt: new Date(),
 }`}</code></pre>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-medium mb-2">HTML Action Card</h3>
+            <p className="text-muted-foreground mb-2">
+              Cuando un mensaje HTML tiene <code className="bg-muted px-1 rounded">htmlAction</code>, se muestra una tarjeta interactiva en lugar del contenido HTML. Perfecta para descargas, enlaces, o acciones ejecutables.
+            </p>
+            <div className="rounded-lg border border-border bg-muted/50 p-4 overflow-x-auto">
+              <pre className="text-sm"><code>{`interface HtmlMessageAction {
+  id: string                  // Identificador único para el handler
+  title: string               // Título de la acción
+  subtitle?: string           // Descripción (formato, tamaño, ubicación)
+  icon?: string               // Icono de Lucide (por defecto: 'Code2')
+}
+
+// Ejemplo: Mensaje con acción para descargar código
+const actionMessage: Message = {
+  id: '2',
+  role: 'assistant',
+  type: 'html',
+  content: 'Aquí generé el código que pediste',
+  htmlAction: {
+    id: 'download-code',
+    title: 'Método ltb increnta',
+    subtitle: 'Código · HTML',
+    icon: 'Code2',
+  },
+  createdAt: new Date(),
+}
+
+// Escuchar el evento en el widget
+<AIChatWidget
+  messages={messages}
+  onMessageActionClicked={(message, action) => {
+    console.log(\`Usuario hizo clic en: \${action.title}\`)
+    // Tu lógica aquí
+  }}
+/>`}</code></pre>
             </div>
           </div>
 

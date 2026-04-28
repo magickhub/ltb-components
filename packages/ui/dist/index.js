@@ -1150,7 +1150,7 @@ function ChatInput({
           onClick: openFilePicker,
           disabled: disabled || isLoading || files.length >= maxAttachments || !!executingAction,
           className: cn(
-            "flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-[var(--ltb-input-border)] bg-transparent text-[var(--ltb-muted-foreground)] transition-colors hover:bg-[var(--ltb-border)] hover:text-[var(--ltb-foreground)] disabled:cursor-not-allowed disabled:opacity-50",
+            "flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--ltb-primary)] text-[var(--ltb-primary-foreground)] transition-colors hover:bg-[var(--ltb-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50",
             classNames == null ? void 0 : classNames.attachButton
           ),
           "aria-label": "Adjuntar archivo",

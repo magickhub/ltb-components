@@ -450,6 +450,168 @@ import 'ltb-components/styles.css'`}</code></pre>
             </tbody>
           </table>
         </div>
+
+        {/* ChatMessageList Props */}
+        <div className="mt-8 pt-8 border-t border-border">
+          <h3 className="text-xl font-semibold mb-4">ChatMessageList Props</h3>
+          <p className="text-muted-foreground mb-4">Componente que muestra la lista de mensajes con soporte para mensajes HTML y acciones.</p>
+          <div className="overflow-x-auto rounded-lg border border-border">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border bg-muted/50">
+                  <th className="py-3 px-4 text-left font-medium">Prop</th>
+                  <th className="py-3 px-4 text-left font-medium">Tipo</th>
+                  <th className="py-3 px-4 text-left font-medium">Default</th>
+                  <th className="py-3 px-4 text-left font-medium">Descripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">messages</td>
+                  <td className="py-3 px-4 font-mono text-xs">Message[]</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Lista de mensajes a mostrar</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">isLoading</td>
+                  <td className="py-3 px-4 font-mono text-xs">boolean</td>
+                  <td className="py-3 px-4">false</td>
+                  <td className="py-3 px-4 text-muted-foreground">Mostrar indicador de carga</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">emptyMessage</td>
+                  <td className="py-3 px-4 font-mono text-xs">string</td>
+                  <td className="py-3 px-4">'Inicia una conversacion'</td>
+                  <td className="py-3 px-4 text-muted-foreground">Mensaje cuando la lista está vacía</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">emptyHint</td>
+                  <td className="py-3 px-4 font-mono text-xs">string</td>
+                  <td className="py-3 px-4">'Envia un mensaje para comenzar'</td>
+                  <td className="py-3 px-4 text-muted-foreground">Hint secundario cuando está vacía</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">loadingText</td>
+                  <td className="py-3 px-4 font-mono text-xs">string</td>
+                  <td className="py-3 px-4">'Pensando...'</td>
+                  <td className="py-3 px-4 text-muted-foreground">Texto del indicador de carga</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">className</td>
+                  <td className="py-3 px-4 font-mono text-xs">string</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Clases CSS personalizadas</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">classNames</td>
+                  <td className="py-3 px-4 font-mono text-xs">ChatClassNames</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Clases CSS por componente</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">onMessageActionClicked</td>
+                  <td className="py-3 px-4 font-mono text-xs">(message, action) =&gt; void</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Se llama cuando se hace clic en una acción HTML</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* ChatMessage Props */}
+        <div className="mt-8 pt-8 border-t border-border">
+          <h3 className="text-xl font-semibold mb-4">ChatMessage Props</h3>
+          <p className="text-muted-foreground mb-4">Componente individual que renderiza un mensaje único con soporte para HTML, adjuntos y acciones.</p>
+          <div className="overflow-x-auto rounded-lg border border-border">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border bg-muted/50">
+                  <th className="py-3 px-4 text-left font-medium">Prop</th>
+                  <th className="py-3 px-4 text-left font-medium">Tipo</th>
+                  <th className="py-3 px-4 text-left font-medium">Default</th>
+                  <th className="py-3 px-4 text-left font-medium">Descripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">message</td>
+                  <td className="py-3 px-4 font-mono text-xs">Message</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Mensaje a renderizar</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">className</td>
+                  <td className="py-3 px-4 font-mono text-xs">string</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Clases CSS personalizadas</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">classNames</td>
+                  <td className="py-3 px-4 font-mono text-xs">ChatClassNames</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Clases CSS por parte del mensaje</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">onMessageActionClicked</td>
+                  <td className="py-3 px-4 font-mono text-xs">(message, action) =&gt; void</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Se llama cuando se hace clic en una acción HTML</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* ChatWindow Props */}
+        <div className="mt-8 pt-8 border-t border-border">
+          <h3 className="text-xl font-semibold mb-4">ChatWindow Props</h3>
+          <p className="text-muted-foreground mb-4">Componente simplificado sin sidebar que combina ChatMessageList e ChatInput para un chat básico.</p>
+          <div className="overflow-x-auto rounded-lg border border-border">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border bg-muted/50">
+                  <th className="py-3 px-4 text-left font-medium">Prop</th>
+                  <th className="py-3 px-4 text-left font-medium">Tipo</th>
+                  <th className="py-3 px-4 text-left font-medium">Default</th>
+                  <th className="py-3 px-4 text-left font-medium">Descripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">messages</td>
+                  <td className="py-3 px-4 font-mono text-xs">Message[]</td>
+                  <td className="py-3 px-4">[]</td>
+                  <td className="py-3 px-4 text-muted-foreground">Lista inicial de mensajes</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">onSendMessage</td>
+                  <td className="py-3 px-4 font-mono text-xs">(message: string) =&gt; void</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Callback cuando se envía un mensaje</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">isLoading</td>
+                  <td className="py-3 px-4 font-mono text-xs">boolean</td>
+                  <td className="py-3 px-4">false</td>
+                  <td className="py-3 px-4 text-muted-foreground">Mostrar estado de carga</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">placeholder</td>
+                  <td className="py-3 px-4 font-mono text-xs">string</td>
+                  <td className="py-3 px-4">'Escribe un mensaje...'</td>
+                  <td className="py-3 px-4 text-muted-foreground">Placeholder del input</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="py-3 px-4 font-mono text-xs">onMessageActionClicked</td>
+                  <td className="py-3 px-4 font-mono text-xs">(message, action) =&gt; void</td>
+                  <td className="py-3 px-4">-</td>
+                  <td className="py-3 px-4 text-muted-foreground">Se llama cuando se hace clic en una acción HTML</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </section>
 
       {/* Tipos */}

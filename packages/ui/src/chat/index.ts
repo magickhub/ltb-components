@@ -5,8 +5,9 @@
  * AI Chat components for building conversational interfaces.
  */
 
-// Main widget
+// Main widgets
 export { AIChatWidget } from './ai-chat-widget'
+export { ChatWindow } from './chat-window'
 
 // Individual components for custom layouts
 export { ChatMessage } from './chat-message'
@@ -34,6 +35,8 @@ export type {
   ChatSidebarProps,
   ChatHeaderProps,
 } from './types'
+
+export type { ChatWindowProps } from './chat-window'
 
 // Hooks
 export { useAutoScroll, useFileAttachments, useAutoResize } from './hooks'

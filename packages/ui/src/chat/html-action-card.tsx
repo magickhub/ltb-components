@@ -9,14 +9,74 @@
 'use client'
 
 import * as React from 'react'
-import { Code2, LucideIcon } from 'lucide-react'
+import { 
+  Code2, 
+  File, 
+  FileText, 
+  FileJson, 
+  FileSpreadsheet,
+  Image, 
+  Video,
+  Music,
+  Github, 
+  BarChart3, 
+  BookOpen, 
+  ExternalLink, 
+  Zap,
+  Database,
+  Copy,
+  Share2,
+  Download,
+  Settings,
+  Lock,
+  Unlock,
+  CheckCircle,
+  AlertCircle,
+  Info,
+  Mail,
+  Calendar,
+  Clock,
+  MapPin,
+  Link,
+  Globe,
+  Terminal,
+  type LucideIcon 
+} from 'lucide-react'
 import { cn } from '../utils'
 import type { Message, HtmlMessageAction } from './types'
 
-// Mapeo de nombres de iconos a componentes
+// Mapeo de nombres de iconos a componentes de Lucide
 const iconMap: Record<string, LucideIcon> = {
   'Code2': Code2,
-  // Agregar más iconos según sea necesario
+  'File': File,
+  'FileText': FileText,
+  'FileJson': FileJson,
+  'FileSpreadsheet': FileSpreadsheet,
+  'Image': Image,
+  'Video': Video,
+  'Music': Music,
+  'Github': Github,
+  'BarChart3': BarChart3,
+  'BookOpen': BookOpen,
+  'ExternalLink': ExternalLink,
+  'Zap': Zap,
+  'Database': Database,
+  'Copy': Copy,
+  'Share2': Share2,
+  'Download': Download,
+  'Settings': Settings,
+  'Lock': Lock,
+  'Unlock': Unlock,
+  'CheckCircle': CheckCircle,
+  'AlertCircle': AlertCircle,
+  'Info': Info,
+  'Mail': Mail,
+  'Calendar': Calendar,
+  'Clock': Clock,
+  'MapPin': MapPin,
+  'Link': Link,
+  'Globe': Globe,
+  'Terminal': Terminal,
 }
 
 interface HtmlActionCardProps {

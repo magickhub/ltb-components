@@ -8,7 +8,6 @@
 
 'use client'
 
-import * as React from 'react'
 import { cn } from '../utils'
 import { ChatMessageList } from './chat-message-list'
 import { ChatInput } from './chat-input'
